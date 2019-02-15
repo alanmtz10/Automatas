@@ -13,7 +13,7 @@ public class Automatas {
 
     public static void main(String[] args) {
         int estado = 0;
-        String cad = "abc";
+        String cad = "abbbbb";
         Integer[][] tabla = {
             {0, 1, 2, -2},
             {null, 1, 2, -2},
