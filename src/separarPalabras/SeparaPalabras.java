@@ -54,6 +54,7 @@ public class SeparaPalabras {
                     }
                 } else if (i == linea.length() - 1) {
                     arr.add(paux + linea.charAt(i));
+                    paux = "";
                 } else {
                     paux += linea.charAt(i);
                 }
