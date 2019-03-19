@@ -16,9 +16,29 @@ public class Prb {
     public static void main(String[] args) {
         ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("programa.txt");
         ArrayList<String> palabras = separarPalabras.SeparaPalabras.separa(lineas, automatas.Automatas.SEPARADORES);
-        
-        for (String palabra : palabras) {
-            System.out.println(palabra);
-        }
+
+//        palabras.forEach((String x) -> {
+//            System.out.println(x);
+//        });
+        token(palabras);
+
+    }
+
+    public static void token(ArrayList<String> palabras) {
+        palabras.forEach((String palabra) -> {
+            boolean tabla = true;
+            for (String[][] conjuntos : automatas.Automatas.TOKEN_FIJOS) {
+                for (String[] conjunto : conjuntos) {
+                    if (palabra.equals(conjunto[1])) {
+                        System.out.println(palabra + " Token: " + conjunto[0]);
+                        tabla = false;
+                        break;
+                    }
+                }
+            }
+            if (tabla) {
+                automatas.Automatas.recorreTabla(palabra);
+            }
+        });
     }
 }

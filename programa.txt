@@ -1,4 +1,4 @@
 if(nombre == "abc" | !validaTexto(nombre)){
 	bandera = 1;
-	msg += "Error en el nombre";
+	msg += "Error";
 }
