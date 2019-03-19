@@ -18,13 +18,6 @@ import java.util.ArrayList;
  */
 public class SeparaPalabras {
 
-    public static void main(String[] args) {
-        ArrayList<String> lineas = leer("texto.txt");
-        ArrayList<String> palabras = separa(lineas, ' ', ',', '.');
-        guardar(palabras);
-
-    }
-
     public static ArrayList<String> leer(String archivo) {
         String txt = "";
         ArrayList<String> lineas = new ArrayList<>();
@@ -46,14 +39,14 @@ public class SeparaPalabras {
             for (int i = 0; i < linea.length(); i++) {
                 if (isSeparador(linea.charAt(i), separadores)) {
                     if (!paux.equals("")) {
-                        arr.add(paux);
+                        arr.add(paux.trim());
                         paux = "";
                     }
                     if (linea.charAt(i) != ' ') {
-                        arr.add(String.valueOf(linea.charAt(i)));
+                        arr.add(String.valueOf(linea.charAt(i)).trim());
                     }
                 } else if (i == linea.length() - 1) {
-                    arr.add(paux + linea.charAt(i));
+                    arr.add((paux + linea.charAt(i)).trim());
                     paux = "";
                 } else {
                     paux += linea.charAt(i);
