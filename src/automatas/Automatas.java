@@ -49,7 +49,6 @@ public class Automatas {
     public static final String MAYUS = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,Ñ,O,P,Q,R,S,T,U,V,W,X,Y,Z";
     public static final String MINUS = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z";
     public static final String NUMBER = "0,1,2,3,4,5,6,7,8,9";
-    public static final char[] SEPARADORES = {'!', ';', ' ', '\n', '.', '=', '(', ')', '+', '-', '/', '*', '[', ']', '{', '}', '%', '&', '|', '<', '>', '\''};
 
     private static final String[][] TIPOS_DATO = {
         {"1", "String"},
@@ -144,110 +143,103 @@ public class Automatas {
     public static final String[][][] TOKEN_FIJOS = {TIPOS_DATO, PALABRAS_RES, CARACTERES_ESP, CLASES_PREDE, FUN_DEF, OPE_ARIT, OPE_LOG,
         OPE_REL, OPE_ASIG};
 
-    public static void recorreTabla(String cad) {
-        String estado = "S0";
-        int e2 = 0;
-        for (int i = 0; i < cad.length(); i++) {
-            if (is(cad.charAt(i), "mayus")) {
-                e2 = 0;
-            } else if (is(cad.charAt(i), "minus")) {
-                e2 = 1;
-            } else if (is(cad.charAt(i), "number")) {
-                e2 = 2;
-            } else if (is(cad.charAt(i), "car_es")) {
-                e2 = 4;
-            } else if (is(cad.charAt(i), "ope_ar")) {
-                e2 = 9;
-            } else if (is(cad.charAt(i), "ope_lo")) {
-                e2 = 10;
-            } else if (is(cad.charAt(i), "ope_re")) {
-                e2 = 11;
-            } else if (is(cad.charAt(i), "pa_re")) {
-                e2 = 12;
-            } else {
-                e2 = alfabetoMap.get(String.valueOf(cad.charAt(i)));
+    public static void validaPalabra(String cad) {
+        if (!isTokenFijo(cad)) {
+            String estado = "S0";
+            int renglon = 0;
+            int columna = 0;
+            for (int i = 0; i < cad.length(); i++) {
+                renglon = estadoMap.get(estado);
+                columna = getSecondPos("" + cad.charAt(i));
+                estado = table[renglon][columna];
             }
-            estado = table[estadoMap.get(estado)][e2];
-            if (estado.contains("E")) {
-                System.out.println(estado);
-                i = cad.length() + 1;
+            if (true) {
+                System.out.println(cad + " Token: " + table[estadoMap.get(estado)][15] + " Renglón: " + renglon + " Columna: " + columna);
             }
         }
-        if (estado.contains("E") || table[estadoMap.get(estado)][15].contains("E")) {
-            String ea = table[estadoMap.get(estado)][15];
-            String msg = "";
-            if (estado.equalsIgnoreCase("E0") || ea.equalsIgnoreCase("E0")) {
-                msg = "Error caracter no valido";
-            } else if (estado.equalsIgnoreCase("E1") || ea.equalsIgnoreCase("E1")) {
-                msg = "Error se esperaba una variable";
-            } else if (estado.equalsIgnoreCase("E2") || ea.equalsIgnoreCase("E2")) {
-                msg = "Error se esperaba un nombre de clase";
-            } else if (estado.equalsIgnoreCase("E3") || ea.equalsIgnoreCase("E3")) {
-                msg = "Error se esperaba un nombre de comentario";
-            } else if (estado.equalsIgnoreCase("E4") || ea.equalsIgnoreCase("E4")) {
-                msg = "Error se esperaba un numero";
-            } else if (estado.equalsIgnoreCase("E5") || ea.equalsIgnoreCase("E5")) {
-                msg = "Error se esperaba un numero real";
-            } else if (estado.equalsIgnoreCase("E6") || ea.equalsIgnoreCase("E6")) {
-                msg = "Error se esperaba un objeto";
-            } else if (estado.equalsIgnoreCase("E7") || ea.equalsIgnoreCase("E7")) {
-                msg = "Error se esperaba una cadena";
-            } else if (estado.equalsIgnoreCase("E8") || ea.equalsIgnoreCase("E8")) {
-                msg = "Error se esperaba un caracter";
+    }
+
+    public static boolean isError(String estado, int renglon, int columna) {
+        if (estado.contains("E")) {
+            switch (estado) {
+                case "E0":
+                    System.err.print("Error carácter no valido");
+                    break;
+                case "E1":
+                    System.err.print("Error se esperaba una variable");
+                    break;
+                case "E2":
+                    System.err.print("Error se esperaba un nombre de clase");
+                    break;
+                case "E3":
+                    System.err.print("Error se esperaba un nombre de comentario ");
+                    break;
+                case "E4":
+                    System.err.print("Error se esperaba un número entero");
+                    break;
+                case "E5":
+                    System.err.print("Error se esperaba un número real");
+                    break;
+                case "E6":
+                    System.err.print("Error se esperaba un objeto");
+                    break;
+                case "E7":
+                    System.err.print("Error se esperaba una cadena");
+                    break;
+                case "E8":
+                    System.err.print("Error se esperaba un carácter");
+                    break;
+                default:
+                    System.err.print("Error desconocido");
             }
-            System.err.println(msg + " ---------- Renglon: " + estadoMap.get(estado) + " Columna: " + e2);
+            System.err.println(" Renglón: " + renglon + " Columna: " + columna);
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isTokenFijo(String cad) {
+        for (String[][] token_fijo : TOKEN_FIJOS) {
+            for (String[] token : token_fijo) {
+                if (token[1].equals(cad)) {
+                    System.out.println(cad + " Token: " + token[0]);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static int getSecondPos(String c) {
+        if (MAYUS.contains(c)) {
+            return 0;
+        } else if (MINUS.contains(c)) {
+            return 1;
+        } else if (NUMBER.contains(c)) {
+            return 2;
+        } else if (contains(c, CARACTERES_ESP)) {
+            return 4;
+        } else if (contains(c, OPE_ARIT)) {
+            return 9;
+        } else if (contains(c, OPE_LOG)) {
+            return 10;
+        } else if (contains(c, OPE_REL)) {
+            return 11;
+        } else if (contains(c, PALABRAS_RES)) {
+            return 12;
         } else {
-            System.out.println(cad + " Token: " + table[estadoMap.get(estado)][15]);
+            return alfabetoMap.get(c);
         }
 
     }
 
-    public static boolean is(char c, String type) {
-        if (type.equalsIgnoreCase("minus") && MINUS.contains(String.valueOf(c))) {
-
-        } else if (type.equalsIgnoreCase("mayus") && MAYUS.contains(String.valueOf(c))) {
-
-        } else if (type.equalsIgnoreCase("number") && NUMBER.contains(String.valueOf(c))) {
-
-        } else if (type.equalsIgnoreCase("car_es")) {
-            for (String[] car : CARACTERES_ESP) {
-                if (car[1].equals(String.valueOf(c))) {
-                    return true;
-                }
+    private static boolean contains(String c, String[][] arr) {
+        for (String[] ar : arr) {
+            if (ar[1].equals(c)) {
+                return true;
             }
-            return false;
-        } else if (type.equalsIgnoreCase("ope_ar")) {
-            for (String[] car : OPE_ARIT) {
-                if (car[1].equals(String.valueOf(c))) {
-                    return true;
-                }
-            }
-            return false;
-        } else if (type.equalsIgnoreCase("ope_lo")) {
-            for (String[] car : OPE_LOG) {
-                if (car[1].equals(String.valueOf(c))) {
-                    return true;
-                }
-            }
-            return false;
-        } else if (type.equalsIgnoreCase("ope_re")) {
-            for (String[] car : OPE_REL) {
-                if (car[1].equals(String.valueOf(c))) {
-                    return true;
-                }
-            }
-            return false;
-        } else if (type.equalsIgnoreCase("pa_re")) {
-            for (String[] car : PALABRAS_RES) {
-                if (car[1].equals(String.valueOf(c))) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            return false;
         }
-        return true;
+        return false;
     }
 
     public static HashMap<String, Integer> map(String alfabeto) {

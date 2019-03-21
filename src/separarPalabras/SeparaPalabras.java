@@ -18,6 +18,8 @@ import java.util.ArrayList;
  */
 public class SeparaPalabras {
 
+    public static final char[] SEPARADORES = {'!', ';', ' ', '\n', '.', '=', '(', ')', '+', '-', '/', '*', '[', ']', '{', '}', '%', '&', '|', '<', '>', '\''};
+
     public static ArrayList<String> leer(String archivo) {
         String txt = "";
         ArrayList<String> lineas = new ArrayList<>();
@@ -32,12 +34,12 @@ public class SeparaPalabras {
         return lineas;
     }
 
-    public static ArrayList<String> separa(ArrayList<String> lineas, char... separadores) {
+    public static ArrayList<String> separa(ArrayList<String> lineas) {
         ArrayList<String> arr = new ArrayList<>();
         String paux = "";
         for (String linea : lineas) {
             for (int i = 0; i < linea.length(); i++) {
-                if (isSeparador(linea.charAt(i), separadores)) {
+                if (isSeparador(linea.charAt(i), SEPARADORES)) {
                     if (!paux.equals("")) {
                         arr.add(paux.trim());
                         paux = "";

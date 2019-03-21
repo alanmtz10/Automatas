@@ -5,6 +5,8 @@
  */
 package programa;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Alan
@@ -12,8 +14,16 @@ package programa;
 public class Pruebas {
 
     public static void main(String[] args) {
-        automatas.Automatas.recorreTabla("6.8");
-        automatas.Automatas.recorreTabla("\"abcdf\"");
-        automatas.Automatas.recorreTabla("'a'");
+        ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("programa.txt");
+
+        for (String linea : lineas) {
+            for (int i = 0; i < linea.length(); i++) {
+                if ((linea.charAt(i) + "").equals("\n")) {
+                    System.out.println("si");
+                }
+            }
+        }
+
     }
+
 }
