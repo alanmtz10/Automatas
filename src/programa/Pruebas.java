@@ -6,6 +6,7 @@
 package programa;
 
 import java.util.ArrayList;
+import separarPalabras.SeparaPalabras;
 
 /**
  *
@@ -14,16 +15,11 @@ import java.util.ArrayList;
 public class Pruebas {
 
     public static void main(String[] args) {
-        ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("programa.txt");
-
-        for (String linea : lineas) {
-            for (int i = 0; i < linea.length(); i++) {
-                if ((linea.charAt(i) + "").equals("\n")) {
-                    System.out.println("si");
-                }
-            }
+        ArrayList<String> lineas = SeparaPalabras.leer("programa.txt");
+        ArrayList<String> palabras = SeparaPalabras.separa(lineas);
+        
+        for (String palabra : palabras) {
+            System.out.println(palabra);
         }
-
     }
-
 }

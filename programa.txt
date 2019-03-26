@@ -1,4 +1,7 @@
 if(nombre == "abc" | !validaTexto(nombre)){
 	bandera = 1;
-	msg += "Error";
+	msg += "Error && mas errores";
+        if(y<10){
+            msg = "Otro mensaje";
+        }
 }

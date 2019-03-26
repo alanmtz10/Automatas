@@ -37,9 +37,13 @@ public class SeparaPalabras {
     public static ArrayList<String> separa(ArrayList<String> lineas) {
         ArrayList<String> arr = new ArrayList<>();
         String paux = "";
+        boolean bandera = true;
         for (String linea : lineas) {
             for (int i = 0; i < linea.length(); i++) {
-                if (isSeparador(linea.charAt(i), SEPARADORES)) {
+                if (linea.charAt(i) == '"' || linea.charAt(i) == '\'') {
+                    bandera = !bandera;
+                }
+                if (isSeparador(linea.charAt(i), SEPARADORES) && bandera) {
                     if (!paux.equals("")) {
                         arr.add(paux.trim());
                         paux = "";
@@ -55,7 +59,29 @@ public class SeparaPalabras {
                 }
             }
         }
+        arr = separa2(arr);
         return arr;
+    }
+
+    public static ArrayList<String> separa2(ArrayList<String> palabras) {
+        ArrayList<String> aux = new ArrayList<>();
+        for (int i = 0; i < palabras.size(); i++) {
+            if ((palabras.get(i).equals("<")
+                    || palabras.get(i).equals(">")
+                    || palabras.get(i).equals("=")
+                    || palabras.get(i).equals("!")
+                    || palabras.get(i).equals("+")
+                    || palabras.get(i).equals("-")
+                    || palabras.get(i).equals("/")
+                    || palabras.get(i).equals("*"))
+                    && (palabras.get(i + 1).equals("="))) {
+                aux.add(palabras.get(i) + "" + palabras.get(i + 1));
+                i++;
+            } else {
+                aux.add(palabras.get(i));
+            }
+        }
+        return aux;
     }
 
     public static boolean isSeparador(char c, char... separadores) {
