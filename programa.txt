@@ -1,7 +1,8 @@
 if(nombre == "abc" | !validaTexto(nombre)){
-	bandera = 1;
-	msg += "Error && mas errores";
-        if(y<10){
-            msg = "Otro mensaje";
+      	bandera = 1.23;
+	String msg += "Error mas errores";
+        if(y<=10){
+            msg2 = "Otro mensaje";
         }
+        
 }

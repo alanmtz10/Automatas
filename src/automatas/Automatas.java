@@ -23,11 +23,11 @@ public class Automatas {
         {"E0", "E0", "E0", "E0", "E0", "S7", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "0", "E0"},
         {"E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "E3", "1", "42"}, // Comentarios
         {"E4", "E4", "S8", "E4", "E4", "E4", "E4", "S9", "E4", "E4", "E4", "E4", "E4", "E4", "1", "43"}, // Numeros
-        {"E0", "E0", "S10", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "0", "E0"},
+        {"E5", "E5", "S10", "E0", "E0", "E0", "E0", "E5", "E0", "E0", "E0", "E0", "E0", "E0", "0", "E0"},
         {"E5", "E5", "S10", "E5", "E5", "E5", "E5", "E5", "E5", "E5", "E5", "E5", "E5", "E5", "1", "48"}, // Numeros reales
         {"S12", "S12", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "0", "E0"},
         {"S12", "S12", "S12", "E6", "E6", "E6", "E6", "E6", "E6", "E6", "E6", "E6", "E6", "E6", "1", "45"}, // Objetos
-        {"S13", "S13", "S13", "E0", "S13", "E0", "E0", "E0", "S14", "S13", "S13", "S13", "S13", "E0", "0", "E0"},
+        {"S13", "S13", "S13", "E0", "S13", "E0", "E0", "E0", "S14", "S13", "S13", "S13", "S13", "E0", "0", "E7"},
         {"E7", "E7", "E7", "E7", "E7", "E7", "E7", "E7", "E7", "E7", "E7", "E7", "E7", "E7", "1", "46"}, // Cadenas
         {"S16", "S16", "S16", "E0", "S16", "E0", "E0", "E0", "E0", "S16", "S16", "E0", "E0", "E0", "0", "E0"},
         {"E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "S17", "0", "E0"},
@@ -46,8 +46,8 @@ public class Automatas {
     static HashMap<String, Integer> alfabetoMap = map("M,m,N,-,CE,/,*,.,\",OA,OL,OR,PR,\'");
     static HashMap<String, Integer> estadoMap = map("S0,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15,S16,S17");
 
-    public static final String MAYUS = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,Ñ,O,P,Q,R,S,T,U,V,W,X,Y,Z";
-    public static final String MINUS = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z";
+    public static final String MAYUS = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,Ñ,O,P,Q,R,S,T,U,V,W,X,Y,Z, ";
+    public static final String MINUS = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z, ";
     public static final String NUMBER = "0,1,2,3,4,5,6,7,8,9";
 
     private static final String[][] TIPOS_DATO = {
@@ -96,7 +96,8 @@ public class Automatas {
         {"33", "]"},
         {"33", "{"},
         {"33", "}"},
-        {"33", ";"}
+        {"33", ";"},
+        {"33", "$"}
     };
 
     private static final String[][] CLASES_PREDE = {
@@ -137,25 +138,42 @@ public class Automatas {
     };
 
     private static final String[][] OPE_ASIG = {
-        {"40", "="}
-    };
+        {"40", "="},
+        {"40", "+="},
+        {"40", "-="},
+        {"40", "*="},
+        {"40", "/="},};
 
     public static final String[][][] TOKEN_FIJOS = {TIPOS_DATO, PALABRAS_RES, CARACTERES_ESP, CLASES_PREDE, FUN_DEF, OPE_ARIT, OPE_LOG,
         OPE_REL, OPE_ASIG};
 
-    public static void validaPalabra(String cad) {
-        if (!isTokenFijo(cad)) {
-            String estado = "S0";
-            int renglon = 0;
-            int columna = 0;
-            for (int i = 0; i < cad.length(); i++) {
-                renglon = estadoMap.get(estado);
-                columna = getSecondPos("" + cad.charAt(i));
-                estado = table[renglon][columna];
+    public  static void validaPalabra(String cad) {
+        boolean error = false;
+        String estado = "S0";
+        int renglon = 0;
+        int columna = 0;
+        try {
+            if (!isTokenFijo(cad)) {
+                for (int i = 0; i < cad.length(); i++) {
+                    renglon = estadoMap.get(estado);
+                    columna = getSecondPos("" + cad.charAt(i));
+                    estado = table[renglon][columna];
+                    if (estado.contains("E")) {
+                        error = true;
+                        break;
+                    }
+                }
+                if (estado.contains("E") || table[estadoMap.get(estado)][15].contains("E")) {
+                    error = true;
+                }
+                if (!error) {
+                    System.out.println(cad + " Token: " + table[estadoMap.get(estado)][15] + " Renglón: " + renglon + " Columna: " + columna);
+                } else {
+                    isError(estado, renglon, columna);
+                }
             }
-            if (true) {
-                System.out.println(cad + " Token: " + table[estadoMap.get(estado)][15] + " Renglón: " + renglon + " Columna: " + columna);
-            }
+        } catch (Exception e) {
+            System.err.println("Caracter no valido");
         }
     }
 
@@ -198,7 +216,7 @@ public class Automatas {
         return false;
     }
 
-    public static boolean isTokenFijo(String cad) {
+    public  static boolean isTokenFijo(String cad) {
         for (String[][] token_fijo : TOKEN_FIJOS) {
             for (String[] token : token_fijo) {
                 if (token[1].equals(cad)) {

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class SeparaPalabras {
 
-    public static final char[] SEPARADORES = {'!', ';', ' ', '\n', '.', '=', '(', ')', '+', '-', '/', '*', '[', ']', '{', '}', '%', '&', '|', '<', '>', '\''};
+    public static final char[] SEPARADORES = {'!', ';', ' ', '\n', '=', '(', ')', '+', '-', '/', '*', '[', ']', '{', '}', '%', '&', '|', '<', '>', '\''};
 
     public static ArrayList<String> leer(String archivo) {
         String txt = "";
@@ -34,7 +34,7 @@ public class SeparaPalabras {
         return lineas;
     }
 
-    public static ArrayList<String> separa(ArrayList<String> lineas) {
+    public  static ArrayList<String> separa(ArrayList<String> lineas) {
         ArrayList<String> arr = new ArrayList<>();
         String paux = "";
         boolean bandera = true;
@@ -57,13 +57,18 @@ public class SeparaPalabras {
                 } else {
                     paux += linea.charAt(i);
                 }
+                if (i == linea.length() - 1 && (linea.length() - 1) != '"' && !bandera) {
+                    bandera = true;
+                    System.out.println("Error se esperaba una cadena");
+                }
             }
+
         }
         arr = separa2(arr);
         return arr;
     }
 
-    public static ArrayList<String> separa2(ArrayList<String> palabras) {
+    public  static ArrayList<String> separa2(ArrayList<String> palabras) {
         ArrayList<String> aux = new ArrayList<>();
         for (int i = 0; i < palabras.size(); i++) {
             if ((palabras.get(i).equals("<")
@@ -77,6 +82,9 @@ public class SeparaPalabras {
                     && (palabras.get(i + 1).equals("="))) {
                 aux.add(palabras.get(i) + "" + palabras.get(i + 1));
                 i++;
+            } else if (palabras.get(i).equals("/") && palabras.get(i).equals("/")) {
+                aux.add(palabras.get(i) + "" + palabras.get(i + 1));
+                i++;
             } else {
                 aux.add(palabras.get(i));
             }
@@ -84,7 +92,7 @@ public class SeparaPalabras {
         return aux;
     }
 
-    public static boolean isSeparador(char c, char... separadores) {
+    public  static boolean isSeparador(char c, char... separadores) {
         for (char t : separadores) {
             if (t == c) {
                 return true;
@@ -93,7 +101,7 @@ public class SeparaPalabras {
         return false;
     }
 
-    public static void guardar(ArrayList<String> palabrasSeparadas) {
+    public  static void guardar(ArrayList<String> palabrasSeparadas) {
         String nom = new Timestamp(System.currentTimeMillis()).toString().replace(' ', '_').replace(":", ".");
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(nom + ".txt"));

@@ -19,7 +19,8 @@ public class Pruebas {
         ArrayList<String> palabras = SeparaPalabras.separa(lineas);
         
         for (String palabra : palabras) {
-            System.out.println(palabra);
+            automatas.Automatas.validaPalabra(palabra);
         }
+//        automatas.Automatas.validaPalabra("\"sadsad");
     }
 }
