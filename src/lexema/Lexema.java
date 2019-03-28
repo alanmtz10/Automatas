@@ -14,15 +14,21 @@ public class Lexema {
     private String lexema;
     private int renglon;
     private int columna;
-    private int token;
+    private String token;
     private String error;
 
-    public Lexema(String lexema, int renglon, int columna, int token, String error) {
+    public Lexema(String lexema, int renglon, int columna) {
+        this.lexema = lexema;
+        this.renglon = renglon;
+        this.columna = columna;
+        automatas.Automatas.valida(this);
+    }
+
+    public Lexema(String lexema, int renglon, int columna, String token) {
         this.lexema = lexema;
         this.renglon = renglon;
         this.columna = columna;
         this.token = token;
-        this.error = error;
     }
 
     public String getError() {
@@ -57,12 +63,45 @@ public class Lexema {
         this.columna = columna;
     }
 
-    public int getToken() {
+    @Override
+    public String toString() {
+        if (error == null) {
+            return lexema + "\t\tToken: " + token + " Renglon: " + renglon + " Columna: " + columna;
+        }
+        return lexema + "\t\tError: " + error + " Renglon: " + renglon + " Columna: " + columna + " Info: " + getInfoError(error);
+    }
+
+    public String getToken() {
         return token;
     }
 
-    public void setToken(int token) {
+    public void setToken(String token) {
         this.token = token;
+    }
+
+    public static String getInfoError(String error) {
+        switch (error) {
+            case "E0":
+                return "Error carácter no valido";
+            case "E1":
+                return "Error se esperaba una variable";
+            case "E2":
+                return "Error se esperaba un nombre de clase";
+            case "E3":
+                return "Error se esperaba un nombre de comentario";
+            case "E4":
+                return "Error se esperaba un número entero";
+            case "E5":
+                return "Error se esperaba un número real";
+            case "E6":
+                return "Error se esperaba un objeto";
+            case "E7":
+                return "Error se esperaba una cadena";
+            case "E8":
+                return "Error se esperaba un carácter";
+            default:
+                return "Error desconocido";
+        }
     }
 
 }

@@ -5,8 +5,9 @@
  */
 package programa;
 
+import automatas.Automatas;
 import java.util.ArrayList;
-import separarPalabras.SeparaPalabras;
+import lexema.Lexema;
 
 /**
  *
@@ -15,12 +16,14 @@ import separarPalabras.SeparaPalabras;
 public class Pruebas {
 
     public static void main(String[] args) {
-        ArrayList<String> lineas = SeparaPalabras.leer("programa.txt");
-        ArrayList<String> palabras = SeparaPalabras.separa(lineas);
+        ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("programa2.txt");
+        ArrayList<Lexema> palabras = separarPalabras.SeparaPalabras.separa(lineas);
         
-        for (String palabra : palabras) {
-            automatas.Automatas.validaPalabra(palabra);
+        for (Lexema palabra : palabras) {
+            System.out.println(palabra);
         }
-//        automatas.Automatas.validaPalabra("\"sadsad");
+
+        
+
     }
 }

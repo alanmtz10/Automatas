@@ -6,12 +6,35 @@
 package automatas;
 
 import java.util.HashMap;
+import lexema.Lexema;
 
 /**
  *
  * @author Alan
  */
 public class Automatas {
+
+    public static String[][] tabla = {
+        /* {M,   m,   N,    -,      CE,  /,   *,     .,    ",    OA,     OL, OR,     PR,   ',  EAc, TOKEN} */
+        {"S1", "S1", "S8", "S11", "E0", "S3", "E0", "E0", "S13", "E0", "E0", "E0", "E0", "S15", "0", "E0"},
+        {"S1", "S1", "S1", "S2", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "41"}, // VARIABLES
+        {"E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "44"}, // CLASES
+        {"E0", "E0", "E0", "E0", "E0", "S4", "S5", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "42"}, // COMENTARIOS
+        {"S4", "S4", "S4", "E0", "S4", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "42"}, // COMENTARIOS
+        {"S5", "S5", "S5", "E0", "S5", "E0", "S6", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "0", "E0"},
+        {"E0", "E0", "E0", "E0", "E0", "S7", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "E0"},
+        {"E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "42"}, // COMENTARIOS
+        {"E0", "E0", "S8", "E0", "E0", "E0", "E0", "S9", "E0", "E0", "E0", "E0", "E0", "E0", "1", "43"}, // NUMEROS
+        {"E0", "E0", "S10", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "0", "E0"},
+        {"E0", "E0", "S10", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "48"}, // NUMEROS REALES
+        {"S12", "S12", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "0", "E0"},
+        {"S12", "S120", "S12", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "45"}, // OBJETOS
+        {"S13", "S13", "S13", "E0", "S13", "E0", "E0", "E0", "S14", "S13", "S13", "S13", "S13", "E0", "0", "E0"},
+        {"E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "46"}, // CADENAS
+        {"S16", "S16", "S16", "E0", "S16", "E0", "E0", "E0", "E0", "S16", "S16", "E0", "E0", "E0", "0", "E0"},
+        {"E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "S17", "0", "E0"},
+        {"E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "E0", "1", "47"} // CARACTERES
+    };
 
     public static String[][] table = new String[][]{
         {"S1", "S1", "S8", "S11", "E0", "S3", "E0", "E0", "S13", "E0", "E0", "E0", "E0", "S15", "0", "E0"},
@@ -43,8 +66,8 @@ public class Automatas {
     // E6 Error se esperaba un objeto
     // E7 Error se esperaba una cadena
     // E8 Error se esperaba un caracter
-    static HashMap<String, Integer> alfabetoMap = map("M,m,N,-,CE,/,*,.,\",OA,OL,OR,PR,\'");
-    static HashMap<String, Integer> estadoMap = map("S0,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15,S16,S17");
+    public static HashMap<String, Integer> alfabetoMap = map("M,m,N,-,CE,/,*,.,\",OA,OL,OR,PR,\'");
+    public static HashMap<String, Integer> estadoMap = map("S0,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15,S16,S17,S18,S19,S20");
 
     public static final String MAYUS = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,Ñ,O,P,Q,R,S,T,U,V,W,X,Y,Z, ";
     public static final String MINUS = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,ñ,o,p,q,r,s,t,u,v,w,x,y,z, ";
@@ -147,16 +170,16 @@ public class Automatas {
     public static final String[][][] TOKEN_FIJOS = {TIPOS_DATO, PALABRAS_RES, CARACTERES_ESP, CLASES_PREDE, FUN_DEF, OPE_ARIT, OPE_LOG,
         OPE_REL, OPE_ASIG};
 
-    public  static void validaPalabra(String cad) {
+    public static void validaPalabra(Lexema cad) {
         boolean error = false;
         String estado = "S0";
         int renglon = 0;
         int columna = 0;
         try {
             if (!isTokenFijo(cad)) {
-                for (int i = 0; i < cad.length(); i++) {
+                for (int i = 0; i < cad.getLexema().length(); i++) {
                     renglon = estadoMap.get(estado);
-                    columna = getSecondPos("" + cad.charAt(i));
+                    columna = getSecondPos("" + cad.getLexema().charAt(i));
                     estado = table[renglon][columna];
                     if (estado.contains("E")) {
                         error = true;
@@ -167,7 +190,8 @@ public class Automatas {
                     error = true;
                 }
                 if (!error) {
-                    System.out.println(cad + " Token: " + table[estadoMap.get(estado)][15] + " Renglón: " + renglon + " Columna: " + columna);
+//                    System.out.println(cad + " Token: " + table[estadoMap.get(estado)][15] + " Renglón: " + renglon + " Columna: " + columna);
+                    cad.setToken(table[estadoMap.get(estado)][15]);
                 } else {
                     isError(estado, renglon, columna);
                 }
@@ -216,11 +240,49 @@ public class Automatas {
         return false;
     }
 
-    public  static boolean isTokenFijo(String cad) {
+    public static void valida(Lexema l) {
+        if (!isTokenFijo(l)) {
+            String estado = "S0";
+            boolean error = false;
+            Integer renglon = 0;
+            Integer columna = 0;
+            for (int i = 0; i < l.getLexema().length(); i++) {
+                renglon = estadoMap.get(estado);
+                columna = getSecondPos("" + l.getLexema().charAt(i));
+                if (renglon == null || columna == null) {
+                    l.setError("E0");
+                    error = true;
+                    break;
+                } else if (estado.contains("E")) {
+                    error = true;
+                    l.setError(estado);
+                    break;
+                } else {
+                    estado = tabla[renglon][columna];
+                }
+            }
+            if (!error && !estado.contains("E")) {
+                renglon = estadoMap.get(estado);
+                String a = tabla[renglon][15];
+                if (!a.contains("E")) {
+                    l.setToken(a);
+                } else {
+                    l.setError(a);
+                }
+
+            }
+ //               else {
+//                l.setError(estado);
+//            }
+
+        }
+    }
+
+    public static boolean isTokenFijo(Lexema cad) {
         for (String[][] token_fijo : TOKEN_FIJOS) {
             for (String[] token : token_fijo) {
-                if (token[1].equals(cad)) {
-                    System.out.println(cad + " Token: " + token[0]);
+                if (token[1].equals(cad.getLexema())) {
+                    cad.setToken(token[0]);
                     return true;
                 }
             }
@@ -228,7 +290,7 @@ public class Automatas {
         return false;
     }
 
-    public static int getSecondPos(String c) {
+    public static Integer getSecondPos(String c) {
         if (MAYUS.contains(c)) {
             return 0;
         } else if (MINUS.contains(c)) {
@@ -248,7 +310,6 @@ public class Automatas {
         } else {
             return alfabetoMap.get(c);
         }
-
     }
 
     private static boolean contains(String c, String[][] arr) {

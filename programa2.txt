@@ -4,5 +4,4 @@ if(nombre == "abc" | !validaTexto(nombre)){
         if(y<=10){
             msg2 = "Otro mensaje";
         }
-        // Comentario ajsdajsdj
 }
