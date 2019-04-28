@@ -14,6 +14,7 @@ import lexema.Lexema;
  */
 public class Automatas {
 
+    // Agregar el automata de llamada a metodos abc.abc.abc
     public static String[][] tabla = {
         /* {M,   m,   N,    -,      CE,  /,   *,     .,    ",    OA,     OL, OR,     PR,   ',  EAc, TOKEN} */
         {"S1", "S1", "S8", "S11", "E0", "S3", "E0", "E0", "S13", "E0", "E0", "E0", "E0", "S15", "0", "E0"},
