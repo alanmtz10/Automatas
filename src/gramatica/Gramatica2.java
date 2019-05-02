@@ -28,22 +28,23 @@ public class Gramatica2 {
         {7, 0, 0, 6, 0}
     };
 
-    private static String[] pila = {"$", "-"};
-    private static String[] entrada = {"-", "$"};
+    private static String[] pila = {"$", "s0"};
+    private static String[] entrada = {"b", "b", "a", "$"};
 
     public static void main(String[] args) {
-
-        while (compara(pila, entrada)) {
-            
+        imprime();
+        while (!entrada[0].equals("$") && pila.length != 1) {
+            if (pila[pila.length - 1].contains("s")) {
+                pila = modPila(pila, 1, tabla[getPos(pila[pila.length - 1])][getPos(entrada[0])] - 1);
+            } else if (pila[pila.length - 1].equals(entrada[0])) {
+                pila = modPila(pila, 0, 0);
+                entrada = modEntrada(entrada);
+            } else if (pila[pila.length - 1].equals("-")) {
+                pila = modPila(pila, 0, 0);
+            }
+            imprime();
         }
 
-    }
-
-    private static boolean compara(String[] a0, String[] a1) {
-        if (a0[0].equals("$") && a1[0].equals("$") && a0.length == 1 && a1.length == 1) {
-            return false;
-        }
-        return true;
     }
 
     private static void imprime() {
@@ -83,7 +84,7 @@ public class Gramatica2 {
     private static String[] modEntrada(String[] entrada) {
         String[] aux = new String[entrada.length - 1];
         for (int i = 0; i < aux.length; i++) {
-            aux[i] = entrada[i];
+            aux[i] = entrada[i + 1];
         }
         return aux;
     }
