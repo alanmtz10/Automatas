@@ -12,13 +12,13 @@ package gramatica;
 public class Gramatica2 {
 
     private static String[][] producciones = {
-        {"a", "s3", "s2", "s1"},
-        {"s1", "b"},
-        {"-"},
-        {"s2", "c"},
-        {"-"},
-        {"s3", "d"},
-        {"-"}
+        {"s0", "a", "s3", "s2", "s1"},
+        {"s1", "s1", "b"},
+        {"s1", "-"},
+        {"s2", "s2", "c"},
+        {"s2", "-"},
+        {"s3", "s3", "d"},
+        {"s3", "-"}
     };
 
     private static int[][] tabla = {
@@ -28,25 +28,79 @@ public class Gramatica2 {
         {7, 0, 0, 6, 0}
     };
 
-    public static void main(String[] args) {
-        String pila[] = {"$", "s0"};
-        String entrada[] = {"b", "b", "a", "$"};
-        while (comparaArr(pila, entrada)) {
+    private static String[] pila = {"$", "-"};
+    private static String[] entrada = {"-", "$"};
 
+    public static void main(String[] args) {
+
+        while (compara(pila, entrada)) {
+            
         }
 
     }
 
-    private static boolean comparaArr(String[] a0, String[] a1) {
-        if ((a0.length == a1.length) && a0[0].equals(a1[0])) {
+    private static boolean compara(String[] a0, String[] a1) {
+        if (a0[0].equals("$") && a1[0].equals("$") && a0.length == 1 && a1.length == 1) {
             return false;
         }
         return true;
     }
 
-    private static void imprime(String[] arr) {
-        for (String arr1 : arr) {
-            System.out.print(arr1 + " ");
+    private static void imprime() {
+        for (String p : pila) {
+            System.out.print(p + " ");
         }
+        System.out.print("--------- ");
+        for (String e : entrada) {
+            System.out.print(e + " ");
+        }
+        System.out.println("");
     }
+
+    private static String[] modPila(String pila[], int sr, int prod) {
+        String[] aux;
+
+        aux = new String[pila.length - 1];
+        for (int i = 0; i < pila.length - 1; i++) {
+            aux[i] = pila[i];
+        }
+        if (sr == 1) {
+            String[] aux2 = new String[aux.length + producciones[prod].length - 1];
+            int i = 0;
+            for (i = 0; i < aux.length; i++) {
+                aux2[i] = aux[i];
+            }
+            for (int j = 1; j < producciones[prod].length; j++) {
+                aux2[i] = producciones[prod][j];
+                i++;
+            }
+            return aux2;
+        }
+        return aux;
+
+    }
+
+    private static String[] modEntrada(String[] entrada) {
+        String[] aux = new String[entrada.length - 1];
+        for (int i = 0; i < aux.length; i++) {
+            aux[i] = entrada[i];
+        }
+        return aux;
+    }
+
+    private static int getPos(String s) {
+        if (s.equals("s0") || s.equals("a")) {
+            return 0;
+        } else if (s.equals("s1") || s.equals("b")) {
+            return 1;
+        } else if (s.equals("s2") || s.equals("c")) {
+            return 2;
+        } else if (s.equals("s3") || s.equals("d")) {
+            return 3;
+        } else if (s.equals("$")) {
+            return 4;
+        }
+        return -1;
+    }
+
 }
