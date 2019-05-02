@@ -5,13 +5,17 @@
  */
 package gramatica;
 
+import java.util.logging.Logger;
+
 /**
  *
  * @author Alan
  */
 public class Gramatica {
 
-    private static String entrada = "a";
+    private static final Logger LOG = Logger.getLogger(Gramatica.class.getName());
+
+    private static String entrada = "as";
     private static String pila[] = {"s0"};
 
     private static String producciones[][] = {
