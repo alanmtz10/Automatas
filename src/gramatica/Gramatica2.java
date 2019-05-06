@@ -29,7 +29,7 @@ public class Gramatica2 {
     };
 
     private static String[] pila = {"$", "s0"};
-    private static String[] entrada = {"b", "b", "a", "$"};
+    private static String[] entrada = {"a", "$"};
 
     public static void main(String[] args) {
         imprime();
