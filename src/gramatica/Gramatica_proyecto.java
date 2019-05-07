@@ -12,119 +12,330 @@ import programa.Pruebas;
  *
  * @author alanm
  */
-public class Gramatica_proyecto {
+public class Gramatica_proyecto
+{
 
     private static HashMap<String, Integer> pos = new HashMap<>();
 
-    private static String[][] producciones = {
-        {"<programa>", "}", "<sentencias>", "{"},
-        {"<sentencias>", "<sentencias>", "<sent_2>"},
-        {"<sentencias>", "-"},
-        {"<sent_2>", "<s_if>"},
-        {"<sent_2>", "<s_for>"},
-        {"<sent_2>", "<s_while>"},
-        {"<sent_2>", "<s_declaracion>"},
-        {"<sent_2>", "<s_asig>"},
-        {"<sent_2>", "<s_dowhile>"},
-        {"<sent_2>", "<s_function>"},
-        {"<sent_2>", "<s_call>"},
-        {"<sent_2>", "<s_leer>"},
-        {"<sent_2>", "<s_write>"},
-        {"<s_leer>", ";", ")", "id", "(", "read"},
-        {"<s_write>", ";", ")", "<s_w2>", "(", "log", ".", "console"},
-        {"<s_w2>", "<s_concat>"},
-        {"<s_declaracion>", ";", "<s_dec2>", "=", "id", "t_dato"},
-        {"<s_dec2>", "<exp>"},
-        {"<s_dec2>", "null"},
-        {"<s_dec2>", "<s_concat_cadenas>"},
-        {"<s_asig>", ";", "<s_asig2>", "=", "id"},
-        {"<s_asig2>", "null"},
-        {"<s_asig2>", "<s_concat>"},
-        {"<exp>", "<exp_2>", "<exp_1>"},
-        {"<exp_1>", ")", "<exp>", "("},
-        {"<exp_1>", "num"},
-        {"<exp_1>", "id"},
-        {"<exp_2>", "<exp>", "<exp_3>"},
-        {"<exp_2>", "-"},
-        {"<exp_3>", "43"},
-        {"<exp_3>", "36"},
-        {"<s_concat>", "<s_concat2>", "cadena"},
-        {"<s_concat>", "<s_concat2>", "<exp>"},
-        {"<s_concat2>", "<s_concat2>", "<s_concat3>", "+"},
-        {"<s_concat2>", "-"},
-        {"<s_concat3>", "cadena"},
-        {"<s_concat3>", "<exp>"},
-        {"<s_concat_cadenas>", "<s_concat_cadenas_2>", "cadena"},
-        {"<s_concat_cadenas_2>", "<s_concat_cadenas_2>", "cadenas", "+"},
-        {"<s_concat_cadenas_2>", "-"},
-        {"<condicion>", "<condicion_2>", "<exp>", "OR", "<exp>"},
-        {"<condicion>", "<condicion_2>", ")", "<exp>", "OR", "<exp>", "(", "!"},
-        {"<condicion_2>", "<condicion>", "OL"},
-        {"<condicion_2>", "-"},
-        {"<s_if>", ";", "<s_else>", "<s_elif>", "}", "<sentencias>", "{", ")", "<condicion>", "(", "if"},
-        {"<s_elif>", "<s_elif>", "}", "<sentencias>", "{", ")", "<condicion>", "(", "if", "else"},
-        {"<s_elif>", "-"},
-        {"<s_else>", "}", "<sentencias>", "{", "else"},
-        {"<s_for>", ";", "}", "<sentencias>", "{", ")", "<s_inc>", ";", "<condicion>", ";", "num", "=", "id", "(", "for"},
-        {"<s_inc>", "<s_inc_2>", "id"},
-        {"<s_inc_2>", "44"},
-        {"<s_inc_2>", "45"},
-        {"<s_while>", ";", "}", "<sentencias>", "{", ")", "<condicion>", "(", "while"},
-        {"<s_dowhile>", ";", ")", "<condicion>", "(", "while", "}", "<sentencias>", "{", "do"},
-        {"<s_call>", ";", ")", "<s_call_params>", "(", "idFuncion"},
-        {"<s_call_params>", "<s_call_params_1>"},
-        {"<s_call_params>", "-"},
-        {"<s_call_params_1>", "<s_call_multi_params>", "<s_concat>"},
-        {"<s_call_multi_params>", "<s_call_params_1>"},
-        {"<s_call_multi_params>", "-"},
-        {"<s_function>", ";", "}", "<sentencias>", "{", ")", "<s_params>", "(", "id", "function"},
-        {"<s_params>", "s_params_1"},
-        {"<s_params>", "-"},
-        {"<s_params_1>", "<s_params_2>", "id", "t_dato"},
-        {"<s_params_2>", "<s_params_1>", ","},
-        {"<s_params_2>", "-"}
+    private static String[][] producciones =
+    {
+        {
+            "<programa>", "}", "<sentencias>", "{"
+        },
+        {
+            "<sentencias>", "<sentencias>", "<sent_2>"
+        },
+        {
+            "<sentencias>", "-"
+        },
+        {
+            "<sent_2>", "<s_if>"
+        },
+        {
+            "<sent_2>", "<s_for>"
+        },
+        {
+            "<sent_2>", "<s_while>"
+        },
+        {
+            "<sent_2>", "<s_declaracion>"
+        },
+        {
+            "<sent_2>", "<s_asig>"
+        },
+        {
+            "<sent_2>", "<s_dowhile>"
+        },
+        {
+            "<sent_2>", "<s_function>"
+        },
+        {
+            "<sent_2>", "<s_call>"
+        },
+        {
+            "<sent_2>", "<s_leer>"
+        },
+        {
+            "<sent_2>", "<s_write>"
+        },
+        {
+            "<s_leer>", ";", ")", "id", "(", "read"
+        },
+        {
+            "<s_write>", ";", ")", "<s_w2>", "(", "log", ".", "console"
+        },
+        {
+            "<s_w2>", "<s_concat>"
+        },
+        {
+            "<s_declaracion>", ";", "<s_dec2>", "=", "id", "t_dato"
+        },
+        {
+            "<s_dec2>", "<exp>"
+        },
+        {
+            "<s_dec2>", "null"
+        },
+        {
+            "<s_dec2>", "<s_concat_cadenas>"
+        },
+        {
+            "<s_asig>", ";", "<s_asig2>", "=", "id"
+        },
+        {
+            "<s_asig2>", "null"
+        },
+        {
+            "<s_asig2>", "<s_concat>"
+        },
+        {
+            "<exp>", "<exp_2>", "<exp_1>"
+        },
+        {
+            "<exp_1>", ")", "<exp>", "("
+        },
+        {
+            "<exp_1>","num"  //aaakakkakak
+        },
+        {
+            "<exp_1>", "id"
+        },
+        {
+            "<exp_2>", "<exp>", "<exp_3>"
+        },
+        {
+            "<exp_2>", "-"
+        },
+        {
+            "<exp_3>", "43"
+        },
+        {
+            "<exp_3>", "36"
+        },
+        {
+            "<s_concat>", "<s_concat2>", "cadena"
+        },
+        {
+            "<s_concat>", "<s_concat2>", "<exp>"
+        },
+        {
+            "<s_concat2>", "<s_concat2>", "<s_concat3>", "+"
+        },
+        {
+            "<s_concat2>", "-"
+        },
+        {
+            "<s_concat3>", "cadena"
+        },
+        {
+            "<s_concat3>", "<exp>"
+        },
+        {
+            "<s_concat_cadenas>", "<s_concat_cadenas_2>", "cadena"
+        },
+        {
+            "<s_concat_cadenas_2>", "<s_concat_cadenas_2>", "cadenas", "+"
+        },
+        {
+            "<s_concat_cadenas_2>", "-"
+        },
+        {
+            "<condicion>", "<condicion_2>", "<exp>", "OR", "<exp>"
+        },
+        {
+            "<condicion>", "<condicion_2>", ")", "<exp>", "OR", "<exp>", "(", "!"
+        },
+        {
+            "<condicion_2>", "<condicion>", "OL"
+        },
+        {
+            "<condicion_2>", "-"
+        },
+        {
+            "<s_if>", ";", "<s_else>", "<s_elif>", "}", "<sentencias>", "{", ")", "<condicion>", "(", "if"
+        },
+        {
+            "<s_elif>", "<s_elif>", "}", "<sentencias>", "{", ")", "<condicion>", "(", "if", "else"
+        },
+        {
+            "<s_elif>", "-"
+        },
+        {
+            "<s_else>", "}", "<sentencias>", "{", "else"
+        },
+        {
+            "<s_for>", ";", "}", "<sentencias>", "{", ")", "<s_inc>", ";", "<condicion>", ";", "num", "=", "id", "(", "for"
+        },
+        {
+            "<s_inc>", "<s_inc_2>", "id"
+        },
+        {
+            "<s_inc_2>", "44"
+        },
+        {
+            "<s_inc_2>", "45"
+        },
+        {
+            "<s_while>", ";", "}", "<sentencias>", "{", ")", "<condicion>", "(", "while"
+        },
+        {
+            "<s_dowhile>", ";", ")", "<condicion>", "(", "while", "}", "<sentencias>", "{", "do"
+        },
+        {
+            "<s_call>", ";", ")", "<s_call_params>", "(", "idFuncion"
+        },
+        {
+            "<s_call_params>", "<s_call_params_1>"
+        },
+        {
+            "<s_call_params>", "-"
+        },
+        {
+            "<s_call_params_1>", "<s_call_multi_params>", "<s_concat>"
+        },
+        {
+            "<s_call_multi_params>", "<s_call_params_1>"
+        },
+        {
+            "<s_call_multi_params>", "-"
+        },
+        {
+            "<s_function>", ";", "}", "<sentencias>", "{", ")", "<s_params>", "(", "id", "function"
+        },
+        {
+            "<s_params>", "s_params_1"
+        },
+        {
+            "<s_params>", "-"
+        },
+        {
+            "<s_params_1>", "<s_params_2>", "id", "t_dato"
+        },
+        {
+            "<s_params_2>", "<s_params_1>", ","
+        },
+        {
+            "<s_params_2>", "-"
+        }
 
     };
 
-    private static int[][] tabla = {
-        {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {2, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 2, 2, 2, 0, 3, 0, 0},
-        {8, 0, 0, 7, 0, 0, 12, 13, 0, 0, 0, 0, 6, 0, 5, 0, 0, 4, 0, 0, 0, 9, 11, 10, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {16, 16, 0, 0, 0, 0, 0, 0, 0, 16, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {18, 18, 0, 0, 0, 0, 0, 0, 19, 18, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {23, 23, 0, 0, 0, 0, 0, 0, 22, 23, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {24, 24, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 25, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {27, 0, 29, 0, 29, 0, 0, 0, 0, 26, 0, 29, 0, 0, 0, 28, 28, 0, 0, 0, 0, 0, 0, 0, 29, 0, 29, 29},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {33, 33, 0, 0, 0, 0, 0, 0, 0, 33, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 35, 0, 34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 35, 0},
-        {37, 37, 0, 0, 0, 0, 0, 0, 0, 37, 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0},
-        {41, 41, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 0, 43, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 44, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 51, 52, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 54, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0},
-        {0, 0, 57, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {58, 58, 0, 0, 0, 0, 0, 0, 0, 58, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 0},
-        {0, 0, 63, 62, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 65, 0, 0},};
+    private static int[][] tabla =
+    {
+        {
+            0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            2, 0, 0, 2, 0, 0, 2, 2, 0, 0, 0, 0, 2, 0, 2, 0, 0, 2, 0, 0, 0, 2, 2, 2, 0, 3, 0, 0
+        },
+        {
+            8, 0, 0, 7, 0, 0, 12, 13, 0, 0, 0, 0, 6, 0, 5, 0, 0, 4, 0, 0, 0, 9, 11, 10, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            16, 16, 0, 0, 0, 0, 0, 0, 0, 16, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            18, 18, 0, 0, 0, 0, 0, 0, 19, 18, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            23, 23, 0, 0, 0, 0, 0, 0, 22, 23, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            24, 24, 0, 0, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 25, 0, 0, 0, 0, 0, 0, 0, 26, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            27, 0, 29, 0, 29, 0, 0, 0, 0, 26, 0, 29, 0, 0, 0, 28, 28, 0, 0, 0, 0, 0, 0, 0, 29, 0, 29, 29
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            33, 33, 0, 0, 0, 0, 0, 0, 0, 33, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 35, 0, 34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 35, 0, 35, 0
+        },
+        {
+            37, 37, 0, 0, 0, 0, 0, 0, 0, 37, 36, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 38, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0
+        },
+        {
+            41, 41, 0, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 42, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 44, 0, 0, 0, 0, 0, 0, 0, 0, 43, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 44, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 45, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 47, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 49, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 51, 52, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 53, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 54, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 55, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 57, 0, 56, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            58, 58, 0, 0, 0, 0, 0, 0, 0, 58, 58, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 61, 0, 0, 0, 0
+        },
+        {
+            0, 0, 63, 62, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 0, 64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        },
+        {
+            0, 0, 66, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 65, 0, 0
+        },
+    };
 
-    private static String[] pila = {"$", "<programa>"};
+    private static String[] pila =
+    {
+        "$", "<programa>"
+    };
     //private static String[] entrada = {"{", "console", ".", "log", "(", "num", ")", ";", "}", "$"};
 //    private static String[] entrada = {"{", "while", "(", "num", "OR", "num", ")", "{", "console", ".", "log", "(", "num", ")", ";", "}", ";", "}", "$"};
 //    private static String[] entrada = {"{", "while", "(", "num", "OR", "num", ")", "{", "if", "(", "num", "OR", "num", ")", "{", "console", ".", "log", "(", "num", ")", ";", "}",";", "}", ";", "}", "$"};
@@ -133,17 +344,22 @@ public class Gramatica_proyecto {
     //private static String[] entrada = {"{", "while", "(", "num", "OR", "num", ")", "{", "for", "(", "id", "=", "num", ";", "num", "OR", "num", ";", "id", "44", ")", "{", "console", ".", "log", "(", "num", ")", ";", "}", ";", "}", ";", "}", "$"};
     private static String[] entrada = Pruebas.getPalabras();
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         genPos();
 
         imprime();
-        while (!entrada[0].equals("$") && pila.length != 1) {
-            if (pila[pila.length - 1].contains("<")) {
+        while (!entrada[0].equals("$") && pila.length != 1)
+        {
+            if (pila[pila.length - 1].contains("<"))
+            {
                 pila = modPila(pila, 1, tabla[getPos(pila[pila.length - 1])][getPos(entrada[0])] - 1);
-            } else if (pila[pila.length - 1].equals(entrada[0])) {
+            } else if (pila[pila.length - 1].equals(entrada[0]))
+            {
                 pila = modPila(pila, 0, 0);
                 entrada = modEntrada(entrada);
-            } else if (pila[pila.length - 1].equals("-")) {
+            } else if (pila[pila.length - 1].equals("-"))
+            {
                 pila = modPila(pila, 0, 0);
             }
             imprime();
@@ -153,31 +369,39 @@ public class Gramatica_proyecto {
 
     }
 
-    private static void imprime() {
-        for (String p : pila) {
+    private static void imprime()
+    {
+        for (String p : pila)
+        {
             System.out.print(p + " ");
         }
         System.out.print("--------- ");
-        for (String e : entrada) {
+        for (String e : entrada)
+        {
             System.out.print(e + " ");
         }
         System.out.println("");
     }
 
-    private static String[] modPila(String pila[], int sr, int prod) {
+    private static String[] modPila(String pila[], int sr, int prod)
+    {
         String[] aux;
 
         aux = new String[pila.length - 1];
-        for (int i = 0; i < pila.length - 1; i++) {
+        for (int i = 0; i < pila.length - 1; i++)
+        {
             aux[i] = pila[i];
         }
-        if (sr == 1) {
+        if (sr == 1)
+        {
             String[] aux2 = new String[aux.length + producciones[prod].length - 1];
             int i = 0;
-            for (i = 0; i < aux.length; i++) {
+            for (i = 0; i < aux.length; i++)
+            {
                 aux2[i] = aux[i];
             }
-            for (int j = 1; j < producciones[prod].length; j++) {
+            for (int j = 1; j < producciones[prod].length; j++)
+            {
                 aux2[i] = producciones[prod][j];
                 i++;
             }
@@ -187,19 +411,23 @@ public class Gramatica_proyecto {
 
     }
 
-    private static String[] modEntrada(String[] entrada) {
+    private static String[] modEntrada(String[] entrada)
+    {
         String[] aux = new String[entrada.length - 1];
-        for (int i = 0; i < aux.length; i++) {
+        for (int i = 0; i < aux.length; i++)
+        {
             aux[i] = entrada[i + 1];
         }
         return aux;
     }
 
-    private static int getPos(String s) {
+    private static int getPos(String s)
+    {
         return pos.get(s);
     }
 
-    private static void genPos() {
+    private static void genPos()
+    {
         // Filas
         pos.put("<programa>", 0);
         pos.put("<sentencias>", 1);
@@ -269,5 +497,4 @@ public class Gramatica_proyecto {
         pos.put(";", 26);
         pos.put("OR", 27);
     }
-
 }
