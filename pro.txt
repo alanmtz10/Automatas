@@ -1,0 +1,25 @@
+{	
+	while(num OR num){
+		t_dato id = num;
+		for(id=num; num OR num;id 44){
+			console.log(num);
+			do{
+				console.log(cadena);
+				read(id);
+				if(num OR num){
+					id = cadena;						
+				}else{
+					id = num;
+					if(num OR num){
+						idFuncion();						
+					}else{
+						while(num OR num){
+							console.log(cadena);
+						};
+					};
+				};
+			}while(num OR num);
+			idFuncion();
+		};
+	};
+}
