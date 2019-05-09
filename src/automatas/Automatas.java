@@ -108,6 +108,9 @@ public class Automatas {
         {"24", "true"},
         {"25", "void"},
         {"26", "new"},
+        {"console", "console"},
+        {"log", "log"},
+        {".", "."},
         {"27", "document"}
     };
 

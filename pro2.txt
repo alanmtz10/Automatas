@@ -1,0 +1,6 @@
+{
+	console.log("Texto texto");
+	for(var = 8; 8<otraVar; var++;){
+
+	}
+}
