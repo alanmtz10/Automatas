@@ -47,10 +47,18 @@ public class Pruebas {
         for (int i = 0; i < p.size(); i++) {
             aux = p.get(i);
             try {
+                if (aux.getLexema().equals("+") && p.get(i + 1).getLexema().equals("+")) {
+                    aux.setLexema("44");
+                    p.remove(i + 1);
+                }
                 if (aux.getToken().equals("43") || aux.getToken().equals("48")) {
                     aux.setLexema("num");
-                } else if (aux.getToken().equals("console") || aux.getToken().equals("log") || aux.getToken().equals("read")) {
-
+                } else if (aux.getLexema().equals("console")) {
+                    aux.setLexema("console");
+                } else if (aux.getLexema().equals("log")) {
+                    aux.setLexema("log");
+                } else if (aux.getLexema().equals("read")) {
+                    aux.setLexema("read");
                 } else if (aux.getToken().equals("46")) {
                     aux.setLexema("cadena");
                 } else if (aux.getToken().equals("41")) {
