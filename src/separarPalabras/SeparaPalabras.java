@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import lexema.Lexema;
 
 /**
  *
@@ -18,12 +19,7 @@ import java.util.ArrayList;
  */
 public class SeparaPalabras {
 
-    public static void main(String[] args) {
-        ArrayList<String> lineas = leer("texto.txt");
-        ArrayList<String> palabras = separa(lineas, ' ', ',', '.');
-        guardar(palabras);
-
-    }
+    public static final char[] SEPARADORES = {'$','!', ';', ' ', '\n', '=', '(', ')', '+', '-', '/', '*', '[', ']', '{', '}', '%', '&', '|', '<', '>', '\'', '.'};
 
     public static ArrayList<String> leer(String archivo) {
         String txt = "";
@@ -39,28 +35,78 @@ public class SeparaPalabras {
         return lineas;
     }
 
-    public static ArrayList<String> separa(ArrayList<String> lineas, char... separadores) {
+    public static ArrayList<Lexema> separa(ArrayList<String> lineas) {
         ArrayList<String> arr = new ArrayList<>();
+        ArrayList<Lexema> arr2 = new ArrayList<>();
         String paux = "";
+        boolean bandera = true;
+        int nLinea = 1;
         for (String linea : lineas) {
-            for (int i = 0; i < linea.length(); i++) {
-                if (isSeparador(linea.charAt(i), separadores)) {
-                    if (!paux.equals("")) {
-                        arr.add(paux);
+            linea = linea.trim();
+            if (linea.startsWith("//")) {
+                arr2.add(new Lexema(linea, nLinea, 0, "42"));
+            } else {
+                for (int i = 0; i < linea.length(); i++) {
+                    if (linea.charAt(i) == '"' || linea.charAt(i) == '\'') {
+                        bandera = !bandera;
+                    }
+                    if (isSeparador(linea.charAt(i), SEPARADORES) && bandera) {
+                        if (!paux.equals("")) {
+                            arr.add(paux.trim());
+                            arr2.add(new Lexema(paux, nLinea, i + 1));
+                            paux = "";
+                        }
+                        if (linea.charAt(i) != ' ') {
+                            arr.add(String.valueOf(linea.charAt(i)).trim());
+                            arr2.add(new Lexema(String.valueOf(linea.charAt(i)).trim(), nLinea, i + 1));
+                        }
+                    } else if (i == linea.length() - 1) {
+                        arr.add((paux + linea.charAt(i)).trim());
+                        arr2.add(new Lexema((paux + linea.charAt(i)).trim(), nLinea, i + 1));
                         paux = "";
+                    } else {
+                        paux += linea.charAt(i);
                     }
-                    if (linea.charAt(i) != ' ') {
-                        arr.add(String.valueOf(linea.charAt(i)));
+                    if (i == linea.length() - 1 && (linea.length() - 1) != '"' && !bandera) {
+                        bandera = true;
+                        System.out.println("Error se esperaba una cadena");
                     }
-                } else if (i == linea.length() - 1) {
-                    arr.add(paux + linea.charAt(i));
-                    paux = "";
+                }
+            }
+            nLinea++;
+        }
+        arr2 = separa2(arr2);
+        return arr2;
+    }
+
+    public static ArrayList<Lexema> separa2(ArrayList<Lexema> palabras) {
+        ArrayList<String> aux = new ArrayList<>();
+        ArrayList<Lexema> aux2 = new ArrayList<>();
+        for (int i = 0; i < palabras.size(); i++) {
+            if ((i + 1) < palabras.size()) {
+                if ((palabras.get(i).getLexema().equals("<")
+                        || palabras.get(i).getLexema().equals(">")
+                        || palabras.get(i).getLexema().equals("=")
+                        || palabras.get(i).getLexema().equals("!")
+                        || palabras.get(i).getLexema().equals("+")
+                        || palabras.get(i).getLexema().equals("-")
+                        || palabras.get(i).getLexema().equals("/")
+                        || palabras.get(i).getLexema().equals("*"))
+                        && (palabras.get(i + 1).getLexema().equals("="))) {
+                    aux.add(palabras.get(i) + "" + palabras.get(i + 1));
+                    aux2.add(new Lexema(palabras.get(i).getLexema() + "" + palabras.get(i + 1).getLexema(), palabras.get(i).getRenglon(), palabras.get(i).getColumna()));
+                    i++;
+                } else if (palabras.get(i).getLexema().equals("/") && palabras.get(i + 1).getLexema().equals("/")) {
+                    aux.add(palabras.get(i) + "" + palabras.get(i + 1));
+                    aux2.add(new Lexema(palabras.get(i).getLexema() + "" + palabras.get(i + 1).getLexema(), palabras.get(i).getRenglon(), palabras.get(i).getColumna()));
+                    i++;
                 } else {
-                    paux += linea.charAt(i);
+//                aux.add(palabras.get(i));
+                    aux2.add(palabras.get(i));
                 }
             }
         }
-        return arr;
+        return aux2;
     }
 
     public static boolean isSeparador(char c, char... separadores) {
