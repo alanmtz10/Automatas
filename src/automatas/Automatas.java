@@ -149,7 +149,7 @@ public class Automatas {
     };
 
     private static final String[][] OPE_LOG = {
-        {"37", "%"},
+        {"37", "&"},
         {"37", "|"},
         {"38", "~"},
         {"38", "!"}

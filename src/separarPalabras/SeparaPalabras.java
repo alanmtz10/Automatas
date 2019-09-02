@@ -19,7 +19,7 @@ import lexema.Lexema;
  */
 public class SeparaPalabras {
 
-    public static final char[] SEPARADORES = {'$','!', ';', ' ', '\n', '=', '(', ')', '+', '-', '/', '*', '[', ']', '{', '}', '%', '&', '|', '<', '>', '\'', '.'};
+    public static final char[] SEPARADORES = {'$','!', ';', ' ', '\n', '=', '(', ')', '+', '-', '/', '*', '[', ']', '{', '}', '%', '&', '|', '<', '>', '\'',};
 
     public static ArrayList<String> leer(String archivo) {
         String txt = "";
