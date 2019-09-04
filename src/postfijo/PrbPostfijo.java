@@ -6,6 +6,8 @@
 package postfijo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import lexema.Lexema;
 
 /**
@@ -18,9 +20,17 @@ public class PrbPostfijo {
         ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("operaciones.txt");
         ArrayList<Lexema> tablaLexema = separarPalabras.SeparaPalabras.separa(lineas);
 
-        Postfijo p = new Postfijo(tablaLexema);
+        for (Lexema tablaLexema1 : tablaLexema) {
+            System.out.println(tablaLexema1);
+        }
 
-//        p.imprimeTablaLexema();
-        System.out.println(p.getPostfijoExp());
+        ArrayList<Lexema> tablaOrdenada = Postfijo.convertirPostfijo(tablaLexema);
+
+        System.out.println("---------------------");
+
+        for (Lexema tablaOrdenada1 : tablaOrdenada) {
+            System.out.println(tablaOrdenada1);
+        }
+
     }
 }

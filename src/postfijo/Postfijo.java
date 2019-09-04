@@ -6,6 +6,7 @@
 package postfijo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 import lexema.Lexema;
 
@@ -15,163 +16,147 @@ import lexema.Lexema;
  */
 public class Postfijo {
 
-    private Stack<String> operadores = new Stack<>();
-    private Stack<String> operandos = new Stack<>();
-    private String expresion;
-    private ArrayList<Lexema> tablaLexema;
-    private ArrayList<Simbolo> tablaSimbolos;
+    private static final HashMap<String, Integer> JERARQUIA = new HashMap<>();
 
-    public static final String[][] JER_OPE = {
-        {"1", "||"},
-        {"2", "&&"},
-        {"3", "!"},
-        {"4", "="},
-        {"4", ">"},
-        {"4", "<"},
-        {"4", ">="},
-        {"4", "<="},
-        {"4", "!="},
-        {"5", "+"},
-        {"5", "-"},
-        {"6", "*"},
-        {"6", "/"},
-        {"9", "("},
-        {"9", ")"}
+    private static final Object[][] MAP_JER = {
+        {"||", 1},
+        {"&&", 2},
+        {"!", 3},
+        {"=", 4},
+        {"==", 4},
+        {">", 4},
+        {"<", 4},
+        {">=", 4},
+        {"<=", 4},
+        {"!=", 4},
+        {"+", 5},
+        {"-", 5},
+        {"*", 6},
+        {"/", 6},
+        {"^", 7},
+        {"(", 9},
+        {")", 9}
     };
 
-    public Postfijo(String expresion) {
-        this.expresion = expresion;
-    }
+    /**
+     * Metodo que convierte una exprecion infija a postfija
+     *
+     * @param expresion Arraylist que contiene los lexemas con su numero de
+     * token, renglon y columna
+     * @return retorna el ArrayList ordenado para evaluarlo
+     */
+    public static ArrayList<Lexema> convertirPostfijo(ArrayList<Lexema> expresion) {
 
-    public Postfijo(ArrayList<Lexema> tablaLexema) {
-        this.tablaLexema = tablaLexema;
-    }
+        /**
+         * Asignar a un HashMap la jerarquia de cada operador
+         */
+        mapJerarquia();
 
-    public Stack<String> getOperadores() {
-        return operadores;
-    }
+        /**
+         * Pila donde se amacenaran temporalmente los operadores y lista donde
+         * se almacenara la salida
+         */
+        Stack<Lexema> operadores = new Stack<>();
+        ArrayList<Lexema> salida = new ArrayList<>();
 
-    public Stack<String> getOperandos() {
-        return operandos;
-    }
+        /**
+         * Temporal token, lexema
+         */
+        String lexema;
+        String token;
 
-    public void setOperadores(Stack<String> operadores) {
-        this.operadores = operadores;
-    }
+        /**
+         * Recorrer la tabla para convertir a notación postfija la expresión
+         */
+        for (Lexema simbolo : expresion) {
 
-    public void setOperandos(Stack<String> operandos) {
-        this.operandos = operandos;
-    }
+            lexema = simbolo.getLexema();
+            token = simbolo.getToken();
 
-    public String getExpresion() {
-        return expresion;
-    }
+            /**
+             * Si el token es un numero o una variable lo inserta en la lista de
+             * salida
+             */
+            if (token.equals("43") || token.equals("41")) {
 
-    public void setExpresion(String expresion) {
-        this.expresion = expresion;
-    }
+                salida.add(simbolo);
 
-    public ArrayList<Lexema> getTablaLexema() {
-        return tablaLexema;
-    }
+                /**
+                 * Si el token es un parentesis de apertura "(" lo inserta en la
+                 * pila de operadores
+                 */
+            } else if (token.equals("28")) {
 
-    public void setTablaLexema(ArrayList<Lexema> tablaLexema) {
-        this.tablaLexema = tablaLexema;
-    }
+                operadores.push(simbolo);
 
-    public String getPostfijo() {
-        return "";
-    }
+                /**
+                 * Si el token es un operador, comprobar los operadores que hay
+                 * en la pila e irlos sacando
+                 */
+            } else if (token.equals("36")) {
 
-    public String getPostfijoExp() {
-        for (int i = 0; i < tablaLexema.size(); i++) {
+                while (!operadores.isEmpty() && !operadores.peek().getLexema().equals("(")
+                        && esDeMayorPre(lexema, operadores.peek().getLexema())) {
+                    salida.add(operadores.pop());
+                }
 
-            String termino = tablaLexema.get(i).getLexema();
-            String token = tablaLexema.get(i).getToken();
+                operadores.add(simbolo);
 
-            switch (token) {
-                case "43":
-                    operandos.push(termino);
-                    break;
-                case "41":
-                    operandos.push(termino);
-                    break;
-                case "28":
-                    operadores.push(termino);
-                    break;
-                case "29":
-                    while (!operadores.empty() && !operadores.peek().equals("(")) {
-                        operandos.push(operadores.pop());
-                    }
-                    if (operadores.peek().equals("(")) {
+                /**
+                 * Si el token es un parentesis de cierre ")" sacar hasta que el
+                 * primer elemento de la pila sea un parentesis de apertura o
+                 * hasta que la pila este vacia
+                 */
+            } else if (token.equals("29")) {
+
+                while (!operadores.isEmpty() && !operadores.peek().getLexema().equals("(")) {
+                    salida.add(operadores.pop());
+                }
+
+                if (!operadores.isEmpty()) {
+                    if (operadores.peek().getLexema().equals("(")) {
                         operadores.pop();
-                    } else {
-                        System.out.println("ERROR");
-                        i = tablaLexema.size() + 1;
                     }
-                    termino = "";
-                    break;
-                case "36":
-                    while (!operadores.empty() && !esDeMayorPrioridad(operadores.peek(), termino)) {
-                        operandos.push(operadores.pop());
-                    }
-                    operandos.push(termino);
-                    break;
-            }
-        }
-        while (!operadores.empty()) {
-            operandos.push(operadores.pop());
-        }
-        return operandos.toString();
-    }
+                }
 
-    /**
-     * @param variable
-     *
-     * Busca si la variable esta en la tabla de simbolos
-     *
-     * @return true si esta en la tabla, false si no.
-     */
-    public boolean existeEnTablaDeSimbolos(String variable) {
-        for (Simbolo s : tablaSimbolos) {
-            if (s.getVariable().equals(variable)) {
-                return true;
             }
-        }
-        return false;
-    }
 
-    public void imprimeTablaLexema() {
-        for (Lexema l : tablaLexema) {
-            System.out.println(l);
         }
+
+        /**
+         * Mientras la pila de operadores no este vacia sacar los operadores y
+         * meterlos a la lista de salida
+         */
+        while (!operadores.isEmpty()) {
+            salida.add(operadores.pop());
+        }
+
+        return salida;
 
     }
 
     /**
-     * @param operador1
-     * @param operador2
-     * @return Devuelve true si el operador1 de mayor o igual prioridad que el
-     * operador 2
+     * Compara si el operador2 es de mayor precedencia que el operador1.
+     *
+     * @param operador1 operador 1
+     * @param operador2 operador 2
+     * @return true si el operador2 es de mayor o igual precedencia, false si
+     * no.
      */
-    public boolean esDeMayorPrioridad(String operador1, String operador2) {
-        int prioridadOp1 = getPrioridad(operador1);
-        int prioridadOp2 = getPrioridad(operador2);
+    private static boolean esDeMayorPre(String operador1, String operador2) {
+        int precedenciaOperador1 = JERARQUIA.get(operador1);
+        int precedenciaOperador2 = JERARQUIA.get(operador2);
 
-        if (prioridadOp1 >= prioridadOp2) {
+        if (precedenciaOperador1 <= precedenciaOperador2) {
             return true;
         }
-
         return false;
+
     }
 
-    private int getPrioridad(String operador) {
-        for (String[] operador0 : JER_OPE) {
-            if (operador0[1].equals(operador)) {
-                return Integer.parseInt(operador0[0]);
-            }
+    private static void mapJerarquia() {
+        for (Object[] op : MAP_JER) {
+            JERARQUIA.put((String) op[0], (Integer) op[1]);
         }
-        return -1;
     }
-
 }

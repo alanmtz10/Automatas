@@ -19,7 +19,7 @@ import lexema.Lexema;
  */
 public class SeparaPalabras {
 
-    public static final char[] SEPARADORES = {'$','!', ';', ' ', '\n', '=', '(', ')', '+', '-', '/', '*', '[', ']', '{', '}', '%', '&', '|', '<', '>', '\'',};
+    public static final char[] SEPARADORES = {'$', '!', ';', ' ', '\n', '=', '(', ')', '+', '-', '/', '*', '[', ']', '{', '}', '%', '&', '|', '<', '>', '\'', '.','^'};
 
     public static ArrayList<String> leer(String archivo) {
         String txt = "";
@@ -100,7 +100,20 @@ public class SeparaPalabras {
                     aux.add(palabras.get(i) + "" + palabras.get(i + 1));
                     aux2.add(new Lexema(palabras.get(i).getLexema() + "" + palabras.get(i + 1).getLexema(), palabras.get(i).getRenglon(), palabras.get(i).getColumna()));
                     i++;
-                } else {
+                } //                } else if (palabras.get(i).getToken().equals("43") && palabras.get(i + 1).getToken().equals(".")
+                //                        && palabras.get(i + 2).getToken().equals("43")) {
+                //                    aux2.add(
+                //                            new Lexema(
+                //                                    palabras.get(i).getLexema()
+                //                                    + palabras.get(i + 1).getLexema()
+                //                                    + palabras.get(i + 2).getLexema(),
+                //                                    palabras.get(i).getRenglon(),
+                //                                    palabras.get(i).getColumna()
+                //                            )
+                //                    );
+                //                    i += 2;
+                //                }
+                else {
 //                aux.add(palabras.get(i));
                     aux2.add(palabras.get(i));
                 }

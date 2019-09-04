@@ -145,7 +145,8 @@ public class Automatas {
         {"36", "-"},
         {"36", "*"},
         {"36", "/"},
-        {"36", "%"}
+        {"36", "%"},
+        {"36", "^"}
     };
 
     private static final String[][] OPE_LOG = {
