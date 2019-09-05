@@ -1,4 +1,9 @@
 {
+	int miVariable = 10;
+	double miOtraVariable = 10.25;
+	string otraVariable = "Hola";	
+
+
 	console.log("Texto texto");
 	for(var = 8; variable<=100; var++){
             read(miVariable);

@@ -1,0 +1,5 @@
+
+	int miVariable = 10;
+	double miOtraVariable = 10.25;
+	String otraVariable = "Hola";
+}
