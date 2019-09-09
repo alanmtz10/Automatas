@@ -38,6 +38,10 @@ public class Postfijo {
         {")", 9}
     };
 
+    private static final String[][] RESULTADOS_OPERACIONES = {
+        {"int", "*", "int", "int"}
+    };
+
     /**
      * Metodo que convierte una exprecion infija a postfija
      *
@@ -154,9 +158,74 @@ public class Postfijo {
 
     }
 
+    /**
+     * Evalua operaciones en notacion postfija
+     *
+     * @param expresionPostfija
+     * @return
+     */
+    public static double evaluar(ArrayList<Lexema> expresionPostfija) {
+
+        Stack<Lexema> operadores = new Stack<>();
+        Stack<Lexema> operandos = new Stack<>();
+
+        for (Lexema termino : expresionPostfija) {
+
+            if (termino.getToken().equals("43")) {
+                operandos.push(termino);
+            } else if (termino.getToken().equals("36")) {
+                operadores.push(termino);
+
+                if (operandos.size() >= 2) {
+                    Lexema terminoDerecha = operandos.pop();
+                    Lexema terminoIzquierda = operandos.pop();
+                    Lexema operador = operadores.pop();
+
+                    Lexema resultado = operacion(terminoIzquierda, terminoDerecha, operador);
+
+                    operandos.push(resultado);
+
+                }
+
+            }
+
+        }
+
+        return Double.parseDouble(operandos.pop().getLexema());
+    }
+
     private static void mapJerarquia() {
         for (Object[] op : MAP_JER) {
             JERARQUIA.put((String) op[0], (Integer) op[1]);
         }
     }
+
+    private static Lexema operacion(Lexema operadorIzquierda, Lexema operadorDerecha, Lexema operador) {
+        String ope = operador.getLexema();
+        int opeI = Integer.parseInt(operadorIzquierda.getLexema());
+        int opeD = Integer.parseInt(operadorIzquierda.getLexema());
+
+        int res = 0;
+
+        switch (ope) {
+            case "+":
+                res = opeI + opeD;
+                break;
+            case "-":
+                res = opeI - opeD;
+                break;
+            case "*":
+                res = opeI * opeD;
+                break;
+            case "/":
+                res = opeI / opeD;
+                break;
+            default:
+                System.err.println("Error al evaluar");
+                return null;
+        }
+
+        return new Lexema(Integer.toString(res), operadorIzquierda.getRenglon(), operadorIzquierda.getRenglon(), "43");
+    }
+
 }

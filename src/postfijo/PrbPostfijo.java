@@ -18,17 +18,15 @@ public class PrbPostfijo {
         ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("operaciones.txt");
         ArrayList<Lexema> tablaLexema = separarPalabras.SeparaPalabras.separa(lineas);
 
-        for (Lexema tablaLexema1 : tablaLexema) {
-            System.out.println(tablaLexema1);
-        }
-
         ArrayList<Lexema> tablaOrdenada = Postfijo.convertirPostfijo(tablaLexema);
 
-        System.out.println("---------------------");
-
-        for (Lexema tablaOrdenada1 : tablaOrdenada) {
-            System.out.println(tablaOrdenada1);
+        for (Lexema lexema : tablaOrdenada) {
+            System.out.println(lexema);
         }
+
+        double res = Postfijo.evaluar(tablaOrdenada);
+
+        System.out.println(res);
 
     }
 }
