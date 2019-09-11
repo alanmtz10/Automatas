@@ -15,9 +15,15 @@ import lexema.Lexema;
 public class PrbPostfijo {
 
     public static void main(String[] args) {
-        ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("operaciones.txt");
-        ArrayList<Lexema> tablaLexema = separarPalabras.SeparaPalabras.separa(lineas);
+        
+        /**
+         * Tabla de lexemas
+         */
+        ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("operaciones.txt");
 
+        /***
+         * Tabla de lexemas en notacion postfija
+         */
         ArrayList<Lexema> tablaOrdenada = Postfijo.convertirPostfijo(tablaLexema);
 
         for (Lexema lexema : tablaOrdenada) {

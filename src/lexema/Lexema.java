@@ -6,6 +6,7 @@
 package lexema;
 
 import java.util.ArrayList;
+import separarPalabras.SeparaPalabras;
 
 /**
  *
@@ -107,10 +108,12 @@ public class Lexema {
     }
 
     public static ArrayList<Lexema> getTablaLexema(String nombreArchivo) {
-        
+
         ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer(nombreArchivo);
-        return separarPalabras.SeparaPalabras.separa(lineas);
-        
+        ArrayList<Lexema> temp = separarPalabras.SeparaPalabras.separa(lineas);
+
+        return SeparaPalabras.arreglos(temp);
+
     }
-    
+
 }

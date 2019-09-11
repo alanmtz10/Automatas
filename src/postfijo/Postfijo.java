@@ -81,7 +81,7 @@ public class Postfijo {
              * Si el token es un numero o una variable lo inserta en la lista de
              * salida
              */
-            if (token.equals("43") || token.equals("41")) {
+            if (token.equals("43") || token.equals("48") || token.equals("41")) {
 
                 salida.add(simbolo);
 
@@ -174,7 +174,7 @@ public class Postfijo {
 
         for (Lexema termino : expresionPostfija) {
 
-            if (termino.getToken().equals("43")) {
+            if (termino.getToken().equals("43") || termino.getToken().equals("48")) {
                 operandos.push(termino);
             } else if (termino.getToken().equals("36")) {
                 operadores.push(termino);

@@ -145,7 +145,6 @@ public class Simbolo {
                      */
                     while (!tablaLexema.get(posicionBus).getLexema().equals(";")) {
 
-//                        System.out.println(tablaLexema.get(posicionBus));
                         valorVariable.add(tablaLexema.get(posicionBus));
 
                         posicionBus++;
