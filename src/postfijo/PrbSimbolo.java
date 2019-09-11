@@ -23,10 +23,6 @@ public class PrbSimbolo {
         for (Simbolo tablaSimbolo : tablaSimbolos) {
             System.out.println(tablaSimbolo);
         }
-//        for (Lexema l : tablaLexema) {
-//            System.out.println(l);
-//        }
-
     }
 
 }

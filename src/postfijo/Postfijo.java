@@ -233,7 +233,7 @@ public class Postfijo {
             return new Lexema(Integer.toString(res2), operadorIzquierda.getRenglon(), operadorIzquierda.getRenglon(), "43");
         }
 
-        return new Lexema(Double.toString(res), operadorIzquierda.getRenglon(), operadorIzquierda.getRenglon(), "43");
+        return new Lexema(Double.toString(res), operadorIzquierda.getRenglon(), operadorIzquierda.getRenglon(), "48");
 
     }
 

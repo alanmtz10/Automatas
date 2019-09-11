@@ -83,7 +83,11 @@ public class Simbolo {
     }
 
     public String getError() {
-        return error;
+        if (error != null) {
+            return "\t\t" + error;
+        }
+        return "";
+
     }
 
     public void setError(String error) {
@@ -100,7 +104,13 @@ public class Simbolo {
 
     @Override
     public String toString() {
-        return variable + "\t\t Tipo de dato: " + tipoDato + " Valor: " + valorEnLexemas;
+        String valorSimplificado = "";
+
+        for (Lexema valorEnLexema : valorEnLexemas) {
+            valorSimplificado += valorEnLexema.getLexema();
+        }
+
+        return variable + "\t\t Tipo de dato: " + tipoDato + " Valor: " + valorSimplificado + " " + getError();
     }
 
     /**
@@ -162,6 +172,51 @@ public class Simbolo {
                      */
                     i = posicionBus;
 
+                } else {
+                    tabla.get(posicion).setError(ERRORES[0] + " ---- " + tablaLexema.get(i));
+                }
+
+                /**
+                 * Si el token i es de una variable, el token i-1 no es un tipo
+                 * de dato y el token i+1 es un operador de asginacion, se
+                 * comprueba que la variable exista en la tabla de simbolos y se
+                 * remplaza el valor.
+                 */
+            } else if (token.equals("41") && !tablaLexema.get(i - 1).getToken().equals("1")
+                    && tablaLexema.get(i + 1).getToken().equals("40")) {
+
+                int posicion = buscarEnTabla(tabla, lexema);
+
+                if (posicion != -1) {
+
+                    ArrayList<Lexema> valorVariable = new ArrayList<>();
+                    int posicionBus = i + 2;
+
+                    /**
+                     * Genera una tabla de lexema que contentra el valor de la
+                     * variable
+                     */
+                    while (!tablaLexema.get(posicionBus).getLexema().equals(";")) {
+
+                        valorVariable.add(tablaLexema.get(posicionBus));
+
+                        posicionBus++;
+
+                    }
+
+                    /**
+                     * Remplaza el valor de la variable por un nuevo valor
+                     */
+                    tabla.get(posicion).setValorEnLexemas(valorVariable);
+
+                    /**
+                     * Adelanta i hasta que termine la declaracion de la
+                     * variable
+                     */
+                    i = posicionBus;
+
+                } else {
+                    System.err.println(ERRORES[2] + " ---- Renglon: " + tablaLexema.get(i).getRenglon() + " Columna: " + tablaLexema.get(i).getColumna());
                 }
 
             }
@@ -181,7 +236,7 @@ public class Simbolo {
     public static int buscarEnTabla(ArrayList<Simbolo> tablaSimbolos, String variable) {
 
         for (int i = 0; i < tablaSimbolos.size(); i++) {
-            if (tablaSimbolos.get(i).getVariable().equals("variable")) {
+            if (tablaSimbolos.get(i).getVariable().equals(variable)) {
                 return i;
             }
         }
