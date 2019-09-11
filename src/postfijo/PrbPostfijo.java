@@ -29,10 +29,11 @@ public class PrbPostfijo {
         for (Lexema lexema : tablaOrdenada) {
             System.out.print(lexema.getLexema());
         }
+        System.out.println("----------------");
 
-//        Lexema res = Postfijo.evaluar(tablaOrdenada);
-//
-//        System.out.println(res);
+        Lexema res = Postfijo.evaluar(tablaOrdenada);
+
+        System.out.println(res);
 
     }
 }

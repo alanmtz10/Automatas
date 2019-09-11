@@ -13,28 +13,29 @@ import lexema.Lexema;
  * @author Alan
  */
 public class Simbolo {
-    
+
     private String variable;
     private String tipoDato;
     private String valor;
     private ArrayList<Lexema> valorEnLexemas;
     private boolean uso;
     private String error;
-    
+
+
     private static final String[] ERRORES = {
         "Error variable duplicada",
         "Error variable no usada",
         "Error variable no declarada",
         "Error tipos de dato incompatibles"
     };
-    
+
     public Simbolo(String variable, String tipoDato, String valor, boolean uso) {
         this.variable = variable;
         this.tipoDato = tipoDato;
         this.valor = valor;
         this.uso = uso;
     }
-    
+
     public Simbolo(String variable, String tipoDato, String valor, boolean uso, String error) {
         this.variable = variable;
         this.tipoDato = tipoDato;
@@ -42,74 +43,74 @@ public class Simbolo {
         this.uso = uso;
         this.error = error;
     }
-    
+
     public Simbolo(String variable, String tipoDato, ArrayList<Lexema> valorEnLexemas, boolean uso) {
         this.variable = variable;
         this.tipoDato = tipoDato;
         this.valorEnLexemas = valorEnLexemas;
         this.uso = uso;
     }
-    
+
     public boolean getUso() {
         return uso;
     }
-    
+
     public void setUso(boolean uso) {
         this.uso = uso;
     }
-    
+
     public String getVariable() {
         return variable;
     }
-    
+
     public void setVariable(String variable) {
         this.variable = variable;
     }
-    
+
     public String getTipoDato() {
         return tipoDato;
     }
-    
+
     public void setTipoDato(String tipoDato) {
         this.tipoDato = tipoDato;
     }
-    
+
     public String getValor() {
         return valor;
     }
-    
+
     public void setValor(String valor) {
         this.valor = valor;
     }
-    
+
     public String getError() {
         if (error != null) {
             return "\t\t" + error;
         }
         return "";
-        
+
     }
-    
+
     public void setError(String error) {
         this.error = error;
     }
-    
+
     public ArrayList<Lexema> getValorEnLexemas() {
         return valorEnLexemas;
     }
-    
+
     public void setValorEnLexemas(ArrayList<Lexema> valorEnLexemas) {
         this.valorEnLexemas = valorEnLexemas;
     }
-    
+
     @Override
     public String toString() {
         String valorSimplificado = "";
-        
+
         for (Lexema valorEnLexema : valorEnLexemas) {
             valorSimplificado += valorEnLexema.getLexema();
         }
-        
+
         return variable + "\t\t Tipo de dato: " + tipoDato + " Valor: " + valorSimplificado + " " + getError();
     }
 
@@ -120,9 +121,9 @@ public class Simbolo {
      * @return tabla de simbolos
      */
     public static ArrayList<Simbolo> getTablaSimbolos(ArrayList<Lexema> tablaLexema) {
-        
+
         ArrayList<Simbolo> tabla = new ArrayList<>();
-        
+
         String token;
         String lexema;
 
@@ -130,7 +131,7 @@ public class Simbolo {
          * Recorrer la tabla de lexemas
          */
         for (int i = 0; i < tablaLexema.size(); i++) {
-            
+
             lexema = tablaLexema.get(i).getLexema();
             token = tablaLexema.get(i).getToken();
 
@@ -141,11 +142,11 @@ public class Simbolo {
              */
             if (token.equals("41") && tablaLexema.get(i - 1).getToken().equals("1")
                     && tablaLexema.get(i + 1).getToken().equals("40")) {
-                
+
                 int posicion = buscarEnTabla(tabla, lexema);
-                
+
                 if (posicion == -1) {
-                    
+
                     ArrayList<Lexema> valorVariable = new ArrayList<>();
                     int posicionBus = i + 2;
 
@@ -154,11 +155,11 @@ public class Simbolo {
                      * variable
                      */
                     while (!tablaLexema.get(posicionBus).getLexema().equals(";")) {
-                        
+
                         valorVariable.add(tablaLexema.get(posicionBus));
-                        
+
                         posicionBus++;
-                        
+
                     }
 
                     /**
@@ -171,7 +172,7 @@ public class Simbolo {
                      * variable
                      */
                     i = posicionBus;
-                    
+
                 } else {
                     tabla.get(posicion).setError(ERRORES[0] + " ---- " + tablaLexema.get(i));
                 }
@@ -184,11 +185,11 @@ public class Simbolo {
                  */
             } else if (token.equals("41") && !tablaLexema.get(i - 1).getToken().equals("1")
                     && tablaLexema.get(i + 1).getToken().equals("40")) {
-                
+
                 int posicion = buscarEnTabla(tabla, lexema);
-                
+
                 if (posicion != -1) {
-                    
+
                     ArrayList<Lexema> valorVariable = new ArrayList<>();
                     int posicionBus = i + 2;
 
@@ -197,11 +198,11 @@ public class Simbolo {
                      * variable
                      */
                     while (!tablaLexema.get(posicionBus).getLexema().equals(";")) {
-                        
+
                         valorVariable.add(tablaLexema.get(posicionBus));
-                        
+
                         posicionBus++;
-                        
+
                     }
 
                     /**
@@ -214,14 +215,14 @@ public class Simbolo {
                      * variable
                      */
                     i = posicionBus;
-                    
+
                 } else {
                     System.err.println(ERRORES[2] + " ---- Renglon: " + tablaLexema.get(i).getRenglon() + " Columna: " + tablaLexema.get(i).getColumna());
                 }
-                
+
             }
         }
-        
+
         return tabla;
     }
 
@@ -234,21 +235,21 @@ public class Simbolo {
      * simbolos, si no existe dentro de la tabla retorna -1
      */
     public static int buscarEnTabla(ArrayList<Simbolo> tablaSimbolos, String variable) {
-        
+
         for (int i = 0; i < tablaSimbolos.size(); i++) {
             if (tablaSimbolos.get(i).getVariable().equals(variable)) {
                 return i;
             }
         }
-        
+
         return -1;
-        
+
     }
-    
+
     public static void convertirValorPostfijo(ArrayList<Simbolo> tablaSimbolos) {
         for (Simbolo tablaSimbolo : tablaSimbolos) {
             tablaSimbolo.setValorEnLexemas(Postfijo.convertirPostfijo(tablaSimbolo.getValorEnLexemas()));
         }
     }
-    
+
 }

@@ -16,16 +16,18 @@ public class PrbSimbolo {
 
     public static void main(String[] args) {
 
+        /**
+         * Tabla de lexemas
+         */
         ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("declaraciones.txt");
         
-//        for (Lexema lexema : tablaLexema) {
-//            System.out.println(lexema);
-//        }
-
+        /**
+         * Tabla de simbolos
+         */
         ArrayList<Simbolo> tablaSimbolos = Simbolo.getTablaSimbolos(tablaLexema);
-
         Simbolo.convertirValorPostfijo(tablaSimbolos);
 
+        
         for (Simbolo tablaSimbolo : tablaSimbolos) {
             System.out.println(tablaSimbolo);
         }

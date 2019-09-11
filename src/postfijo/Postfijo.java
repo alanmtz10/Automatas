@@ -38,10 +38,6 @@ public class Postfijo {
         {")", 9}
     };
 
-    private static final String[][] RESULTADOS_OPERACIONES = {
-        {"int", "*", "int", "int"}
-    };
-
     /**
      * Metodo que convierte una exprecion infija a postfija
      *
