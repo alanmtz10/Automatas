@@ -164,8 +164,11 @@ public class Postfijo {
      * @param expresionPostfija
      * @return
      */
-    public static double evaluar(ArrayList<Lexema> expresionPostfija) {
+    public static Lexema evaluar(ArrayList<Lexema> expresionPostfija) {
 
+        /**
+         * Pila de operadores y operandos
+         */
         Stack<Lexema> operadores = new Stack<>();
         Stack<Lexema> operandos = new Stack<>();
 
@@ -177,12 +180,12 @@ public class Postfijo {
                 operadores.push(termino);
 
                 if (operandos.size() >= 2) {
+
                     Lexema terminoDerecha = operandos.pop();
                     Lexema terminoIzquierda = operandos.pop();
                     Lexema operador = operadores.pop();
 
                     Lexema resultado = operacion(terminoIzquierda, terminoDerecha, operador);
-
                     operandos.push(resultado);
 
                 }
@@ -191,7 +194,7 @@ public class Postfijo {
 
         }
 
-        return Double.parseDouble(operandos.pop().getLexema());
+        return operandos.pop();
     }
 
     private static void mapJerarquia() {
@@ -202,10 +205,10 @@ public class Postfijo {
 
     private static Lexema operacion(Lexema operadorIzquierda, Lexema operadorDerecha, Lexema operador) {
         String ope = operador.getLexema();
-        int opeI = Integer.parseInt(operadorIzquierda.getLexema());
-        int opeD = Integer.parseInt(operadorIzquierda.getLexema());
+        double opeI = Double.parseDouble(operadorIzquierda.getLexema());
+        double opeD = Double.parseDouble(operadorDerecha.getLexema());
 
-        int res = 0;
+        double res;
 
         switch (ope) {
             case "+":
@@ -225,7 +228,13 @@ public class Postfijo {
                 return null;
         }
 
-        return new Lexema(Integer.toString(res), operadorIzquierda.getRenglon(), operadorIzquierda.getRenglon(), "43");
+        if (res % 1 == 0) {
+            int res2 = (int) (res);
+            return new Lexema(Integer.toString(res2), operadorIzquierda.getRenglon(), operadorIzquierda.getRenglon(), "43");
+        }
+
+        return new Lexema(Double.toString(res), operadorIzquierda.getRenglon(), operadorIzquierda.getRenglon(), "43");
+
     }
 
 }

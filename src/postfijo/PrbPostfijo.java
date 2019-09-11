@@ -24,7 +24,7 @@ public class PrbPostfijo {
             System.out.println(lexema);
         }
 
-        double res = Postfijo.evaluar(tablaOrdenada);
+        Lexema res = Postfijo.evaluar(tablaOrdenada);
 
         System.out.println(res);
 

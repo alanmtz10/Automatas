@@ -112,5 +112,5 @@ public class Lexema {
         return separarPalabras.SeparaPalabras.separa(lineas);
         
     }
-
+    
 }
