@@ -2,5 +2,4 @@
 	int miVariable = 10+a+x*(b+y);
 	double miOtraVariable = 10.25;
 	String otraVariable = "Hola";
-    misVariable = 20;
 }

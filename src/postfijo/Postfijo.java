@@ -19,8 +19,8 @@ public class Postfijo {
     private static final HashMap<String, Integer> JERARQUIA = new HashMap<>();
 
     private static final Object[][] MAP_JER = {
-        {"||", 1},
-        {"&&", 2},
+        {"|", 1},
+        {"&", 2},
         {"!", 3},
         {"=", 4},
         {"==", 4},
@@ -50,6 +50,10 @@ public class Postfijo {
      * @return retorna el ArrayList ordenado para evaluarlo
      */
     public static ArrayList<Lexema> convertirPostfijo(ArrayList<Lexema> expresion) {
+
+        if (expresion.get(0).getToken().equals("46")) {
+            return expresion;
+        }
 
         /**
          * Asignar a un HashMap la jerarquia de cada operador
@@ -97,7 +101,7 @@ public class Postfijo {
                  * Si el token es un operador, comprobar los operadores que hay
                  * en la pila e irlos sacando
                  */
-            } else if (token.equals("36")) {
+            } else if (token.equals("36") || token.equals("39") || token.equals("37")) {
 
                 while (!operadores.isEmpty() && !operadores.peek().getLexema().equals("(")
                         && esDeMayorPre(lexema, operadores.peek().getLexema())) {

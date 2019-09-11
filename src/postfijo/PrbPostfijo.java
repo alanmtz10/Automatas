@@ -27,12 +27,12 @@ public class PrbPostfijo {
         ArrayList<Lexema> tablaOrdenada = Postfijo.convertirPostfijo(tablaLexema);
 
         for (Lexema lexema : tablaOrdenada) {
-            System.out.println(lexema);
+            System.out.print(lexema.getLexema());
         }
 
-        Lexema res = Postfijo.evaluar(tablaOrdenada);
-
-        System.out.println(res);
+//        Lexema res = Postfijo.evaluar(tablaOrdenada);
+//
+//        System.out.println(res);
 
     }
 }
