@@ -269,12 +269,14 @@ public class Simbolo {
      */
     public static void getTablasDeSimbolos(ArrayList<Lexema> fuenteEnLexemas) {
 
-        ArrayList<Simbolo> tablaGlobal = new ArrayList<>();
+        TablaSimbolo tablaGlobal = new TablaSimbolo();
 
-        for (Lexema lexema : fuenteEnLexemas) {
+        ArrayList<Lexema> aux = new ArrayList<>();
 
-            if (lexema.getToken().equals("5")) {
+        for (int i = 0; i < fuenteEnLexemas.size(); i++) {
 
+            if (!fuenteEnLexemas.get(i).getToken().equals("5")) {
+                aux.add(fuenteEnLexemas.get(i));
             }
 
         }
