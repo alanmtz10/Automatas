@@ -24,12 +24,12 @@ public class PrbSimbolo {
         /**
          * Tabla de simbolos
          */
-        ArrayList<Simbolo> tablaSimbolos = Simbolo.getTablaSimbolos(tablaLexema);
-        Simbolo.convertirValorPostfijo(tablaSimbolos);
-        Postfijo.evaluarTabla(tablaSimbolos);
+//        ArrayList<Simbolo> tablaSimbolos = Simbolo.getTablaSimbolos(tablaLexema);
+//        Simbolo.convertirValorPostfijo(tablaSimbolos);
+//        Postfijo.evaluarTabla(tablaSimbolos);
 
-        for (Simbolo tablaSimbolo : tablaSimbolos) {
-            System.out.println(tablaSimbolo);
+        for (Lexema lex : tablaLexema) {
+            System.out.println(lex);
         }
     }
 

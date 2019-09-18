@@ -264,4 +264,21 @@ public class Simbolo {
         }
     }
 
+    /**
+     * Obtener las tablas globales y locales de simbolos.
+     */
+    public static void getTablasDeSimbolos(ArrayList<Lexema> fuenteEnLexemas) {
+
+        ArrayList<Simbolo> tablaGlobal = new ArrayList<>();
+
+        for (Lexema lexema : fuenteEnLexemas) {
+
+            if (lexema.getToken().equals("5")) {
+
+            }
+
+        }
+
+    }
+
 }
