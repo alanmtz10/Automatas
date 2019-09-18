@@ -5,8 +5,6 @@
  */
 package pruebas;
 
-import java.util.ArrayList;
-import lexema.Lexema;
 import postfijo.Postfijo;
 
 /**
@@ -16,19 +14,6 @@ import postfijo.Postfijo;
 public class Prbs {
 
     public static void main(String[] args) {
-        ArrayList<Lexema> tabla = Lexema.getTablaLexema("operaciones.txt");
-        
-        tabla = Postfijo.convertirPostfijo(tabla);
-        
-        
-
-        for (Lexema lexema : tabla) {
-            System.out.println(lexema);
-        }
-        
-        System.out.println("----------------------------------");
-        
-        System.out.println(Postfijo.evaluar(tabla));
 
     }
 

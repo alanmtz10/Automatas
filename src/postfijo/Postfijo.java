@@ -47,7 +47,8 @@ public class Postfijo {
      */
     public static ArrayList<Lexema> convertirPostfijo(ArrayList<Lexema> expresion) {
 
-        if (expresion.get(0).getToken().equals("46")) {
+        if (expresion.get(0).getToken().equals("46") || expresion.get(0).getToken().equals("24")
+                || expresion.get(0).getToken().equals("14")) {
             return expresion;
         }
 
@@ -162,9 +163,11 @@ public class Postfijo {
      * Evalua operaciones en notacion postfija
      *
      * @param expresionPostfija
+     * @param tabla Tabla a la que pertenece la expresion
+     * @param indice Indice que ocupa el simbolo dentro de la tabla
      * @return
      */
-    public static Lexema evaluar(ArrayList<Lexema> expresionPostfija) {
+    public static Lexema evaluar(ArrayList<Simbolo> tabla, ArrayList<Lexema> expresionPostfija, int indice) {
 
         /**
          * Pila de operadores y operandos
@@ -174,9 +177,33 @@ public class Postfijo {
 
         for (Lexema termino : expresionPostfija) {
 
-            if (termino.getToken().equals("43") || termino.getToken().equals("48")) {
+            if (termino.getToken().equals("43") || termino.getToken().equals("48")
+                    || termino.getToken().equals("14") || termino.getToken().equals("24")) {
                 operandos.push(termino);
-            } else if (termino.getToken().equals("36")) {
+            } else if (termino.getToken().equals("41")) {
+
+                int pos = Simbolo.buscarEnTabla(tabla, termino.getLexema());
+
+                if (pos != -1) {
+
+                    Simbolo simbolo = tabla.get(pos);
+                    Lexema res = simbolo.getValorEvaluado();
+
+                    if (res == null) {
+
+                        ArrayList<Lexema> valorEnLexema = simbolo.getValorEnLexemas();
+                        res = evaluar(tabla, valorEnLexema, pos);
+
+                    }
+
+                    simbolo.setValorEvaluado(res);
+                    operandos.push(res);
+
+                } else {
+                    tabla.get(indice).setError("Variables no declaradas");
+                }
+
+            } else if (termino.getToken().equals("36") || termino.getToken().equals("39")) {
                 operadores.push(termino);
 
                 if (operandos.size() >= 2) {
@@ -197,16 +224,101 @@ public class Postfijo {
         return operandos.pop();
     }
 
+    /**
+     * Metodo para evaluar las operaciones aritmeticas de una tabla de simbolos
+     *
+     * @param tablaSimbolos
+     */
+    public static void evaluarTabla(ArrayList<Simbolo> tablaSimbolos) {
+
+        ArrayList<Lexema> valorVariable;
+
+        for (Simbolo simbolo : tablaSimbolos) {
+
+            valorVariable = simbolo.getValorEnLexemas();
+
+            if (valorVariable.size() == 1 && valorVariable.get(0).getToken().equals("46")) {
+
+                simbolo.setValorEvaluado(valorVariable.get(0));
+
+            } else {
+
+                /**
+                 * Indice del simbolo en la tabla
+                 */
+                int indiceSimbolo = tablaSimbolos.indexOf(simbolo);
+
+                Lexema valorEvaluado = evaluar(tablaSimbolos, valorVariable, indiceSimbolo);
+                simbolo.setValorEvaluado(valorEvaluado);
+
+            }
+
+            /**
+             * Comprobar que el resultado y el tipo de dato sean compatibles
+             */
+            setError(simbolo);
+
+        }
+    }
+
+    /**
+     * Compara entre el tipo de dato y el valor cuando se evalua, pone error si
+     * el tipo de dato y el valor son incompatibles
+     *
+     * @param s Simbolo a comprobar
+     */
+    private static void setError(Simbolo s) {
+
+        String error = s.getError();
+        boolean existeError = false;
+
+        if (s.getTipoDato().equals("string") && !s.getValorEvaluado().getToken().equals("46")) {
+
+            existeError = true;
+
+        } else if (s.getTipoDato().equals("int") && !s.getValorEvaluado().getToken().equals("43")) {
+
+            existeError = true;
+
+        } else if (s.getTipoDato().equals("double") && !s.getValorEvaluado().getToken().equals("48")) {
+
+            existeError = true;
+
+        }
+
+        if (existeError) {
+            if (!error.equals("")) {
+                s.setError(error + " --- " + Simbolo.ERRORES[3]);
+            } else {
+                s.setError(Simbolo.ERRORES[3]);
+            }
+        }
+
+    }
+
     private static void mapJerarquia() {
         for (Object[] op : MAP_JER) {
             JERARQUIA.put((String) op[0], (Integer) op[1]);
         }
     }
 
+    /**
+     * Evaluar operaciones aritmeticas
+     *
+     * @param operadorIzquierda operador izquierda
+     * @param operadorDerecha operador derecha
+     * @param operador operador
+     * @return Resultado en lexema
+     */
     private static Lexema operacion(Lexema operadorIzquierda, Lexema operadorDerecha, Lexema operador) {
         String ope = operador.getLexema();
+
         double opeI = Double.parseDouble(operadorIzquierda.getLexema());
         double opeD = Double.parseDouble(operadorDerecha.getLexema());
+
+        if (operador.getToken().equals("39")) {
+            return operacionLogica(opeI, opeD, operador);
+        }
 
         double res;
 
@@ -234,6 +346,48 @@ public class Postfijo {
         }
 
         return new Lexema(Double.toString(res), operadorIzquierda.getRenglon(), operadorIzquierda.getRenglon(), "48");
+
+    }
+
+    /**
+     * Evaluar operaciones logicas
+     *
+     * @param operadorIzquierda operador izquierda
+     * @param operadorDerecha operador derecha
+     * @param operador operador
+     * @return Resultado en lexema
+     */
+    private static Lexema operacionLogica(double operadorIzquierda, double operadorDerecha, Lexema operador) {
+
+        Lexema res = new Lexema("", operador.getRenglon(), operador.getColumna(), "");
+        boolean resultado = false;
+
+        switch (operador.getLexema()) {
+            case ">":
+                resultado = operadorIzquierda > operadorDerecha;
+                break;
+            case ">=":
+                resultado = operadorIzquierda >= operadorDerecha;
+                break;
+            case "<":
+                resultado = operadorIzquierda < operadorDerecha;
+                break;
+            case "<=":
+                resultado = operadorIzquierda <= operadorDerecha;
+                break;
+            default:
+                res.setError(Simbolo.ERRORES[3]);
+        }
+
+        if (resultado) {
+            res.setLexema("true");
+            res.setToken("24");
+        } else {
+            res.setLexema("false");
+            res.setToken("14");
+        }
+
+        return res;
 
     }
 

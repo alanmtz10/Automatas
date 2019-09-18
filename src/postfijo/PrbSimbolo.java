@@ -20,14 +20,14 @@ public class PrbSimbolo {
          * Tabla de lexemas
          */
         ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("declaraciones.txt");
-        
+
         /**
          * Tabla de simbolos
          */
         ArrayList<Simbolo> tablaSimbolos = Simbolo.getTablaSimbolos(tablaLexema);
         Simbolo.convertirValorPostfijo(tablaSimbolos);
+        Postfijo.evaluarTabla(tablaSimbolos);
 
-        
         for (Simbolo tablaSimbolo : tablaSimbolos) {
             System.out.println(tablaSimbolo);
         }

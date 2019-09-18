@@ -18,11 +18,11 @@ public class Simbolo {
     private String tipoDato;
     private String valor;
     private ArrayList<Lexema> valorEnLexemas;
+    private Lexema valorEvaluado;
     private boolean uso;
     private String error;
 
-
-    private static final String[] ERRORES = {
+    public static final String[] ERRORES = {
         "Error variable duplicada",
         "Error variable no usada",
         "Error variable no declarada",
@@ -103,12 +103,24 @@ public class Simbolo {
         this.valorEnLexemas = valorEnLexemas;
     }
 
+    public Lexema getValorEvaluado() {
+        return valorEvaluado;
+    }
+
+    public void setValorEvaluado(Lexema valorEvaluado) {
+        this.valorEvaluado = valorEvaluado;
+    }
+
     @Override
     public String toString() {
         String valorSimplificado = "";
 
         for (Lexema valorEnLexema : valorEnLexemas) {
             valorSimplificado += valorEnLexema.getLexema();
+        }
+
+        if (valorEvaluado != null) {
+            return variable + "\t\t Tipo de dato: " + tipoDato + " Valor postfijo " + valorSimplificado + " Valor evaluado: " + valorEvaluado + " " + getError();
         }
 
         return variable + "\t\t Tipo de dato: " + tipoDato + " Valor: " + valorSimplificado + " " + getError();

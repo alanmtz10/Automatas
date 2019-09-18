@@ -5,9 +5,6 @@
  */
 package postfijo;
 
-import java.util.ArrayList;
-import lexema.Lexema;
-
 /**
  *
  * @author alan
@@ -15,25 +12,7 @@ import lexema.Lexema;
 public class PrbPostfijo {
 
     public static void main(String[] args) {
-        
-        /**
-         * Tabla de lexemas
-         */
-        ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("operaciones.txt");
 
-        /***
-         * Tabla de lexemas en notacion postfija
-         */
-        ArrayList<Lexema> tablaOrdenada = Postfijo.convertirPostfijo(tablaLexema);
-
-        for (Lexema lexema : tablaOrdenada) {
-            System.out.print(lexema.getLexema());
-        }
-        System.out.println("----------------");
-
-        Lexema res = Postfijo.evaluar(tablaOrdenada);
-
-        System.out.println(res);
 
     }
 }
