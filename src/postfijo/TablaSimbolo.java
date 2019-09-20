@@ -6,15 +6,31 @@
 package postfijo;
 
 import java.util.ArrayList;
+import lexema.Lexema;
 
 /**
+ * Clase para representar las tablas de simbolos
  *
  * @author alanm
  */
 public class TablaSimbolo {
-    
+
+    private ArrayList<Lexema> lexemas;
     private ArrayList<Simbolo> variables;
     private ArrayList<TablaSimbolo> tablasHijas;
+    private TablaSimbolo tablaPadre;
+
+    public TablaSimbolo() {
+        this.lexemas = new ArrayList<>();
+        this.tablasHijas = new ArrayList<>();
+        this.tablaPadre = null;
+    }
+
+    public TablaSimbolo(TablaSimbolo tablaPadre) {
+        this.lexemas = new ArrayList<>();
+        this.tablasHijas = new ArrayList<>();
+        this.tablaPadre = tablaPadre;
+    }
 
     public ArrayList<Simbolo> getVariables() {
         return variables;
@@ -32,6 +48,36 @@ public class TablaSimbolo {
         this.tablasHijas = tablasHijas;
     }
 
+    public ArrayList<Lexema> getLexemas() {
+        return lexemas;
+    }
 
-        
+    public void setLexemas(ArrayList<Lexema> lexemas) {
+        this.lexemas = lexemas;
+    }
+
+    public void setTablaHija(TablaSimbolo tablaHija) {
+        this.tablasHijas.add(tablaHija);
+    }
+
+    public TablaSimbolo getTablaPadre() {
+        return tablaPadre;
+    }
+
+    public void setTablaPadre(TablaSimbolo tablaPadre) {
+        this.tablaPadre = tablaPadre;
+    }
+
+    public void imprime() {
+        for (Lexema lexema : lexemas) {
+            System.out.println(lexema);
+        }
+
+        System.out.println("------------");
+
+        for (TablaSimbolo hija : tablasHijas) {
+            hija.imprime();
+        }
+    }
+
 }

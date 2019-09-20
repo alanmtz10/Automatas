@@ -266,21 +266,42 @@ public class Simbolo {
 
     /**
      * Obtener las tablas globales y locales de simbolos.
+     *
+     * @param fuenteEnLexemas programa fuente separado
      */
-    public static void getTablasDeSimbolos(ArrayList<Lexema> fuenteEnLexemas) {
+    public static void getTablasDeSimbolos(ArrayList<Lexema> fuenteEnLexemas, TablaSimbolo tablaInicial) {
 
-        TablaSimbolo tablaGlobal = new TablaSimbolo();
+        ArrayList<Lexema> fuenteCopy = (ArrayList<Lexema>) fuenteEnLexemas.clone();
 
-        ArrayList<Lexema> aux = new ArrayList<>();
+        TablaSimbolo actual = tablaInicial;
 
-        for (int i = 0; i < fuenteEnLexemas.size(); i++) {
+        for (int i = 0; i < fuenteCopy.size(); i++) {
 
-            if (!fuenteEnLexemas.get(i).getToken().equals("5")) {
-                aux.add(fuenteEnLexemas.get(i));
+            Lexema temporal = fuenteCopy.get(i);
+
+            actual.getLexemas().add(temporal);
+
+            if (temporal.getLexema().equals("{")) {
+
+                /**
+                 * Se construye una tabla hija y se le indica cual es la tabla
+                 * padre, se agrega a la tabla padre la tabla hija
+                 */
+                TablaSimbolo hija = new TablaSimbolo(actual);
+                actual.setTablaHija(hija);
+
+                actual = hija;
+
+            } else if (temporal.getLexema().equals("}")) {
+
+                TablaSimbolo padre = actual.getTablaPadre();
+
+                if (padre != null) {
+                    actual = padre;
+                }
+
             }
-
         }
-
     }
 
 }

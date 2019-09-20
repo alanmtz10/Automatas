@@ -1,14 +1,35 @@
-{
+
 	int num = 8;
 	int num2 = 4;
 	int num5 = num3 + num4;
-	int res = (num > num2) & (num3 <= num4);
+	boolean res = (num > num2) & (num3 <= num4);
 
-	if(){
-		int num3 = 10;
-		int num4 = 10;
+	if(num>4){
+		String var = "Holis";
+	}
+
+	if(num2 >= num5 & res != false){
+		double var8 = 22.5;
+
+		if(x>8){
+			int alan = 22;
+			if(true){
+				string noSeQuePoner = "xD";
+			}
+		}else{
+			string varOtra = "Otra variable";
+
+			if(!false){
+				double numero = 50.5;
+			}
+
+			string otraVar = "Variable Otra";
+
+		}
+
+		string nombre = "alan";
+		boolean yaQuedo = false;
 
 	}
 
-
-}
+-
