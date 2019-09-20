@@ -68,15 +68,28 @@ public class TablaSimbolo {
         this.tablaPadre = tablaPadre;
     }
 
-    public void imprime() {
-        for (Lexema lexema : lexemas) {
-            System.out.println(lexema);
+    public void imprime(int nivel) {
+        for (int i = 0; i < nivel; i++) {
+            System.out.print("\t");
         }
 
-        System.out.println("------------");
+        System.out.println("------------------------------------------------------------------------"
+                + "------------------------------------------------------------------------");
+
+        for (Simbolo s : variables) {
+            for (int i = 0; i < nivel; i++) {
+                System.out.print("\t");
+            }
+            System.out.println(s);
+            for (int i = 0; i < nivel; i++) {
+                System.out.print("\t");
+            }
+            System.out.println("------------------------------------------------------------------------"
+                    + "------------------------------------------------------------------------");
+        }
 
         for (TablaSimbolo hija : tablasHijas) {
-            hija.imprime();
+            hija.imprime(nivel + 1);
         }
     }
 

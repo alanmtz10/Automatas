@@ -120,10 +120,10 @@ public class Simbolo {
         }
 
         if (valorEvaluado != null) {
-            return variable + "\t\t Tipo de dato: " + tipoDato + " Valor postfijo " + valorSimplificado + " Valor evaluado: " + valorEvaluado + " " + getError();
+            return "| " + variable + "\t| Tipo de dato: " + tipoDato + "| Valor postfijo " + valorSimplificado + "| Valor evaluado: " + valorEvaluado + " " + getError();
         }
 
-        return variable + "\t\t Tipo de dato: " + tipoDato + " Valor: " + valorSimplificado + " " + getError();
+        return "| " + variable + "\t| Tipo de dato: " + tipoDato + "| Valor: " + valorSimplificado + " " + getError();
     }
 
     /**
@@ -269,9 +269,11 @@ public class Simbolo {
      *
      * @param fuenteEnLexemas programa fuente separado
      */
-    public static void getTablasDeSimbolos(ArrayList<Lexema> fuenteEnLexemas, TablaSimbolo tablaInicial) {
+    public static TablaSimbolo getTablasDeSimbolos(ArrayList<Lexema> fuenteEnLexemas) {
 
         ArrayList<Lexema> fuenteCopy = (ArrayList<Lexema>) fuenteEnLexemas.clone();
+
+        TablaSimbolo tablaInicial = new TablaSimbolo();
 
         TablaSimbolo actual = tablaInicial;
 
@@ -302,6 +304,52 @@ public class Simbolo {
 
             }
         }
+
+        getSimbolos(tablaInicial);
+        convertirTablaSimboloPostfijo(tablaInicial);
+        evaluarTablaSimboloPostfijo(tablaInicial);
+
+        return tablaInicial;
+    }
+
+    /**
+     * Generar la tabla de simbolos a partir de las fragmentos de codigo
+     * separados por tablas
+     * @param tablaGeneral
+     */
+    private static void getSimbolos(TablaSimbolo tablaGeneral) {
+
+        tablaGeneral.setVariables(getTablaSimbolos(tablaGeneral.getLexemas()));
+        tablaGeneral.setLexemas(null);
+
+        for (TablaSimbolo hija : tablaGeneral.getTablasHijas()) {
+
+            getSimbolos(hija);
+        }
+
+    }
+
+    private static void convertirTablaSimboloPostfijo(TablaSimbolo tablaGeneral) {
+        convertirValorPostfijo(tablaGeneral.getVariables());
+
+        for (TablaSimbolo tablaHija : tablaGeneral.getTablasHijas()) {
+            convertirTablaSimboloPostfijo(tablaHija);
+        }
+    }
+
+    /**
+     * Evaluar las variables globales y locales en notacion postfija
+     *
+     * @param tablaGeneral Tabla de variables globales y locales.
+     */
+    private static void evaluarTablaSimboloPostfijo(TablaSimbolo tablaGeneral) {
+        ArrayList<Simbolo> tablaVariables = tablaGeneral.getVariables();
+        Postfijo.evaluarTabla(tablaVariables);
+
+        for (TablaSimbolo tablaHija : tablaGeneral.getTablasHijas()) {
+            evaluarTablaSimboloPostfijo(tablaHija);
+        }
+
     }
 
 }

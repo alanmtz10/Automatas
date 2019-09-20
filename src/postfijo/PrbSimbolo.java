@@ -17,20 +17,15 @@ public class PrbSimbolo {
     public static void main(String[] args) {
 
         /**
-         * Tabla de lexemas
+         * Programa fuente en lexemas
          */
         ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("declaraciones.txt");
 
         /**
-         * Tabla de simbolos
+         * Tablas de variables globales y locales en notacion postfija
          */
-//        ArrayList<Simbolo> tablaSimbolos = Simbolo.getTablaSimbolos(tablaLexema);
-//        Simbolo.convertirValorPostfijo(tablaSimbolos);
-//        Postfijo.evaluarTabla(tablaSimbolos);
-        TablaSimbolo tablaInicial = new TablaSimbolo();
-        Simbolo.getTablasDeSimbolos(tablaLexema, tablaInicial);
-
-        tablaInicial.imprime();
+        TablaSimbolo tablaGlobal = Simbolo.getTablasDeSimbolos(tablaLexema);
+        tablaGlobal.imprime(0);
 
     }
 
