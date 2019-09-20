@@ -120,10 +120,10 @@ public class Simbolo {
         }
 
         if (valorEvaluado != null) {
-            return variable + "\t\t Tipo de dato: " + tipoDato + " Valor postfijo " + valorSimplificado + " Valor evaluado: " + valorEvaluado + " " + getError();
+            return "| " + variable + "\t| Tipo de dato: " + tipoDato + "| Valor postfijo " + valorSimplificado + "| Valor evaluado: " + valorEvaluado + " " + getError();
         }
 
-        return variable + "\t\t Tipo de dato: " + tipoDato + " Valor: " + valorSimplificado + " " + getError();
+        return "| " + variable + "\t| Tipo de dato: " + tipoDato + "| Valor: " + valorSimplificado + " " + getError();
     }
 
     /**
@@ -262,6 +262,94 @@ public class Simbolo {
         for (Simbolo tablaSimbolo : tablaSimbolos) {
             tablaSimbolo.setValorEnLexemas(Postfijo.convertirPostfijo(tablaSimbolo.getValorEnLexemas()));
         }
+    }
+
+    /**
+     * Obtener las tablas globales y locales de simbolos.
+     *
+     * @param fuenteEnLexemas programa fuente separado
+     */
+    public static TablaSimbolo getTablasDeSimbolos(ArrayList<Lexema> fuenteEnLexemas) {
+
+        ArrayList<Lexema> fuenteCopy = (ArrayList<Lexema>) fuenteEnLexemas.clone();
+
+        TablaSimbolo tablaInicial = new TablaSimbolo();
+
+        TablaSimbolo actual = tablaInicial;
+
+        for (int i = 0; i < fuenteCopy.size(); i++) {
+
+            Lexema temporal = fuenteCopy.get(i);
+
+            actual.getLexemas().add(temporal);
+
+            if (temporal.getLexema().equals("{")) {
+
+                /**
+                 * Se construye una tabla hija y se le indica cual es la tabla
+                 * padre, se agrega a la tabla padre la tabla hija
+                 */
+                TablaSimbolo hija = new TablaSimbolo(actual);
+                actual.setTablaHija(hija);
+
+                actual = hija;
+
+            } else if (temporal.getLexema().equals("}")) {
+
+                TablaSimbolo padre = actual.getTablaPadre();
+
+                if (padre != null) {
+                    actual = padre;
+                }
+
+            }
+        }
+
+        getSimbolos(tablaInicial);
+        convertirTablaSimboloPostfijo(tablaInicial);
+        evaluarTablaSimboloPostfijo(tablaInicial);
+
+        return tablaInicial;
+    }
+
+    /**
+     * Generar la tabla de simbolos a partir de las fragmentos de codigo
+     * separados por tablas
+     * @param tablaGeneral
+     */
+    private static void getSimbolos(TablaSimbolo tablaGeneral) {
+
+        tablaGeneral.setVariables(getTablaSimbolos(tablaGeneral.getLexemas()));
+        tablaGeneral.setLexemas(null);
+
+        for (TablaSimbolo hija : tablaGeneral.getTablasHijas()) {
+
+            getSimbolos(hija);
+        }
+
+    }
+
+    private static void convertirTablaSimboloPostfijo(TablaSimbolo tablaGeneral) {
+        convertirValorPostfijo(tablaGeneral.getVariables());
+
+        for (TablaSimbolo tablaHija : tablaGeneral.getTablasHijas()) {
+            convertirTablaSimboloPostfijo(tablaHija);
+        }
+    }
+
+    /**
+     * Evaluar las variables globales y locales en notacion postfija
+     *
+     * @param tablaGeneral Tabla de variables globales y locales.
+     */
+    private static void evaluarTablaSimboloPostfijo(TablaSimbolo tablaGeneral) {
+        ArrayList<Simbolo> tablaVariables = tablaGeneral.getVariables();
+        Postfijo.evaluarTabla(tablaVariables);
+
+        for (TablaSimbolo tablaHija : tablaGeneral.getTablasHijas()) {
+            evaluarTablaSimboloPostfijo(tablaHija);
+        }
+
     }
 
 }

@@ -203,7 +203,8 @@ public class Postfijo {
                     tabla.get(indice).setError("Variables no declaradas");
                 }
 
-            } else if (termino.getToken().equals("36") || termino.getToken().equals("39")) {
+            } else if (termino.getToken().equals("36") || termino.getToken().equals("39")
+                    || termino.getToken().equals("37")) {
                 operadores.push(termino);
 
                 if (operandos.size() >= 2) {
@@ -313,6 +314,15 @@ public class Postfijo {
     private static Lexema operacion(Lexema operadorIzquierda, Lexema operadorDerecha, Lexema operador) {
         String ope = operador.getLexema();
 
+        if (operador.getToken().equals("37")) {
+
+            boolean opeI = Boolean.parseBoolean(operadorIzquierda.getLexema());
+            boolean opeD = Boolean.parseBoolean(operadorDerecha.getLexema());
+
+            return operacionLogica2(opeI, opeD, operador);
+
+        }
+
         double opeI = Double.parseDouble(operadorIzquierda.getLexema());
         double opeD = Double.parseDouble(operadorDerecha.getLexema());
 
@@ -391,4 +401,30 @@ public class Postfijo {
 
     }
 
+    private static Lexema operacionLogica2(boolean operadorIzquierda, boolean operadorDerecha, Lexema operador) {
+
+        Lexema res = new Lexema("", operador.getRenglon(), operador.getColumna(), "");
+        boolean resultado = false;
+
+        switch (operador.getLexema()) {
+            case "&":
+                resultado = operadorIzquierda && operadorDerecha;
+                break;
+            case "|":
+                resultado = operadorIzquierda || operadorDerecha;
+                break;
+            default:
+        }
+
+        if (resultado) {
+            res.setLexema("true");
+            res.setToken("24");
+        } else {
+            res.setLexema("false");
+            res.setToken("14");
+        }
+
+        return res;
+
+    }
 }
