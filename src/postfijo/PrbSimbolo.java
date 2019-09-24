@@ -27,8 +27,6 @@ public class PrbSimbolo {
         TablaSimbolo tablaGlobal = Simbolo.getTablasDeSimbolos(tablaLexema);
         
         tablaGlobal.imprime(0);
-        Simbolo s = Postfijo.buscarVariable(tablaGlobal.getTablasHijas().get(0).getTablasHijas().get(0), "res");
-        System.out.println(s);
         
     }
     
