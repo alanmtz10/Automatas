@@ -13,7 +13,7 @@ import lexema.Lexema;
  * @author Alan
  */
 public class PrbSimbolo {
-
+    
     public static void main(String[] args) {
 
         /**
@@ -25,9 +25,11 @@ public class PrbSimbolo {
          * Tablas de variables globales y locales en notacion postfija
          */
         TablaSimbolo tablaGlobal = Simbolo.getTablasDeSimbolos(tablaLexema);
-//        tablaGlobal.imprime(0);
-        Operaciones.evaluarTabla(tablaGlobal);
-
+        
+        tablaGlobal.imprime(0);
+        Simbolo s = Postfijo.buscarVariable(tablaGlobal.getTablasHijas().get(0).getTablasHijas().get(0), "res");
+        System.out.println(s);
+        
     }
-
+    
 }

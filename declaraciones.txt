@@ -6,7 +6,13 @@
 
 	if(num>19){
 		double alan = 22.3;
-		double alan2 = alan + 13.7;
+		double alan2 = num + 13.8;
+
+		if(num>19){
+			double yoo = 22.3;
+			double yoo2 = alan + 13.8;
+		}
+
 	}
 
 -
