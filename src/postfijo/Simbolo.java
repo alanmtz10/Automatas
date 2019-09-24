@@ -315,6 +315,7 @@ public class Simbolo {
     /**
      * Generar la tabla de simbolos a partir de las fragmentos de codigo
      * separados por tablas
+     *
      * @param tablaGeneral
      */
     private static void getSimbolos(TablaSimbolo tablaGeneral) {
@@ -341,10 +342,11 @@ public class Simbolo {
      * Evaluar las variables globales y locales en notacion postfija
      *
      * @param tablaGeneral Tabla de variables globales y locales.
+     *  
      */
     private static void evaluarTablaSimboloPostfijo(TablaSimbolo tablaGeneral) {
         ArrayList<Simbolo> tablaVariables = tablaGeneral.getVariables();
-        Postfijo.evaluarTabla(tablaVariables);
+        Postfijo.evaluarTabla(tablaGeneral, tablaVariables);
 
         for (TablaSimbolo tablaHija : tablaGeneral.getTablasHijas()) {
             evaluarTablaSimboloPostfijo(tablaHija);

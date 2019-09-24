@@ -167,7 +167,7 @@ public class Postfijo {
      * @param indice Indice que ocupa el simbolo dentro de la tabla
      * @return
      */
-    public static Lexema evaluar(ArrayList<Simbolo> tabla, ArrayList<Lexema> expresionPostfija, int indice) {
+    public static Lexema evaluar(ArrayList<Simbolo> tabla, ArrayList<Lexema> expresionPostfija, int indice, TablaSimbolo ts) {
 
         /**
          * Pila de operadores y operandos
@@ -184,15 +184,17 @@ public class Postfijo {
 
                 int pos = Simbolo.buscarEnTabla(tabla, termino.getLexema());
 
-                if (pos != -1) {
+                Simbolo s = buscarVariable(ts, termino.getLexema());
 
-                    Simbolo simbolo = tabla.get(pos);
+                if (s != null) {
+
+                    Simbolo simbolo = s;
                     Lexema res = simbolo.getValorEvaluado();
 
                     if (res == null) {
 
                         ArrayList<Lexema> valorEnLexema = simbolo.getValorEnLexemas();
-                        res = evaluar(tabla, valorEnLexema, pos);
+                        res = evaluar(tabla, valorEnLexema, pos, ts);
 
                     }
 
@@ -230,7 +232,7 @@ public class Postfijo {
      *
      * @param tablaSimbolos
      */
-    public static void evaluarTabla(ArrayList<Simbolo> tablaSimbolos) {
+    public static void evaluarTabla(TablaSimbolo ts, ArrayList<Simbolo> tablaSimbolos) {
 
         ArrayList<Lexema> valorVariable;
 
@@ -249,7 +251,7 @@ public class Postfijo {
                  */
                 int indiceSimbolo = tablaSimbolos.indexOf(simbolo);
 
-                Lexema valorEvaluado = evaluar(tablaSimbolos, valorVariable, indiceSimbolo);
+                Lexema valorEvaluado = evaluar(tablaSimbolos, valorVariable, indiceSimbolo, ts);
                 simbolo.setValorEvaluado(valorEvaluado);
 
             }
@@ -311,7 +313,7 @@ public class Postfijo {
      * @param operador operador
      * @return Resultado en lexema
      */
-    private static Lexema operacion(Lexema operadorIzquierda, Lexema operadorDerecha, Lexema operador) {
+    public static Lexema operacion(Lexema operadorIzquierda, Lexema operadorDerecha, Lexema operador) {
         String ope = operador.getLexema();
 
         if (operador.getToken().equals("37")) {
@@ -425,6 +427,24 @@ public class Postfijo {
         }
 
         return res;
+
+    }
+
+    public static Simbolo buscarVariable(TablaSimbolo ts, String var) {
+
+        for (Simbolo variable : ts.getVariables()) {
+            if (variable.getVariable().equals(var)) {
+                return variable;
+            }
+        }
+
+        TablaSimbolo padre = ts.getTablaPadre();
+
+        if (padre != null) {
+            return buscarVariable(padre, var);
+        }
+
+        return null;
 
     }
 }

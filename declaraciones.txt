@@ -1,53 +1,18 @@
 
 	int num = 8;
-	int num2 = 4;
+	int num2 = 4 + num;
 	int num5 = 8 + 7;
 	boolean res = (8 > 9) & (10 <= 4);
 
-	if(num>4){
-		String var = "Holis";
+	if(num>19){
+		double alan = 22.3;
+		double alan2 = num + 13.8;
 
-		if(num2 >= 84){
-			double numeroFl = 29.3;
-			String nombre = "Alan";
-
-			if(res){
-				boolean varBool = false;
-
-			}else{
-				double numFloat = 45.5;
-
-			}
-
+		if(num>19){
+			double yoo = 22.3;
+			double yoo2 = alan + 13.8;
 		}
 
 	}
-
-	if(num2 >= 10){
-		String apellido = "Martinez";
-
-		if(num5 > 11){
-			String materia = "Automatas II";
-
-			if(true){
-				int n = 8;
-				if(true){
-					int n2 = 1000;
-					if(true){
-						double n3 = 1000.0;
-					}
-				}
-				int vars = 78+n;
-				if(true){
-					String varx = "Holis 3";
-				}
-			}
-
-		}
-
-		String semestre = "Noveno";
-	}
-
-	String variableGlobal = "Esta es una variable global xD";
 
 -
