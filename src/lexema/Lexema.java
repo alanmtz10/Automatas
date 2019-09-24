@@ -5,6 +5,9 @@
  */
 package lexema;
 
+import java.util.ArrayList;
+import separarPalabras.SeparaPalabras;
+
 /**
  *
  * @author Alan
@@ -102,6 +105,15 @@ public class Lexema {
             default:
                 return "Error desconocido";
         }
+    }
+
+    public static ArrayList<Lexema> getTablaLexema(String nombreArchivo) {
+
+        ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer(nombreArchivo);
+        ArrayList<Lexema> temp = separarPalabras.SeparaPalabras.separa(lineas);
+
+        return SeparaPalabras.arreglos(temp);
+
     }
 
 }
