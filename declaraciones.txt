@@ -1,7 +1,12 @@
 
 	int num = 8;
-	int num2 = 4;
+	int num2 = 4 + num;
 	int num5 = 8 + 7;
 	boolean res = (8 > 9) & (10 <= 4);
+
+	if(num>19){
+		double alan = 22.3;
+		double alan2 = alan + 13.7;
+	}
 
 -

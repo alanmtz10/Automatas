@@ -25,7 +25,8 @@ public class PrbSimbolo {
          * Tablas de variables globales y locales en notacion postfija
          */
         TablaSimbolo tablaGlobal = Simbolo.getTablasDeSimbolos(tablaLexema);
-        tablaGlobal.imprime(0);
+//        tablaGlobal.imprime(0);
+        Operaciones.evaluarTabla(tablaGlobal);
 
     }
 

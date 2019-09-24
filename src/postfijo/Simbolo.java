@@ -307,7 +307,7 @@ public class Simbolo {
 
         getSimbolos(tablaInicial);
         convertirTablaSimboloPostfijo(tablaInicial);
-        evaluarTablaSimboloPostfijo(tablaInicial);
+//        evaluarTablaSimboloPostfijo(tablaInicial);
 
         return tablaInicial;
     }
