@@ -22,6 +22,7 @@ public class Main {
         TablaSimbolo tablaGlobal = Simbolo.getTablasDeSimbolos(tablaLexema);
 
         ArrayList<Cuadrupla> cuadruplas = Cuadrupla.getCuadruplas(tablaGlobal);
+        System.out.println("(Operacion, Operando1, Operando2, Resultado)");
 
         for (Cuadrupla cuadrupla : cuadruplas) {
             System.out.println(cuadrupla);
