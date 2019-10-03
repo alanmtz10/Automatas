@@ -17,16 +17,15 @@ import postfijo.TablaSimbolo;
 public class Main {
 
     public static void main(String[] args) {
-        /**
-         * Programa fuente en lexemas
-         */
-        ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("declaraciones.txt");
 
-        /**
-         * Tablas de variables globales y locales en notacion postfija
-         */
+        ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("fuentes/cuadruplas.txt");
         TablaSimbolo tablaGlobal = Simbolo.getTablasDeSimbolos(tablaLexema);
 
-        tablaGlobal.imprime(0);
+        ArrayList<Cuadrupla> cuadruplas = Cuadrupla.getCuadruplas(tablaGlobal);
+
+        for (Cuadrupla cuadrupla : cuadruplas) {
+            System.out.println(cuadrupla);
+        }
+
     }
 }

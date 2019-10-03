@@ -10,5 +10,7 @@ package cintermedio;
  * @author alan
  */
 public class CIntermedio {
+    
+    
 
 }
