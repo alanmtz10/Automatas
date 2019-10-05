@@ -18,15 +18,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("fuentes/cuadruplas.txt");
-        TablaSimbolo tablaGlobal = Simbolo.getTablasDeSimbolos(tablaLexema);
-
-        ArrayList<Cuadrupla> cuadruplas = Cuadrupla.getCuadruplas(tablaGlobal);
-        System.out.println("(Operacion, Operando1, Operando2, Resultado)");
-
+        ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("fuentes/cuadrupla2.txt");
+        TablaSimbolo ts = Simbolo.getTablasDeSimbolos(tablaLexema);
+        ArrayList<Cuadrupla> cuadruplas = Cuadrupla.getCuadruplas(ts);
         for (Cuadrupla cuadrupla : cuadruplas) {
             System.out.println(cuadrupla);
         }
-
+        System.out.println("\n");
+        CIntermedio.generaCodigoIntermedio(tablaLexema);
+        CIntermedio.imprimeEtiquetas();
     }
 }
