@@ -98,7 +98,7 @@ public class Postfijo {
                  * Si el token es un operador, comprobar los operadores que hay
                  * en la pila e irlos sacando
                  */
-            } else if (token.equals("36") || token.equals("39") || token.equals("37")) {
+            } else if (token.equals("36") || token.equals("39") || token.equals("37") || token.equals("38")) {
 
                 while (!operadores.isEmpty() && !operadores.peek().getLexema().equals("(")
                         && esDeMayorPre(lexema, operadores.peek().getLexema())) {
