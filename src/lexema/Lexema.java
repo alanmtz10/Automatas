@@ -12,7 +12,7 @@ import separarPalabras.SeparaPalabras;
  *
  * @author Alan
  */
-public class Lexema {
+public class Lexema implements Cloneable {
 
     private String lexema;
     private int renglon;
@@ -114,6 +114,17 @@ public class Lexema {
 
         return SeparaPalabras.arreglos(temp);
 
+    }
+
+    @Override
+    public Object clone(){
+        Object clone = null;
+        try {
+            clone = super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return clone;
     }
 
 }
