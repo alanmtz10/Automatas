@@ -357,8 +357,6 @@ public class Gramatica_proyecto {
             }
             imprime();
         }
-//        System.out.println(getPos("<condicion_2>"));
-//        System.out.println(getPos(")"));
 
     }
 

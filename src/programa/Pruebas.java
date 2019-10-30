@@ -18,7 +18,7 @@ public class Pruebas {
     public static String[] prbs;
 
     public static void main(String[] args) {
-        ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("pro2.txt");
+        ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("fuentes/pro2.txt");
         ArrayList<Lexema> palabras = separarPalabras.SeparaPalabras.separa(lineas);
         for (Lexema palabra : palabras) {
             System.out.println(palabra);
@@ -26,7 +26,7 @@ public class Pruebas {
     }
 
     public static String[] getPalabras() {
-        ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("pro2.txt");
+        ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer("fuentes/pro2.txt");
         ArrayList<Lexema> palabras = separarPalabras.SeparaPalabras.separa(lineas);
         cambia(palabras);
 
