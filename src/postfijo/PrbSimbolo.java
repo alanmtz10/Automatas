@@ -19,7 +19,7 @@ public class PrbSimbolo {
         /**
          * Programa fuente en lexemas
          */
-        ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("declaraciones.txt");
+        ArrayList<Lexema> tablaLexema = Lexema.getTablaLexema("fuentes/declaraciones.txt");
 
         /**
          * Tablas de variables globales y locales en notacion postfija

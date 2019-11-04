@@ -1,7 +1,8 @@
-while(a>b & (x+3) > (z+w-3)){
-
+while(a >= x-3){
+    if(a >= b){
+        console.log("write holis");
+    }
 }
 
-if(a>b){}
 
 -
