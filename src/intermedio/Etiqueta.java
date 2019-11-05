@@ -40,6 +40,10 @@ public class Etiqueta {
     private ArrayList<Lexema> condicion;
     private ArrayList<Lexema> aumento;
 
+    public Etiqueta() {
+        
+    }
+
     public Etiqueta(int sentencia) {
         this.sentencia = sentencia;
         if (sentencia == SENT_IF) {
@@ -64,6 +68,7 @@ public class Etiqueta {
             eFalse = (contador += 5);
             eSig = anterior.geteSig();
         }
+
     }
 
     public Etiqueta(ArrayList<Lexema> variable, ArrayList<Lexema> condicion, ArrayList<Lexema> aumento) {
@@ -200,6 +205,11 @@ public class Etiqueta {
 
     public void setSentencia(int sentencia) {
         this.sentencia = sentencia;
+    }
+    
+    
+    public static ArrayList<Etiqueta> getEtiquetasAnd(Etiqueta principal){
+        
     }
 
 }

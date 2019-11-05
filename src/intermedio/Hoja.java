@@ -5,6 +5,7 @@
  */
 package intermedio;
 
+import java.util.ArrayList;
 import lexema.Lexema;
 
 /**
@@ -18,6 +19,11 @@ public class Hoja {
     private Hoja padre;
     private Hoja izquierda;
     private Hoja derecha;
+
+    /**
+     * Izquierda -- Derecha
+     */
+    private ArrayList<Etiqueta> etiquetas;
 
     public Hoja(Lexema h, Hoja izquierda, Hoja derecha) {
         this.valor = h;

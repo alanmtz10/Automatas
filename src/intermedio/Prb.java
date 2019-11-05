@@ -17,14 +17,13 @@ public class Prb {
 
     public static void main(String[] args) {
         ArrayList<Lexema> fuente = Lexema.getTablaLexema("post");
-
         fuente = Postfijo.convertirPostfijo(fuente);
-//        
-//        for (Lexema lexema : fuente) {
-//            System.out.print(lexema.getLexema()+" ");
-//        }
 
-        Arbol.construyeArbol(fuente);
+        Etiqueta principal = new Etiqueta();
+        /**
+         * Arbol
+         */
+        Arbol a = Arbol.construyeArbol(fuente);
 
     }
 
