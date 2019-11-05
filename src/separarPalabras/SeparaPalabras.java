@@ -171,7 +171,7 @@ public class SeparaPalabras {
 
                 }
 
-            } else if ((i < tabla.size()-1) && tabla.get(i).getToken().equals("43")) {
+            } else if ((i < tabla.size() - 1) && tabla.get(i).getToken().equals("43")) {
 
                 if (!tabla.get(i + 1).getToken().equals(".")) {
                     tablaAux.add(tabla.get(i));

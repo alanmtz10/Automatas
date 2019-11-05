@@ -1,7 +1,5 @@
-while(a >= x-3){
-    if(a >= b){
-        console.log("write holis");
-    }
+for(int i = 0; i<= 8; i++){
+    console.log("asdsad");
 }
 
 
