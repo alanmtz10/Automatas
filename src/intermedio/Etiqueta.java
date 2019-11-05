@@ -147,7 +147,7 @@ public class Etiqueta {
             System.out.println("goto " + eInicio);
             System.out.println(eFalse + ":");
         } else if (this.sentencia == SENT_FOR) {
-            System.out.println("aumento");
+            System.out.println(getAumento());
             System.out.println("goto " + eInicio);
             System.out.println(eFalse + ":");
         }
@@ -172,6 +172,13 @@ public class Etiqueta {
         }
 
         return var;
+    }
+
+    public String getAumento() {
+        if (Lexema.compareTo(aumento, variable.get(1).getLexema() + "++")) {
+            return variable.get(1).getLexema() + "=" + variable.get(1).getLexema() + "+1";
+        }
+        return "";
     }
 
 }

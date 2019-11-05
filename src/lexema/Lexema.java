@@ -117,7 +117,7 @@ public class Lexema implements Cloneable {
     }
 
     @Override
-    public Object clone(){
+    public Object clone() {
         Object clone = null;
         try {
             clone = super.clone();
@@ -125,6 +125,26 @@ public class Lexema implements Cloneable {
             e.printStackTrace();
         }
         return clone;
+    }
+
+    /**
+     * Comprobar si un ArrayList de lexemas es igual a una cadena Ej.
+     * ['h','o','l','a'] == "hola" : true
+     *
+     * @param lexemas Arreglo de lexemas
+     * @param cadena cadena
+     * @return true si son iguales
+     */
+    public static boolean compareTo(ArrayList<Lexema> lexemas, String cadena) {
+
+        String cadArray = "";
+
+        for (Lexema lexema : lexemas) {
+            cadArray += lexema.getLexema();
+        }
+
+        return cadArray.equals(cadena);
+
     }
 
 }
