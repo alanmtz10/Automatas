@@ -59,6 +59,11 @@ public class Etiqueta {
             eFalse = anterior.geteFalse();
             eSig = anterior.geteSig();
         }
+        if (sentencia == SENT_ELSE_IF) {
+            eTrue = (contador += 5);
+            eFalse = (contador += 5);
+            eSig = anterior.geteSig();
+        }
     }
 
     public Etiqueta(ArrayList<Lexema> variable, ArrayList<Lexema> condicion, ArrayList<Lexema> aumento) {
@@ -130,7 +135,12 @@ public class Etiqueta {
             System.out.println("if " + getCondicionEnPostfijo(this.condicion) + " goto " + eTrue);
             System.out.println("goto " + eFalse);
             System.out.println(eTrue + ":");
+        } else if (this.sentencia == SENT_ELSE_IF) {
+            System.out.println("if " + getCondicionEnPostfijo(condicion) + " goto " + eTrue);
+            System.out.println("goto " + eFalse);
+            System.out.println(eTrue + ":");
         }
+
     }
 
     public void printFin(ArrayList<Lexema> programa, int pos) {
@@ -150,6 +160,9 @@ public class Etiqueta {
             System.out.println(getAumento());
             System.out.println("goto " + eInicio);
             System.out.println(eFalse + ":");
+        } else if (this.sentencia == SENT_ELSE_IF) {
+            System.out.println("goto " + eSig);
+            System.out.println(eFalse+":");
         }
     }
 

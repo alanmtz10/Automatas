@@ -35,14 +35,20 @@ public class Pruebas {
 
         for (int i = 0; i < programa.size(); i++) {
 
-            if (programa.get(i).getLexema().equals("if")) {
+            if (programa.get(i).getLexema().equals("else") && programa.get(i + 1).getLexema().equals("if")) {
 
-                etiquetas.add(new Etiqueta(Etiqueta.SENT_IF));
+                etiquetas.add(new Etiqueta(Etiqueta.SENT_ELSE_IF, etPop));
                 sentencia = true;
+                i++;
 
             } else if (programa.get(i).getLexema().equals("else")) {
 
                 etiquetas.add(new Etiqueta(Etiqueta.SENT_ELSE, etPop));
+
+            } else if (programa.get(i).getLexema().equals("if")) {
+
+                etiquetas.add(new Etiqueta(Etiqueta.SENT_IF));
+                sentencia = true;
 
             } else if (programa.get(i).getLexema().equals("while")) {
 

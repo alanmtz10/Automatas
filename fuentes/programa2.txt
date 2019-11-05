@@ -1,9 +1,14 @@
-for(int j = 0; j<= 8; j++){
-    console.log("asdsad");
+
     if(a != b & x < 2){
         console.log("Hola me llamo alan xddd");
+    }else if(a != 45){
+        console.log("Else if");
+    }else if(unaVariable != otraVariable){
+        console.log("segunndo elseIf");
+    }else{
+        console.log("else");
     }
-}
+
 
 
 -
