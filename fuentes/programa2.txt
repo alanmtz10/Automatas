@@ -1,13 +1,18 @@
-
-    if(a != b & x < 2){
-        console.log("Hola me llamo alan xddd");
-    }else if(a != 45){
-        console.log("Else if");
-    }else if(unaVariable != otraVariable){
-        console.log("segunndo elseIf");
-    }else{
-        console.log("else");
+if(a>b){
+    console.log("asdsd");
+}else{
+    while(a != b){
+        console.log("qwerty");
     }
+
+    if(variable != otraVariable){
+        console.log("alan");
+    }
+}
+
+while(condicion != condicion2){
+    console.log("condicion2");
+}
 
 
 

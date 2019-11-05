@@ -126,7 +126,7 @@ public class Etiqueta {
             System.out.println(eTrue + ":");
         } else if (this.sentencia == SENT_WHILE) {
             System.out.println(eInicio + ":");
-            System.out.println("if" + getCondicionEnPostfijo(condicion) + " goto " + eTrue);
+            System.out.println("if " + getCondicionEnPostfijo(condicion) + " goto " + eTrue);
             System.out.println("goto " + eFalse);
             System.out.println(eTrue + ":");
         } else if (this.sentencia == SENT_FOR) {
@@ -162,7 +162,7 @@ public class Etiqueta {
             System.out.println(eFalse + ":");
         } else if (this.sentencia == SENT_ELSE_IF) {
             System.out.println("goto " + eSig);
-            System.out.println(eFalse+":");
+            System.out.println(eFalse + ":");
         }
     }
 
@@ -192,6 +192,14 @@ public class Etiqueta {
             return variable.get(1).getLexema() + "=" + variable.get(1).getLexema() + "+1";
         }
         return "";
+    }
+
+    public int getSentencia() {
+        return sentencia;
+    }
+
+    public void setSentencia(int sentencia) {
+        this.sentencia = sentencia;
     }
 
 }
