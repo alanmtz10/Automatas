@@ -66,8 +66,6 @@ public class Cuadrupla {
 
     @Override
     public String toString() {
-//        return "(Operacion: " + this.operacion + ", Operando 1: " + this.operando1
-//                + ", Operando 2: " + this.operando2 + ", Resultado: " + this.resultado + ")";
         return "(" + this.operacion + ", " + this.operando1
                 + ", " + this.operando2 + ", " + this.resultado + ")";
     }

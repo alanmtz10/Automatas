@@ -5,7 +5,9 @@
  */
 package intermedio;
 
-import java.util.StringTokenizer;
+import java.util.ArrayList;
+import lexema.Lexema;
+import postfijo.Postfijo;
 
 /**
  *
@@ -14,11 +16,16 @@ import java.util.StringTokenizer;
 public class Prb {
 
     public static void main(String[] args) {
-        StringTokenizer st = new StringTokenizer("for(int i = 0; i>= 20; i++){", "(;){");
+        ArrayList<Lexema> fuente = Lexema.getTablaLexema("post");
 
-        while (st.hasMoreTokens()) {
-            System.out.println(st.nextToken().replace(" ", ""));
-        }
+        fuente = Postfijo.convertirPostfijo(fuente);
+//        
+//        for (Lexema lexema : fuente) {
+//            System.out.print(lexema.getLexema()+" ");
+//        }
+
+        Arbol.construyeArbol(fuente);
+
     }
 
 }

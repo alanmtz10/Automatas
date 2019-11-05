@@ -147,4 +147,12 @@ public class Lexema implements Cloneable {
 
     }
 
+    public boolean isOperador() {
+        if (token.equals("37") || token.equals("39") || token.equals("38") || token.equals("39")) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
