@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package intermedio;
+package intermedio.arbol;
 
 import java.util.ArrayList;
 import lexema.Lexema;
@@ -27,6 +27,12 @@ public class Arbol {
         this.raizArbol = raiz;
     }
 
+    /**
+     * Construir arbol binario de una expresion postfija
+     *
+     * @param fuente expresion en postfijo
+     * @return arbol binario
+     */
     public static Arbol construyeArbol(ArrayList<Lexema> fuente) {
         Arbol arbol = new Arbol();
         Hoja raiz = null;
@@ -40,6 +46,13 @@ public class Arbol {
         return arbol;
     }
 
+    /**
+     * Agregar nodo a arbol
+     *
+     * @param c Lexema a agregar
+     * @param raiz ultima Hoja usada null si es primera vez
+     * @return hoja donde se inserto c
+     */
     public Hoja addNodo(Lexema c, Hoja raiz) {
         Hoja aux;
 
@@ -61,6 +74,11 @@ public class Arbol {
         }
     }
 
+    /**
+     * Imprimir arbol Izquierda Derecha Raiz
+     *
+     * @param inicio Hoja de inicio
+     */
     public void imprimeArbol(Hoja inicio) {
         if (inicio.getIzquierda() != null) {
             imprimeArbol(inicio.getIzquierda());
@@ -70,7 +88,5 @@ public class Arbol {
             imprimeArbol(inicio.getDerecha());
         }
     }
-
-    
 
 }

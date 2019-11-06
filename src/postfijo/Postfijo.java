@@ -39,7 +39,7 @@ public class Postfijo {
     };
 
     /**
-     * Metodo que convierte una exprecion infija a postfija
+     * Metodo que convierte una expresion infija a postfija
      *
      * @param expresion Arraylist que contiene los lexemas con su numero de
      * token, renglon y columna
