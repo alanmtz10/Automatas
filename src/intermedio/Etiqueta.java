@@ -41,7 +41,7 @@ public class Etiqueta {
     private ArrayList<Lexema> aumento;
 
     public Etiqueta() {
-        
+
     }
 
     public Etiqueta(int sentencia) {
@@ -125,22 +125,40 @@ public class Etiqueta {
     }
 
     public void printEnc(ArrayList<Lexema> condicion) {
+
         if (this.sentencia == SENT_IF) {
+            System.out.println("");
+            ArrayList<Lexema> condicionAux = Postfijo.convertirPostfijo((ArrayList<Lexema>) condicion.clone());
+            Cuadrupla.printCuadruplas(Cuadrupla.generaCuadrupla(condicionAux));
+            System.out.println("");
+
             System.out.println("if " + getCondicionEnPostfijo(condicion) + " goto " + eTrue);
             System.out.println("goto " + eFalse);
             System.out.println(eTrue + ":");
         } else if (this.sentencia == SENT_WHILE) {
+            System.out.println("");
+            ArrayList<Lexema> condicionAux = Postfijo.convertirPostfijo((ArrayList<Lexema>) condicion.clone());
+            Cuadrupla.printCuadruplas(Cuadrupla.generaCuadrupla(condicionAux));
+            System.out.println("");
+
             System.out.println(eInicio + ":");
             System.out.println("if " + getCondicionEnPostfijo(condicion) + " goto " + eTrue);
             System.out.println("goto " + eFalse);
             System.out.println(eTrue + ":");
         } else if (this.sentencia == SENT_FOR) {
+            System.out.println("");
+            ArrayList<Lexema> condicionAux = Postfijo.convertirPostfijo((ArrayList<Lexema>) this.condicion.clone());
+            Cuadrupla.printCuadruplas(Cuadrupla.generaCuadrupla(condicionAux));
+            System.out.println("");
+
             System.out.println(getVariable());
             System.out.println(eInicio + ":");
             System.out.println("if " + getCondicionEnPostfijo(this.condicion) + " goto " + eTrue);
             System.out.println("goto " + eFalse);
             System.out.println(eTrue + ":");
+
         } else if (this.sentencia == SENT_ELSE_IF) {
+
             System.out.println("if " + getCondicionEnPostfijo(condicion) + " goto " + eTrue);
             System.out.println("goto " + eFalse);
             System.out.println(eTrue + ":");
@@ -157,15 +175,22 @@ public class Etiqueta {
             }
             System.out.println(eFalse + ":");
         } else if (this.sentencia == SENT_ELSE) {
+
             System.out.println(eSig + ":");
+            System.out.println("sadsadsad");
         } else if (this.sentencia == SENT_WHILE) {
+
             System.out.println("goto " + eInicio);
             System.out.println(eFalse + ":");
+            
         } else if (this.sentencia == SENT_FOR) {
+
             System.out.println(getAumento());
             System.out.println("goto " + eInicio);
             System.out.println(eFalse + ":");
+
         } else if (this.sentencia == SENT_ELSE_IF) {
+
             System.out.println("goto " + eSig);
             System.out.println(eFalse + ":");
         }
@@ -206,10 +231,4 @@ public class Etiqueta {
     public void setSentencia(int sentencia) {
         this.sentencia = sentencia;
     }
-    
-    
-    public static ArrayList<Etiqueta> getEtiquetasAnd(Etiqueta principal){
-        
-    }
-
 }

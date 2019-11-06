@@ -18,13 +18,20 @@ public class Prb {
     public static void main(String[] args) {
         ArrayList<Lexema> fuente = Lexema.getTablaLexema("post");
         fuente = Postfijo.convertirPostfijo(fuente);
+        ArrayList<Cuadrupla> cuadruplas = Cuadrupla.generaCuadrupla(fuente);
+        
+        for (Cuadrupla lexema : cuadruplas) {
+            System.out.println(lexema);
+        }
 
-        Etiqueta principal = new Etiqueta();
-        /**
-         * Arbol
-         */
-        Arbol a = Arbol.construyeArbol(fuente);
-
+//        
+//        Etiqueta principal = new Etiqueta();
+//        /**
+//         * Arbol
+//         */
+//        Arbol a = Arbol.construyeArbol(fuente);
+//        
+//        a.imprimeArbol(a.getRaiz());
     }
 
 }

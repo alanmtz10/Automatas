@@ -14,6 +14,56 @@ import separarPalabras.SeparaPalabras;
  */
 public class Lexema implements Cloneable {
 
+    /**
+     * Constante de numero
+     */
+    public static final int NUMERO = 1;
+
+    /**
+     * Constante de numero entero
+     */
+    public static final int NUMERO_ENTERO = 2;
+
+    /**
+     * Constante de numero real
+     */
+    public static final int NUMERO_REAL = 3;
+
+    /**
+     * Constante de variable
+     */
+    public static final int VARIABLE = 4;
+
+    /**
+     * Contstante de numero o variable
+     */
+    public static final int NUMERO_VARIABLE = 5;
+
+    /**
+     * Constante de cadena
+     */
+    public static final int STRING = 6;
+
+    /**
+     * Constante de operador logico, aritmetico o relacional
+     */
+    public static final int OPERADOR = 7;
+
+    /**
+     * Constante de operador aritmetico / * - +
+     */
+    public static final int OPERADOR_ARITMETICO = 8;
+
+    /**
+     * Constante de operador logico & |
+     */
+    public static final int OPERADOR_LOGICO = 9;
+
+    /**
+     * Constante de operador relacional > < >= <= != ==
+     */
+    public static final int OPERADOR_RELACIONAL = 10;
+
     private String lexema;
     private int renglon;
     private int columna;
@@ -149,6 +199,39 @@ public class Lexema implements Cloneable {
 
     public boolean isOperador() {
         if (token.equals("37") || token.equals("39") || token.equals("38") || token.equals("39")) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Saber si el lexema es del tipo "that"
+     *
+     * @param that tipo
+     *
+     * Lexema.NUMERO_VARIABLE Lexema.NUMERO Lexema.STRING
+     * @return true si es del tipo
+     */
+    public boolean is(int that) {
+
+        if (that == NUMERO_VARIABLE && (token.equals("43") || token.equals("41") || token.equals("48"))) {
+            return true;
+        } else if (that == VARIABLE && token.equals("41")) {
+            return true;
+        } else if (that == OPERADOR && (token.equals("36") || token.equals("39") || token.equals("37"))) {
+            return true;
+        } else if (that == STRING && token.equals("46")) {
+            return true;
+        } else if (that == NUMERO_ENTERO && token.equals("43")) {
+            return true;
+        } else if (that == NUMERO_REAL && token.equals("48")) {
+            return true;
+        } else if (that == OPERADOR_ARITMETICO && token.equals("36")) {
+            return true;
+        } else if (that == OPERADOR_LOGICO && token.equals("37")) {
+            return true;
+        } else if (that == OPERADOR_RELACIONAL && token.equals("39")) {
             return true;
         }
 

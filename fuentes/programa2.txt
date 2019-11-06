@@ -1,19 +1,9 @@
-if(a>b){
-    console.log("asdsd");
+if(a>b & x != y){
+
 }else{
-    while(a != b){
-        console.log("qwerty");
-    }
 
-    if(variable != otraVariable){
-        console.log("alan");
-    }
 }
-
-while(condicion != condicion2){
-    console.log("condicion2");
-}
-
 
 
 -
+

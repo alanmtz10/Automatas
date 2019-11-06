@@ -102,6 +102,8 @@ public class Pruebas {
             } else if (programa.get(i).getLexema().equals("}")) {
                 etPop = etiquetas.pop();
                 etPop.printFin(programa, i);
+
+                
             } else {
                 while (!programa.get(i).getLexema().equals(";")) {
                     sent.add(programa.get(i));
