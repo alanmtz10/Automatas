@@ -129,7 +129,11 @@ public class Etiqueta {
         if (this.sentencia == SENT_IF) {
             System.out.println("");
             ArrayList<Lexema> condicionAux = Postfijo.convertirPostfijo((ArrayList<Lexema>) condicion.clone());
-            Cuadrupla.printCuadruplas(Cuadrupla.generaCuadrupla(condicionAux));
+
+            ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(condicionAux);
+            optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
+            Cuadrupla.printCuadruplas(c);
+
             System.out.println("");
 
             System.out.println("if " + getCondicionEnPostfijo(condicion) + " goto " + eTrue);
@@ -138,7 +142,9 @@ public class Etiqueta {
         } else if (this.sentencia == SENT_WHILE) {
             System.out.println("");
             ArrayList<Lexema> condicionAux = Postfijo.convertirPostfijo((ArrayList<Lexema>) condicion.clone());
-            Cuadrupla.printCuadruplas(Cuadrupla.generaCuadrupla(condicionAux));
+            ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(condicionAux);
+            optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
+            Cuadrupla.printCuadruplas(c);
             System.out.println("");
 
             System.out.println(eInicio + ":");
@@ -148,7 +154,9 @@ public class Etiqueta {
         } else if (this.sentencia == SENT_FOR) {
             System.out.println("");
             ArrayList<Lexema> condicionAux = Postfijo.convertirPostfijo((ArrayList<Lexema>) this.condicion.clone());
-            Cuadrupla.printCuadruplas(Cuadrupla.generaCuadrupla(condicionAux));
+            ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(condicionAux);
+            optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
+            Cuadrupla.printCuadruplas(c);
             System.out.println("");
 
             System.out.println(getVariable());
@@ -182,7 +190,7 @@ public class Etiqueta {
 
             System.out.println("goto " + eInicio);
             System.out.println(eFalse + ":");
-            
+
         } else if (this.sentencia == SENT_FOR) {
 
             System.out.println(getAumento());
