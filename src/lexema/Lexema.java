@@ -223,6 +223,8 @@ public class Lexema implements Cloneable {
             return true;
         } else if (that == STRING && token.equals("46")) {
             return true;
+        } else if (that == NUMERO && (token.equals("43") || token.equals("48"))) {
+            return true;
         } else if (that == NUMERO_ENTERO && token.equals("43")) {
             return true;
         } else if (that == NUMERO_REAL && token.equals("48")) {
