@@ -136,7 +136,9 @@ public class Etiqueta {
 
             System.out.println("");
 
-            System.out.println("if " + getCondicionEnPostfijo(condicion) + " goto " + eTrue);
+            String res = c.get(c.size() - 1).getResultado().getLexema();
+
+            System.out.println("if " + res + " goto " + eTrue);
             System.out.println("goto " + eFalse);
             System.out.println(eTrue + ":");
         } else if (this.sentencia == SENT_WHILE) {
@@ -146,9 +148,10 @@ public class Etiqueta {
             optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
             Cuadrupla.printCuadruplas(c);
             System.out.println("");
+            String res = c.get(c.size() - 1).getResultado().getLexema();
 
             System.out.println(eInicio + ":");
-            System.out.println("if " + getCondicionEnPostfijo(condicion) + " goto " + eTrue);
+            System.out.println("if " + res + " goto " + eTrue);
             System.out.println("goto " + eFalse);
             System.out.println(eTrue + ":");
         } else if (this.sentencia == SENT_FOR) {
@@ -159,9 +162,11 @@ public class Etiqueta {
             Cuadrupla.printCuadruplas(c);
             System.out.println("");
 
+            String res = c.get(c.size() - 1).getResultado().getLexema();
+
             System.out.println(getVariable());
             System.out.println(eInicio + ":");
-            System.out.println("if " + getCondicionEnPostfijo(this.condicion) + " goto " + eTrue);
+            System.out.println("if " + res + " goto " + eTrue);
             System.out.println("goto " + eFalse);
             System.out.println(eTrue + ":");
 
@@ -183,9 +188,7 @@ public class Etiqueta {
             }
             System.out.println(eFalse + ":");
         } else if (this.sentencia == SENT_ELSE) {
-
             System.out.println(eSig + ":");
-            System.out.println("sadsadsad");
         } else if (this.sentencia == SENT_WHILE) {
 
             System.out.println("goto " + eInicio);
