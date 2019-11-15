@@ -238,4 +238,18 @@ public class Lexema implements Cloneable {
         return false;
     }
 
+    /**
+     * Comparar si 2 lexemas son iguales
+     *
+     * @param l1 lexema 1
+     * @param l2 lexema 2
+     * @return true si son iguales
+     */
+    public static boolean compareTo(Lexema l1, Lexema l2) {
+        if (l1.lexema.equals(l2.lexema)) {
+            return true;
+        }
+        return false;
+    }
+
 }

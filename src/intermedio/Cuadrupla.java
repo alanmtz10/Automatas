@@ -138,4 +138,26 @@ public class Cuadrupla {
             System.out.println(cuadrupla);
         }
     }
+
+    /**
+     * Comparar si 2 cuadruplas son iguales operandos y operacion
+     *
+     * @param c1 cuadrupla 1
+     * @param c2 cuadrupla 2
+     * @return true si son iguales
+     */
+    public static boolean comparar(Cuadrupla c1, Cuadrupla c2) {
+
+        if (c1.operacion.getLexema().equals(c2.operacion.getLexema())
+                && (c1.operacion.getLexema().equals("*") || c1.operacion.getLexema().equals("+"))) {
+            if (c1.operando1.getLexema().equals(c2.getOperando2().getLexema())
+                    && c1.operando2.getLexema().equals(c2.getOperando1().getLexema())) {
+                return true;
+            }
+        }
+
+        return c1.operacion.getLexema().equals(c2.operacion.getLexema()) && c1.operando1.getLexema()
+                .equals(c2.operando1.getLexema()) && c1.operando2.getLexema()
+                .equals(c2.operando2.getLexema());
+    }
 }
