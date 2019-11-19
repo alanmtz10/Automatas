@@ -72,40 +72,42 @@ public class Optimizacion {
 
         for (int i = 0; i < cuadruplas.size(); i++) {
 
-            res = cuadruplas.get(i).getResultado();
-            oper = cuadruplas.get(i).getOperacion();
-            op1 = cuadruplas.get(i).getOperando1();
-            op2 = cuadruplas.get(i).getOperando2();
+            if (!(i + 1 >= cuadruplas.size())) {
+                res = cuadruplas.get(i).getResultado();
+                oper = cuadruplas.get(i).getOperacion();
+                op1 = cuadruplas.get(i).getOperando1();
+                op2 = cuadruplas.get(i).getOperando2();
 
-            if ((oper.getLexema().equals("+") || oper.getLexema().equals("-") || oper.getLexema().equals("*"))
-                    && (op1.getLexema().equals("0") || op2.getLexema().equals("0"))) {
+                if ((oper.getLexema().equals("+") || oper.getLexema().equals("-") || oper.getLexema().equals("*"))
+                        && (op1.getLexema().equals("0") || op2.getLexema().equals("0"))) {
 
-                cuadruplas.remove(i);
-                if (op1.getLexema().equals("0")) {
-                    remplazar(cuadruplas, res, op2);
-                } else {
+                    cuadruplas.remove(i);
+                    if (op1.getLexema().equals("0")) {
+                        remplazar(cuadruplas, res, op2);
+                    } else {
+                        remplazar(cuadruplas, res, op1);
+                    }
+
+                } else if (oper.getLexema().equals("*")
+                        && (op1.getLexema().equals("1") || op2.getLexema().equals("1"))) {
+
+                    cuadruplas.remove(i);
+                    if (op1.getLexema().equals("1")) {
+                        remplazar(cuadruplas, res, op2);
+                    } else {
+                        remplazar(cuadruplas, res, op1);
+                    }
+
+                } else if (oper.getLexema().equals("/") && op2.getLexema().equals("1")) {
+
+                    cuadruplas.remove(i);
                     remplazar(cuadruplas, res, op1);
+                } else if (op1.is(Lexema.NUMERO) && op2.is(Lexema.NUMERO)) {
+
+                    cuadruplas.remove(i);
+                    remplazar(cuadruplas, res, Postfijo.operacion(op1, op2, oper));
+
                 }
-
-            } else if (oper.getLexema().equals("*")
-                    && (op1.getLexema().equals("1") || op2.getLexema().equals("1"))) {
-
-                cuadruplas.remove(i);
-                if (op1.getLexema().equals("1")) {
-                    remplazar(cuadruplas, res, op2);
-                } else {
-                    remplazar(cuadruplas, res, op1);
-                }
-
-            } else if (oper.getLexema().equals("/") && op2.getLexema().equals("1")) {
-
-                cuadruplas.remove(i);
-                remplazar(cuadruplas, res, op1);
-            } else if (op1.is(Lexema.NUMERO) && op2.is(Lexema.NUMERO)) {
-
-                cuadruplas.remove(i);
-                remplazar(cuadruplas, res, Postfijo.operacion(op1, op2, oper));
-
             }
         }
 

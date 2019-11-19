@@ -34,17 +34,13 @@ public class Pruebas {
         boolean sentencia = false;
 
         for (int i = 0; i < programa.size(); i++) {
-
             if (programa.get(i).getLexema().equals("else") && programa.get(i + 1).getLexema().equals("if")) {
 
                 etiquetas.add(new Etiqueta(Etiqueta.SENT_ELSE_IF, etPop));
                 sentencia = true;
                 i++;
-
             } else if (programa.get(i).getLexema().equals("else")) {
-
                 etiquetas.add(new Etiqueta(Etiqueta.SENT_ELSE, etPop));
-
             } else if (programa.get(i).getLexema().equals("if")) {
 
                 etiquetas.add(new Etiqueta(Etiqueta.SENT_IF));
@@ -103,16 +99,32 @@ public class Pruebas {
                 etPop = etiquetas.pop();
                 etPop.printFin(programa, i);
 
-                
             } else {
-                while (!programa.get(i).getLexema().equals(";")) {
-                    sent.add(programa.get(i));
-                    i++;
-                }
-                sent.add(programa.get(i));
+                if (programa.get(i).getLexema().equals("int") || programa.get(i).getLexema().equals("double")) {
+                    String var = programa.get(i + 1).getLexema();
+                    i += 2;
 
-                printSentencia(sent);
-                sent.clear();
+                    while (!programa.get(i).getLexema().equals(";")) {
+                        sent.add(programa.get(i));
+                        i++;
+                    }
+                    sent = Postfijo.convertirPostfijo(sent);
+                    ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(sent);
+                    optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 2);
+                    Cuadrupla.printCuadruplas(c);
+                    System.out.println(var + "=" + c.get(c.size() - 1).getResultado().getLexema());
+
+                    sent.clear();
+
+                } else {
+                    while (!programa.get(i).getLexema().equals(";")) {
+                        sent.add(programa.get(i));
+                        i++;
+                    }
+                    sent.add(programa.get(i));
+                    printSentencia(sent);
+                    sent.clear();
+                }
             }
 
         }
