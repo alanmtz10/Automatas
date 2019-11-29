@@ -16,12 +16,10 @@ import postfijo.Postfijo;
  */
 public class Pruebas {
 
+    public static ArrayList<ArrayList<Cuadrupla>> listaCuadruplas = new ArrayList<>();
+
     public static void main(String[] args) {
         ArrayList<Lexema> programa = Lexema.getTablaLexema("fuentes/programa2.txt");
-
-//        for (Lexema lexema : programa) {
-//            System.out.println(lexema);
-//        }
         generaCodigoIntermedio(programa);
     }
 
@@ -30,6 +28,12 @@ public class Pruebas {
         ArrayList<Lexema> condicion = new ArrayList<>();
         ArrayList<Lexema> sent = new ArrayList<>();
         Etiqueta etPop = null;
+        Etiqueta temp;
+
+        /**
+         * Almacenar cuadruplas de if, for, while, etc.
+         */
+        ArrayList<Cuadrupla> temporal;
 
         boolean sentencia = false;
 
@@ -41,9 +45,11 @@ public class Pruebas {
                 i++;
             } else if (programa.get(i).getLexema().equals("else")) {
                 etiquetas.add(new Etiqueta(Etiqueta.SENT_ELSE, etPop));
+
             } else if (programa.get(i).getLexema().equals("if")) {
 
-                etiquetas.add(new Etiqueta(Etiqueta.SENT_IF));
+                temp = new Etiqueta(Etiqueta.SENT_IF);
+                etiquetas.add(temp);
                 sentencia = true;
 
             } else if (programa.get(i).getLexema().equals("while")) {
@@ -101,7 +107,7 @@ public class Pruebas {
 
             } else {
                 if (programa.get(i).getLexema().equals("int") || programa.get(i).getLexema().equals("double")) {
-                    String var = programa.get(i + 1).getLexema();
+                    Lexema var = programa.get(i + 1);
                     i += 2;
 
                     while (!programa.get(i).getLexema().equals(";")) {
@@ -110,10 +116,17 @@ public class Pruebas {
                     }
                     sent = Postfijo.convertirPostfijo(sent);
                     ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(sent);
-                    optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 4);
+//                    optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 4);
+                    c.add(
+                            new Cuadrupla(
+                                    new Lexema("=", 0, 0, "40"),
+                                    c.get(c.size() - 1).getResultado(),
+                                    null,
+                                    var
+                            )
+                    );
                     Cuadrupla.printCuadruplas(c);
-                    System.out.println(var + "=" + c.get(c.size() - 1).getResultado().getLexema());
-
+                    listaCuadruplas.add(c);
                     sent.clear();
 
                 } else {

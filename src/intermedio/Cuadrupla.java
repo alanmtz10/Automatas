@@ -72,7 +72,11 @@ public class Cuadrupla {
     @Override
     public String toString() {
 //        return "(" + operacion.getLexema() + "," + operando1.getLexema() + "," + operando2.getLexema() + "," + resultado.getLexema() + ")";
-        return resultado.getLexema() + " = " + operando1.getLexema() + " " + operacion.getLexema() + " " + operando2.getLexema();
+        if (operando2 != null) {
+            return resultado.getLexema() + " = " + operando1.getLexema() + " " + operacion.getLexema() + " " + operando2.getLexema();
+        }
+
+        return resultado.getLexema() + " = " + operando1.getLexema() + " " + operacion.getLexema();
     }
 
     /**

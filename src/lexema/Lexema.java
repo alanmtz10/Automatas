@@ -64,6 +64,11 @@ public class Lexema implements Cloneable {
      */
     public static final int OPERADOR_RELACIONAL = 10;
 
+    /**
+     * Constante de operador de asignacion = += -=
+     */
+    public static final int OPERADOR_ASIGNACION = 11;
+
     private String lexema;
     private int renglon;
     private int columna;
@@ -235,6 +240,8 @@ public class Lexema implements Cloneable {
             return true;
         } else if (that == OPERADOR_RELACIONAL && token.equals("39")) {
             return true;
+        } else if (that == OPERADOR_ASIGNACION && token.equals("40")) {
+
         }
 
         return false;
