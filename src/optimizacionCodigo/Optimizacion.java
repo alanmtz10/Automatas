@@ -50,7 +50,6 @@ public class Optimizacion {
                 }
                 for (int j = 0; j < pos.size(); j++) {
                     Lexema temporal = cuadruplas.remove((int) pos.get(j)).getResultado();
-
                     remplazar(cuadruplas, temporal, cuadruplas.get(i).getResultado());
                 }
                 pos.clear();
@@ -73,6 +72,7 @@ public class Optimizacion {
         for (int i = 0; i < cuadruplas.size(); i++) {
 
             if (!(i + 1 >= cuadruplas.size())) {
+                
                 res = cuadruplas.get(i).getResultado();
                 oper = cuadruplas.get(i).getOperacion();
                 op1 = cuadruplas.get(i).getOperando1();
@@ -99,14 +99,11 @@ public class Optimizacion {
                     }
 
                 } else if (oper.getLexema().equals("/") && op2.getLexema().equals("1")) {
-
                     cuadruplas.remove(i);
                     remplazar(cuadruplas, res, op1);
                 } else if (op1.is(Lexema.NUMERO) && op2.is(Lexema.NUMERO)) {
-
                     cuadruplas.remove(i);
                     remplazar(cuadruplas, res, Postfijo.operacion(op1, op2, oper));
-
                 }
             }
         }

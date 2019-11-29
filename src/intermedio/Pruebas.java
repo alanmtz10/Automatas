@@ -110,7 +110,7 @@ public class Pruebas {
                     }
                     sent = Postfijo.convertirPostfijo(sent);
                     ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(sent);
-                    optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 2);
+                    optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 4);
                     Cuadrupla.printCuadruplas(c);
                     System.out.println(var + "=" + c.get(c.size() - 1).getResultado().getLexema());
 

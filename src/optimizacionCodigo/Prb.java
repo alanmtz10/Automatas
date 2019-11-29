@@ -30,7 +30,7 @@ public class Prb {
         System.out.println("Optimizacion");
         System.out.println("--------------------------");
 
-        Optimizacion.optimizaCuadrupla(tablaCuadruplas, 3);
+        Optimizacion.optimizaCuadrupla(tablaCuadruplas, 5);
 
         for (Cuadrupla c : tablaCuadruplas) {
             System.out.println(c);
