@@ -1,0 +1,18 @@
+int x = 20+3+2;
+
+int yaa = 10+5;
+
+String msj = "Mi mensaje";
+
+
+if(x>=20){
+    console.log("Hola");
+
+    read("Alan");
+
+    while(x+3 >= 20){
+        console.log("Sacar cuadruples y cod inter");
+    }
+}
+
+-

@@ -17,10 +17,23 @@ import postfijo.Postfijo;
 public class Pruebas {
 
     public static ArrayList<ArrayList<Cuadrupla>> listaCuadruplas = new ArrayList<>();
+    public static ArrayList<Cuadrupla> variablesEncabezado = new ArrayList<>();
+
+    private static int varMsj = 1;
 
     public static void main(String[] args) {
-        ArrayList<Lexema> programa = Lexema.getTablaLexema("fuentes/programa2.txt");
+        ArrayList<Lexema> programa = Lexema.getTablaLexema("fuentes/codinter.txt");
         generaCodigoIntermedio(programa);
+
+        System.out.println("*************************************");
+
+        for (ArrayList<Cuadrupla> l : listaCuadruplas) {
+            for (Cuadrupla l1 : l) {
+                System.out.println(l1);
+            }
+            System.out.println("\n");
+        }
+
     }
 
     public static void generaCodigoIntermedio(ArrayList<Lexema> programa) {
@@ -29,6 +42,8 @@ public class Pruebas {
         ArrayList<Lexema> sent = new ArrayList<>();
         Etiqueta etPop = null;
         Etiqueta temp;
+
+        ArrayList<Cuadrupla> aux = new ArrayList<>();
 
         /**
          * Almacenar cuadruplas de if, for, while, etc.
@@ -104,7 +119,6 @@ public class Pruebas {
             } else if (programa.get(i).getLexema().equals("}")) {
                 etPop = etiquetas.pop();
                 etPop.printFin(programa, i);
-
             } else {
                 if (programa.get(i).getLexema().equals("int") || programa.get(i).getLexema().equals("double")) {
                     Lexema var = programa.get(i + 1);
@@ -129,6 +143,28 @@ public class Pruebas {
                     listaCuadruplas.add(c);
                     sent.clear();
 
+                } else if (programa.get(i).getLexema().equals("String")) {
+                    variablesEncabezado.add(
+                            new Cuadrupla(null, programa.get(i + 3), null, programa.get(i + 1))
+                    );
+                    i += 4;
+                } else if (programa.get(i).getLexema().equals("console")) {
+                    variablesEncabezado.add(
+                            new Cuadrupla(null, programa.get(i + 3), null, new Lexema("msj" + varMsj, 0, 0))
+                    );
+
+                    aux.add(new Cuadrupla(
+                            new Lexema("write", 0, 0, "console"),
+                            new Lexema("msj" + varMsj, 0, 0, "41"),
+                            null,
+                            null
+                    ));
+
+                    listaCuadruplas.add(aux);
+                    aux.clear();
+
+                    varMsj++;
+                    i += 5;
                 } else {
                     while (!programa.get(i).getLexema().equals(";")) {
                         sent.add(programa.get(i));

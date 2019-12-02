@@ -20,7 +20,6 @@ public class PrbAssembly {
         ArrayList<Lexema> fuente = Lexema.getTablaLexema("post");
         fuente = Postfijo.convertirPostfijo(fuente);
         ArrayList<Cuadrupla> cuadruplas = Cuadrupla.generaCuadrupla(fuente);
-        
         Assembly.toAssembly(cuadruplas);
     }
 }

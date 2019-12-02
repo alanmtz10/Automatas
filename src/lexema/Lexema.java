@@ -69,6 +69,11 @@ public class Lexema implements Cloneable {
      */
     public static final int OPERADOR_ASIGNACION = 11;
 
+    /**
+     * Constante de tipo de dato String int double
+     */
+    public static final int TIPO_DATO = 12;
+
     private String lexema;
     private int renglon;
     private int columna;
@@ -241,7 +246,9 @@ public class Lexema implements Cloneable {
         } else if (that == OPERADOR_RELACIONAL && token.equals("39")) {
             return true;
         } else if (that == OPERADOR_ASIGNACION && token.equals("40")) {
-
+            return true;
+        } else if (that == TIPO_DATO && token.equals("1")) {
+            return true;
         }
 
         return false;

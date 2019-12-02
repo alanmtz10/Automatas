@@ -131,7 +131,8 @@ public class Etiqueta {
             ArrayList<Lexema> condicionAux = Postfijo.convertirPostfijo((ArrayList<Lexema>) condicion.clone());
 
             ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(condicionAux);
-            optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
+//            optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
+            Pruebas.listaCuadruplas.add(c);
             Cuadrupla.printCuadruplas(c);
 
             System.out.println("");
@@ -145,7 +146,8 @@ public class Etiqueta {
             System.out.println("");
             ArrayList<Lexema> condicionAux = Postfijo.convertirPostfijo((ArrayList<Lexema>) condicion.clone());
             ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(condicionAux);
-            optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
+//            optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
+            Pruebas.listaCuadruplas.add(c);
             Cuadrupla.printCuadruplas(c);
             System.out.println("");
             String res = c.get(c.size() - 1).getResultado().getLexema();
@@ -158,7 +160,8 @@ public class Etiqueta {
             System.out.println("");
             ArrayList<Lexema> condicionAux = Postfijo.convertirPostfijo((ArrayList<Lexema>) this.condicion.clone());
             ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(condicionAux);
-            optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
+//            optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 3);
+            Pruebas.listaCuadruplas.add(c);
             Cuadrupla.printCuadruplas(c);
             System.out.println("");
 

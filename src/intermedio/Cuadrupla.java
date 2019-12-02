@@ -71,12 +71,25 @@ public class Cuadrupla {
 
     @Override
     public String toString() {
-//        return "(" + operacion.getLexema() + "," + operando1.getLexema() + "," + operando2.getLexema() + "," + resultado.getLexema() + ")";
+        String op = "";
+        String op1 = "";
+        String op2 = "";
+        String res = "";
+
+        if (operacion != null) {
+            op = operacion.getLexema();
+        }
+        if (operando1 != null) {
+            op1 = operando1.getLexema();
+        }
         if (operando2 != null) {
-            return resultado.getLexema() + " = " + operando1.getLexema() + " " + operacion.getLexema() + " " + operando2.getLexema();
+            op2 = operando2.getLexema();
+        }
+        if (resultado != null) {
+            res = resultado.getLexema();
         }
 
-        return resultado.getLexema() + " = " + operando1.getLexema() + " " + operacion.getLexema();
+        return res + " " + op1 + " " + op + " " + op2;
     }
 
     /**
