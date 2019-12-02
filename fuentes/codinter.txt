@@ -2,17 +2,21 @@ int x = 20+3+2;
 
 int yaa = 10+5;
 
+double j = 10+20;
+
 String msj = "Mi mensaje";
 
 
 if(x>=20){
     console.log("Hola");
 
-    read("Alan");
+    read(z);
 
-    while(x+3 >= 20){
-        console.log("Sacar cuadruples y cod inter");
+    if(x +3 >= 8-1){
+
     }
+
+    console.log("Variable");
 }
 
 -

@@ -45,6 +45,7 @@ public class Etiqueta {
     }
 
     public Etiqueta(int sentencia) {
+
         this.sentencia = sentencia;
         if (sentencia == SENT_IF) {
             eSig = contador;

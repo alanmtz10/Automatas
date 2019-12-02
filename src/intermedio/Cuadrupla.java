@@ -89,7 +89,7 @@ public class Cuadrupla {
             res = resultado.getLexema();
         }
 
-        return res + " " + op1 + " " + op + " " + op2;
+        return "Resultado " + res + " Operando1 " + op1 + " Operacion " + op + "  Operando2 " + op2;
     }
 
     /**

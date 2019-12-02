@@ -28,10 +28,17 @@ public class Pruebas {
         System.out.println("*************************************");
 
         for (ArrayList<Cuadrupla> l : listaCuadruplas) {
+            System.out.println(l.size());
             for (Cuadrupla l1 : l) {
                 System.out.println(l1);
             }
             System.out.println("\n");
+        }
+
+        System.out.println("*************************************");
+
+        for (Cuadrupla c : variablesEncabezado) {
+            System.out.println(c);
         }
 
     }
@@ -44,6 +51,8 @@ public class Pruebas {
         Etiqueta temp;
 
         ArrayList<Cuadrupla> aux = new ArrayList<>();
+
+        ArrayList<Cuadrupla> temporalC;
 
         /**
          * Almacenar cuadruplas de if, for, while, etc.
@@ -114,11 +123,68 @@ public class Pruebas {
                 sentencia = false;
 
             } else if (programa.get(i).getLexema().equals("{")) {
-                etiquetas.peek().printEnc(condicion);
+
+                if (etiquetas.peek().getSentencia() == Etiqueta.SENT_IF) {
+
+                    Etiqueta e = etiquetas.peek();
+
+                    temporalC = Cuadrupla.generaCuadrupla(Postfijo.convertirPostfijo(condicion));
+                    Cuadrupla t = temporalC.get(temporalC.size() - 1);
+
+                    temporalC.add(new Cuadrupla(
+                            new Lexema(t.getOperacion().getLexema(), 0, 0),
+                            new Lexema(t.getOperando1().getLexema(), 0, 0),
+                            new Lexema(t.getOperando2().getLexema(), 0, 0),
+                            null
+                    ));
+
+                    temporalC.add(new Cuadrupla(
+                            new Lexema("true", 0, 0),
+                            new Lexema("" + e.geteTrue(), 0, 0),
+                            null,
+                            null
+                    ));
+
+                    temporalC.add(new Cuadrupla(
+                            new Lexema("false", 0, 0),
+                            new Lexema("" + e.geteFalse(), 0, 0),
+                            null,
+                            null
+                    ));
+
+                    temporalC.add(new Cuadrupla(
+                            new Lexema(":", 0, 0),
+                            new Lexema("" + e.geteTrue(), 0, 0),
+                            null,
+                            null
+                    ));
+
+                    listaCuadruplas.add(temporalC);
+//                    temporalC.clear();
+
+                }
+
+//                etiquetas.peek().printEnc(condicion);
                 condicion.clear();
             } else if (programa.get(i).getLexema().equals("}")) {
                 etPop = etiquetas.pop();
-                etPop.printFin(programa, i);
+
+                if (etPop.getSentencia() == Etiqueta.SENT_IF) {
+
+                    temporalC = new ArrayList<Cuadrupla>();
+
+                    temporalC.add(new Cuadrupla(
+                            new Lexema(":", 0, 0),
+                            new Lexema("" + etPop.geteFalse(), 0, 0),
+                            null,
+                            null
+                    ));
+
+                    listaCuadruplas.add(temporalC);
+
+                }
+
+//                etPop.printFin(programa, i);
             } else {
                 if (programa.get(i).getLexema().equals("int") || programa.get(i).getLexema().equals("double")) {
                     Lexema var = programa.get(i + 1);
@@ -153,18 +219,40 @@ public class Pruebas {
                             new Cuadrupla(null, programa.get(i + 3), null, new Lexema("msj" + varMsj, 0, 0))
                     );
 
-                    aux.add(new Cuadrupla(
-                            new Lexema("write", 0, 0, "console"),
-                            new Lexema("msj" + varMsj, 0, 0, "41"),
-                            null,
-                            null
-                    ));
+                    aux.add(
+                            new Cuadrupla(
+                                    new Lexema("write", 0, 0, "console"),
+                                    new Lexema("msj" + varMsj, 0, 0, "41"),
+                                    null,
+                                    null
+                            ));
 
                     listaCuadruplas.add(aux);
-                    aux.clear();
+                    aux = new ArrayList<>();
 
                     varMsj++;
                     i += 5;
+                } else if (programa.get(i).getLexema().equals("read")) {
+                    variablesEncabezado.add(
+                            new Cuadrupla(
+                                    null,
+                                    null,
+                                    null,
+                                    programa.get(i + 2)
+                            ));
+
+                    aux.add(
+                            new Cuadrupla(
+                                    new Lexema("read", 0, 0),
+                                    new Lexema(programa.get(i + 2).getLexema(), 0, 0),
+                                    null,
+                                    null
+                            ));
+                    listaCuadruplas.add(aux);
+
+                    aux = new ArrayList<>();
+
+                    i += 4;
                 } else {
                     while (!programa.get(i).getLexema().equals(";")) {
                         sent.add(programa.get(i));
