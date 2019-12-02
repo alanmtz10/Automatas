@@ -194,9 +194,11 @@ public class Pruebas {
                         sent.add(programa.get(i));
                         i++;
                     }
+
                     sent = Postfijo.convertirPostfijo(sent);
                     ArrayList<Cuadrupla> c = Cuadrupla.generaCuadrupla(sent);
 //                    optimizacionCodigo.Optimizacion.optimizaCuadrupla(c, 4);
+
                     c.add(
                             new Cuadrupla(
                                     new Lexema("=", 0, 0, "40"),

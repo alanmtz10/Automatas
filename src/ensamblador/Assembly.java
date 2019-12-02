@@ -6,6 +6,7 @@
 package ensamblador;
 
 import intermedio.Cuadrupla;
+import intermedio.Pruebas;
 import java.util.ArrayList;
 
 /**
@@ -13,6 +14,9 @@ import java.util.ArrayList;
  * @author alanm
  */
 public class Assembly {
+
+    public static ArrayList<Cuadrupla> variables = Pruebas.variablesEncabezado;
+    public static ArrayList<ArrayList<Cuadrupla>> cuadruplas = Pruebas.listaCuadruplas;
 
     public static final String encabezado = "TITLE operaciones"
             + "\n.MODEL SMALL"
@@ -49,7 +53,7 @@ public class Assembly {
     public static void toAssembly(ArrayList<Cuadrupla> cuadruplas) {
         String aux;
         System.out.println(encabezado + "\n");
-        for (int i = 0; i < cuadruplas.size(); i++) {
+        for (int i = 0; i < variables.size(); i++) {
             System.out.println(defWord.replace(":var", cuadruplas.get(i).getResultado().getLexema()));
         }
         System.out.println("\n" + codigo + "\n");
@@ -79,6 +83,16 @@ public class Assembly {
 
         System.out.println(fin);
 
+    }
+
+    public static void addVariables() {
+        for (ArrayList<Cuadrupla> cua : cuadruplas) {
+            for (Cuadrupla c : cua) {
+                if (c.getResultado() != null) {
+                    variables.add(c);
+                }
+            }
+        }
     }
 
 }

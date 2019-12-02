@@ -9,6 +9,7 @@ import intermedio.Cuadrupla;
 import java.util.ArrayList;
 import lexema.Lexema;
 import postfijo.Postfijo;
+import intermedio.Pruebas;
 
 /**
  *
@@ -17,9 +18,11 @@ import postfijo.Postfijo;
 public class PrbAssembly {
 
     public static void main(String[] args) {
-        ArrayList<Lexema> fuente = Lexema.getTablaLexema("post");
-        fuente = Postfijo.convertirPostfijo(fuente);
-        ArrayList<Cuadrupla> cuadruplas = Cuadrupla.generaCuadrupla(fuente);
-        Assembly.toAssembly(cuadruplas);
+        Pruebas.main(args);
+        System.out.println("***************");
+        Assembly.addVariables();
+        
+        Assembly.toAssembly(null);
+        
     }
 }
