@@ -41,7 +41,7 @@ public class Etiqueta {
     private ArrayList<Lexema> aumento;
 
     public Etiqueta() {
-
+        
     }
 
     public Etiqueta(int sentencia) {

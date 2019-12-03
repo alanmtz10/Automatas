@@ -172,8 +172,26 @@ public class Lexema implements Cloneable {
         ArrayList<String> lineas = separarPalabras.SeparaPalabras.leer(nombreArchivo);
         ArrayList<Lexema> temp = separarPalabras.SeparaPalabras.separa(lineas);
 
-        return SeparaPalabras.arreglos(temp);
+        temp = SeparaPalabras.arreglos(temp);
+        return unirElseif(temp);
+    }
 
+    /**
+     * Unir else if
+     */
+    private static ArrayList<Lexema> unirElseif(ArrayList<Lexema> lista) {
+        ArrayList<Lexema> fixed = new ArrayList<>();
+
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getLexema().equals("else") && lista.get(i + 1).getLexema().equals("if")) {
+                fixed.add(new Lexema("else if", 0, 0, "77"));
+                i += 1;
+            } else {
+                fixed.add(lista.get(i));
+            }
+        }
+
+        return fixed;
     }
 
     @Override

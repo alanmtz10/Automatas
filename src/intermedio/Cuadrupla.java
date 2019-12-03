@@ -123,11 +123,9 @@ public class Cuadrupla {
         for (Lexema lexema : expresionCopy) {
 
             if (lexema.is(Lexema.NUMERO_VARIABLE)) {
-
                 operandos.push(lexema);
 
             } else if (lexema.is(Lexema.OPERADOR)) {
-
                 operadores.push(lexema);
 
                 if (operandos.size() >= 2) {

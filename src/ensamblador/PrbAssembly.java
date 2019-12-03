@@ -21,8 +21,7 @@ public class PrbAssembly {
         Pruebas.main(args);
         System.out.println("***************");
         Assembly.addVariables();
-        
-        Assembly.toAssembly(null);
+//        Assembly.toAssembly(null);
         
     }
 }
