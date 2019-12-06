@@ -211,4 +211,12 @@ public class Cuadrupla {
                 .equals(c2.operando2.getLexema());
     }
 
+    public String getEtiqueta() {
+        return etiqueta;
+    }
+
+    public void setEtiqueta(String etiqueta) {
+        this.etiqueta = etiqueta;
+    }
+
 }

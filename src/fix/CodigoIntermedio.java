@@ -42,9 +42,10 @@ public class CodigoIntermedio {
     /**
      * Generar lista de cuadruplas y variables listas para pasar a ensamblador
      *
-     * @param listaLexemas lista de lexemas
+     * @param listaLexemas lista lexemas
+     * @return [0] ArrayList Cuadrupla [1] ArrayList Variable
      */
-    public static void generaCodigoIntermedio(ArrayList<Lexema> listaLexemas) {
+    public static Object[] generaCodigoIntermedio(ArrayList<Lexema> listaLexemas) {
 
         for (int i = 0; i < listaLexemas.size(); i++) {
             head = listaLexemas.get(i);
@@ -167,6 +168,7 @@ public class CodigoIntermedio {
         for (Variable variable : variables) {
             System.out.println(variable);
         }
+        return new Object[]{cuadruplas, variables};
     }
 
     /**
