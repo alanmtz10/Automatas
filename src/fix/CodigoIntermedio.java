@@ -108,6 +108,14 @@ public class CodigoIntermedio {
                     ));
                     nMensajes++;
                     i += 4;
+                } else if (listaLexemas.get(i + 2).is(Lexema.VARIABLE)) {
+                    cuadruplas.add(new Cuadrupla(
+                            head,
+                            listaLexemas.get(i + 2),
+                            null,
+                            new Lexema("write", 0, 0)
+                    ));
+                    i += 4;
                 }
 
             } else if (head.is(Lexema.LLAVE_CIERRE)) {
