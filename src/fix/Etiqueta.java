@@ -49,6 +49,13 @@ public class Etiqueta {
             eSig = anterior.eSig;
             eFalse = anterior.eFalse;
 
+        } else if (tipoSent == WHILE) {
+
+            eInit = nEtiqueta;
+            eTrue = nEtiqueta + 5;
+            eFalse = nEtiqueta + 10;
+            nEtiqueta += 15;
+
         }
 
     }

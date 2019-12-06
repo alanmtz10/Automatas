@@ -17,6 +17,11 @@ import lexema.Lexema;
 public class CodigoIntermedio {
 
     /**
+     * Controlar el numero de variables de mensajes
+     */
+    public static int nMensajes = 1;
+
+    /**
      * Bandera para saber si se esta dentro de una condicion de if, for, while
      */
     private static boolean condicion = false;
@@ -34,6 +39,11 @@ public class CodigoIntermedio {
     public static Etiqueta temporal;
     public static Cuadrupla cuadruplaAux;
 
+    /**
+     * Generar lista de cuadruplas y variables listas para pasar a ensamblador
+     *
+     * @param listaLexemas lista de lexemas
+     */
     public static void generaCodigoIntermedio(ArrayList<Lexema> listaLexemas) {
 
         for (int i = 0; i < listaLexemas.size(); i++) {
@@ -66,32 +76,40 @@ public class CodigoIntermedio {
                 id = listaLexemas.get(i);
                 i = identificaValorVariables(listaLexemas, i, false);
             } else if (head.is(Lexema.SENT_IF)) {
-                temporal = new Etiqueta(Etiqueta.IF, null);
-                etiquetas.add(temporal);
-                i += 1;
-                valorAuxiliar = new ArrayList<>();
-                while (!listaLexemas.get(i).getLexema().equals(")")) {
-                    valorAuxiliar.add(listaLexemas.get(i));
-                    i++;
-                }
-                i--;
-                valorAuxiliar = postfijo.Postfijo.convertirPostfijo(valorAuxiliar);
-                cuadruplasAuxiliar = Cuadrupla.generaCuadrupla(valorAuxiliar);
-                /**
-                 * Remover la ultima cuadrupla para generar una cuadrupla de
-                 * condicion
-                 */
-                cuadruplaAux = cuadruplasAuxiliar.remove(cuadruplasAuxiliar.size() - 1);
-                cuadruplasAuxiliar.add(new Cuadrupla(
-                        cuadruplaAux.getOperacion(),
-                        cuadruplaAux.getOperando1(),
-                        cuadruplaAux.getOperando2(),
-                        "gt e" + temporal.geteTrue()
+
+                i = getCondicionDeIfWhile(i, listaLexemas, Lexema.SENT_IF);
+
+            } else if (head.is(Lexema.SENT_WHILE)) {
+
+                i = getCondicionDeIfWhile(i, listaLexemas, Lexema.SENT_WHILE);
+
+            } else if (head.is(Lexema.SENT_READ)) {
+
+                variables.add(new Variable(listaLexemas.get(i + 2), null));
+                cuadruplas.add(new Cuadrupla(
+                        head,
+                        listaLexemas.get(i + 2),
+                        null,
+                        new Lexema("read", 0, 0) /* Arreglar la ambiguedad del constructor :c */
                 ));
-                cuadruplasAuxiliar.add(new Cuadrupla("gt e" + temporal.geteFalse()));
-                cuadruplasAuxiliar.add(new Cuadrupla("e" + temporal.geteTrue()));
-                cuadruplas.addAll(cuadruplasAuxiliar);
-                i += 1;
+
+                i += 4;
+
+            } else if (head.is(Lexema.SENT_WRITE)) {
+
+                if (listaLexemas.get(i + 2).is(Lexema.STRING)) {
+                    Variable t = new Variable(new Lexema("msj" + nMensajes, 0, 0, "41"), listaLexemas.get(i + 2));
+                    variables.add(t);
+                    cuadruplas.add(new Cuadrupla(
+                            head,
+                            t.getId(),
+                            null,
+                            new Lexema("write", 0, 0)
+                    ));
+                    nMensajes++;
+                    i += 4;
+                }
+
             } else if (head.is(Lexema.LLAVE_CIERRE)) {
 
                 temporal = etiquetas.pop();
@@ -104,6 +122,9 @@ public class CodigoIntermedio {
 
                     } else if (temporal.getTipoSent() == Etiqueta.ELSE) {
                         cuadruplas.add(new Cuadrupla("e" + temporal.geteSig()));
+                    } else if (temporal.getTipoSent() == Etiqueta.WHILE) {
+                        cuadruplas.add(new Cuadrupla("gt e" + temporal.geteInit()));
+                        cuadruplas.add(new Cuadrupla("e" + temporal.geteFalse()));
                     }
                 } else {
 
@@ -135,9 +156,9 @@ public class CodigoIntermedio {
             System.out.println(cuadrupla);
         }
 
-//        for (Variable variable : variables) {
-//            System.out.println(variable);
-//        }
+        for (Variable variable : variables) {
+            System.out.println(variable);
+        }
     }
 
     /**
@@ -207,6 +228,43 @@ public class CodigoIntermedio {
                 return;
             }
         }
+    }
+
+    public static int getCondicionDeIfWhile(int i, ArrayList<Lexema> listaLexemas, int sentencia) {
+        if (sentencia == Lexema.SENT_IF) {
+            temporal = new Etiqueta(Etiqueta.IF, null);
+        } else if (sentencia == Lexema.SENT_WHILE) {
+            temporal = new Etiqueta(Etiqueta.WHILE, null);
+        }
+        etiquetas.add(temporal);
+        i += 1;
+        valorAuxiliar = new ArrayList<>();
+        while (!listaLexemas.get(i).getLexema().equals(")")) {
+            valorAuxiliar.add(listaLexemas.get(i));
+            i++;
+        }
+        i--;
+        valorAuxiliar = postfijo.Postfijo.convertirPostfijo(valorAuxiliar);
+        cuadruplasAuxiliar = Cuadrupla.generaCuadrupla(valorAuxiliar);
+        /**
+         * Remover la ultima cuadrupla para generar una cuadrupla de condicion
+         */
+        cuadruplaAux = cuadruplasAuxiliar.remove(cuadruplasAuxiliar.size() - 1);
+        if (sentencia == Lexema.SENT_WHILE) {
+            cuadruplasAuxiliar.add(new Cuadrupla("e" + temporal.geteInit()));
+        }
+        cuadruplasAuxiliar.add(new Cuadrupla(
+                cuadruplaAux.getOperacion(),
+                cuadruplaAux.getOperando1(),
+                cuadruplaAux.getOperando2(),
+                "gt e" + temporal.geteTrue()
+        ));
+        cuadruplasAuxiliar.add(new Cuadrupla("gt e" + temporal.geteFalse()));
+        cuadruplasAuxiliar.add(new Cuadrupla("e" + temporal.geteTrue()));
+        cuadruplas.addAll(cuadruplasAuxiliar);
+        i += 1;
+
+        return i;
     }
 
     /**

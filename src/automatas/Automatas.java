@@ -111,7 +111,9 @@ public class Automatas {
         {"console", "console"},
         {"log", "log"},
         {".", "."},
-        {"27", "document"}
+        {"27", "document"},
+        {"501", "read"},
+        {"502", "write"}
     };
 
     private static final String[][] CARACTERES_ESP = {
@@ -276,7 +278,7 @@ public class Automatas {
                 }
 
             }
- //               else {
+            //               else {
 //                l.setError(estado);
 //            }
 

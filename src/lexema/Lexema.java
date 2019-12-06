@@ -12,82 +12,7 @@ import separarPalabras.SeparaPalabras;
  *
  * @author Alan
  */
-public class Lexema implements Cloneable {
-
-    /**
-     * Constante de numero
-     */
-    public static final int NUMERO = 1;
-
-    /**
-     * Constante de numero entero
-     */
-    public static final int NUMERO_ENTERO = 2;
-
-    /**
-     * Constante de numero real
-     */
-    public static final int NUMERO_REAL = 3;
-
-    /**
-     * Constante de variable
-     */
-    public static final int VARIABLE = 4;
-
-    /**
-     * Contstante de numero o variable
-     */
-    public static final int NUMERO_VARIABLE = 5;
-
-    /**
-     * Constante de cadena
-     */
-    public static final int STRING = 6;
-
-    /**
-     * Constante de operador logico, aritmetico o relacional
-     */
-    public static final int OPERADOR = 7;
-
-    /**
-     * Constante de operador aritmetico / * - +
-     */
-    public static final int OPERADOR_ARITMETICO = 8;
-
-    /**
-     * Constante de operador logico & |
-     */
-    public static final int OPERADOR_LOGICO = 9;
-
-    /**
-     * Constante de operador relacional > < >= <= != ==
-     */
-    public static final int OPERADOR_RELACIONAL = 10;
-
-    /**
-     * Constante de operador de asignacion = += -=
-     */
-    public static final int OPERADOR_ASIGNACION = 11;
-
-    /**
-     * Constante de tipo de dato String int double
-     */
-    public static final int TIPO_DATO = 12;
-
-    /**
-     * Constante de sentencia if
-     */
-    public static final int SENT_IF = 13;
-
-    /**
-     * Constante de sentencia ELSE
-     */
-    public static final int SENT_ELSE = 15;
-
-    /**
-     * Constante de llave de cierre }
-     */
-    public static final int LLAVE_CIERRE = 14;
+public class Lexema implements Cloneable, LexConst {
 
     private String lexema;
     private int renglon;
@@ -287,6 +212,12 @@ public class Lexema implements Cloneable {
         } else if (that == SENT_ELSE && token.equals("6")) {
             return true;
         } else if (that == LLAVE_CIERRE && lexema.equals("}")) {
+            return true;
+        } else if (that == SENT_WHILE && token.equals("18")) {
+            return true;
+        } else if (that == SENT_READ && token.equals("501")) {
+            return true;
+        } else if (that == SENT_WRITE && token.equals("502")) {
             return true;
         }
 

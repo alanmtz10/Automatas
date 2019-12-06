@@ -1,20 +1,9 @@
-int r1 = 1;
-
-
-r1 = 8+2+3+4;
-
-String alan = "Minombre";
-
-int r2 = r1+8+4;
-
-double miVarAux = 20.5 + r2 +1 +10;
-
-if(x+8-4/2 != 4+3-1){
-    if(x+5-3>=8*2/2){
-
+while(x+1 != 3/3){
+    if(miVariable > 10){
+        write("hola");
+        int r1 = 25;
+        r1 = r1 + 1;
     }
-}else{
-
 }
 
 
