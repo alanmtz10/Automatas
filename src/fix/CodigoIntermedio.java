@@ -16,38 +16,144 @@ import lexema.Lexema;
  */
 public class CodigoIntermedio {
 
+    /**
+     * Bandera para saber si se esta dentro de una condicion de if, for, while
+     */
+    private static boolean condicion = false;
+
     public static Stack<Etiqueta> etiquetas = new Stack();
     public static ArrayList<Variable> variables = new ArrayList();
     public static ArrayList<Cuadrupla> cuadruplas = new ArrayList();
 
+    public static ArrayList<Lexema> valorAuxiliar;
+    public static ArrayList<Cuadrupla> cuadruplasAuxiliar;
+
+    public static Lexema id;
+    public static Lexema head;
+
     public static void generaCodigoIntermedio(ArrayList<Lexema> listaLexemas) {
-
-        Lexema id;
-        ArrayList<Lexema> valorAuxiliar = new ArrayList<>();
-
-        Lexema head;
 
         for (int i = 0; i < listaLexemas.size(); i++) {
             head = listaLexemas.get(i);
 
+            /**
+             * Si head es un tipo de dato
+             */
             if (head.is(Lexema.TIPO_DATO)) {
 
+                /**
+                 * Si viene un tipo de dato y despues del identificador no viene
+                 * un ;
+                 */
                 id = listaLexemas.get(i + 1);
-                i += 2;
+                if (!listaLexemas.get(i + 2).getLexema().equals(";")) {
 
-                while (!listaLexemas.get(i).getLexema().equals(";")) {
-                    valorAuxiliar.add(listaLexemas.get(i));
-                    i++;
-                }
-
-                if (valorAuxiliar.size() == 1) {
-                    variables.add(new Variable(id, valorAuxiliar.get(0)));
+                    i = identificaValorVariables(listaLexemas, i, true);
+                    /**
+                     * Si despues del identificador viene un ;
+                     */
                 } else {
                     variables.add(new Variable(id, null));
                 }
 
+                /**
+                 * Si head es una variable y no se esta dentro de una condicion
+                 */
+            } else if (head.is(Lexema.VARIABLE) && !condicion) {
+                id = listaLexemas.get(i);
+                i = identificaValorVariables(listaLexemas, i, false);
             }
 
+        }
+
+        generaVariablesTemporales();
+
+        for (Cuadrupla cuadrupla : cuadruplas) {
+            System.out.println(cuadrupla);
+        }
+
+        for (Variable variable : variables) {
+            System.out.println(variable);
+        }
+
+    }
+
+    /**
+     * Itentificar el valor de las variables
+     *
+     * @param i posicion del recorrido
+     * @param nuevaVariable bandera para identificar si la variable no se a
+     * declarado
+     * @return la ulitma posicion del recorrido
+     */
+    public static int identificaValorVariables(ArrayList<Lexema> listaLexemas, int i, boolean nuevaVariable) {
+        valorAuxiliar = new ArrayList<>();
+
+        if (nuevaVariable) {
+            i += 3;
+        } else {
+            i += 2;
+        }
+
+        while (!listaLexemas.get(i).getLexema().equals(";")) {
+            valorAuxiliar.add(listaLexemas.get(i));
+            i++;
+        }
+        valorAuxiliar.size();
+
+        if (valorAuxiliar.size() == 1) {
+            if (nuevaVariable) {
+                variables.add(new Variable(id, null));
+            }
+            cuadruplasAuxiliar = new ArrayList<>();
+            cuadruplasAuxiliar.add(new Cuadrupla(
+                    new Lexema("=", 0, 0, "40"),
+                    valorAuxiliar.get(0),
+                    null,
+                    id
+            ));
+            cuadruplas.addAll(cuadruplasAuxiliar);
+        } else {
+            if (nuevaVariable) {
+                variables.add(new Variable(id, null));
+            }
+            /*Convertir a postfijo y sacar cuadruplas*/
+            valorAuxiliar = postfijo.Postfijo.convertirPostfijo(valorAuxiliar);
+            cuadruplasAuxiliar = Cuadrupla.generaCuadrupla(valorAuxiliar);
+            cuadruplasAuxiliar.add(new Cuadrupla(
+                    new Lexema("=", 0, 0, "40"), /* Operacion */
+                    cuadruplasAuxiliar.get(cuadruplasAuxiliar.size() - 1).getResultado(), /* Operando 1 */
+                    null, /* Operando 2 */
+                    id /* Resultado */
+            ));
+            cuadruplas.addAll(cuadruplasAuxiliar);
+        }
+        valorAuxiliar = null;
+        return i;
+    }
+
+    /**
+     * Remplazar el valor de una variable
+     *
+     * @param variable variable
+     * @param nuevoValor nuevo valor
+     */
+    public static void remplazarValorVariable(Lexema variable, Lexema nuevoValor) {
+        for (Variable v : variables) {
+            if (v.getId().getLexema().equals(variable.getLexema())) {
+                v.setValor(nuevoValor);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Generar las variables temporales
+     */
+    public static void generaVariablesTemporales() {
+        int nTemporales = Cuadrupla.getContadorTemporales();
+        for (int i = 1; i < nTemporales; i++) {
+            variables.add(new Variable(new Lexema("T" + i, 0, 0, "41"), null));
         }
 
     }

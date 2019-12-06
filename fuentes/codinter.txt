@@ -1,25 +1,12 @@
-int r1 = 0+0;
-int r2 = 0+0;
-int r3 = 0+0;
-int acum = 0+0;
+int r1 = 1;
 
 
+r1 = 8+2+3+4;
 
-while(acum < 15){
-    read(x);
-    if(x == 1){
-        r1 = r1+1;
-    }else if(x == 2){
-        r2 = r2+1;
-    }else{
-        r3 = r3+1;
-    }
+String alan = "Minombre";
 
-    cont = cont+1;
-}
+int r2 = r1+8+4;
 
-write(r1);
-write(r2);
-write(r3);
+double miVarAux = 20.5 + r2 +1 +10;
 
 -

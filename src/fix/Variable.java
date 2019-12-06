@@ -39,4 +39,13 @@ public class Variable {
         this.valor = valor;
     }
 
+    @Override
+    public String toString() {
+        String v = "null";
+        if (valor != null) {
+            v = valor.getLexema();
+        }
+        return id.getLexema() + "  " + v;
+    }
+
 }
