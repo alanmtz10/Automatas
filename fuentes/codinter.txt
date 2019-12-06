@@ -1,8 +1,35 @@
 int x = 0;
 
-while(x<10){
-    write(x);
+int res =11*5;
+
+write(res);
+ 
+while(x != 20){
+
+    write("Hola me llamo alan");
     x = x+1;
+}
+
+int miVar = 9;
+
+write("hola");
+
+if(miVar == 10){
+    write(miVar);
+}else{
+    write("ciclo while");
+    int cont = 0;
+    while(cont < 5){
+        write("ciclo");
+        cont = cont+1;
+    }
+
+    write("Escribe un numero");
+    read(nVar);
+
+    write("El numero que escribiste fue: ");
+
+    write(nVar);
 }
 
 

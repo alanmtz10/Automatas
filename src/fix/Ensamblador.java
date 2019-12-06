@@ -77,21 +77,32 @@ public class Ensamblador {
 
                 } else if (cuadrupla.getOperacion().is(Lexema.SENT_WRITE)) {
                     System.out.println("printNum " + cuadrupla.getOperando1().getLexema());
+                    System.out.println("nuevaLinea");
+                } else if (cuadrupla.getOperacion().is(Lexema.SENT_WRITES)) {
+                    System.out.println("printString " + cuadrupla.getOperando1().getLexema());
+                    System.out.println("nuevaLinea");
+                } else if (cuadrupla.getOperacion().is(Lexema.SENT_READ)) {
+                    System.out.println("leerNum " + cuadrupla.getOperando1().getLexema());
+                    System.out.println("nuevaLinea");
                 }
             } else if (cuadrupla.getEtiqueta() != null) {
                 if (cuadrupla.getOperacion() != null && cuadrupla.getOperacion().is(Lexema.OPERADOR_RELACIONAL)) {
                     System.out.println("CMP " + cuadrupla.getOperando1().getLexema() + ", " + cuadrupla.getOperando2().getLexema());
                     switch (cuadrupla.getOperacion().getLexema()) {
                         case "==":
+                            System.out.println("JE " + cuadrupla.getEtiqueta().replace("gt ", ""));
                             break;
                         case "!=":
+                            System.out.println("JNE " + cuadrupla.getEtiqueta().replace("gt ", ""));
                             break;
                         case ">=":
                             System.out.println("JGE " + cuadrupla.getEtiqueta().replace("gt ", ""));
                             break;
                         case "<=":
+                            System.out.println("JLE " + cuadrupla.getEtiqueta().replace("gt ", ""));
                             break;
                         case ">":
+                            System.out.println("JG " + cuadrupla.getEtiqueta().replace("gt ", ""));
                             break;
                         case "<":
                             System.out.println("JL " + cuadrupla.getEtiqueta().replace("gt ", ""));

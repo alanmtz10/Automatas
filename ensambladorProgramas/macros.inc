@@ -1,19 +1,19 @@
 ; MACROS
 
 multiplicacion MACRO op1, op2, res
-	mov ax, op1
-	mov cx, op2
-	imul cx
-	mov res, ax
+	MOV AX, op1
+	MOV CX, op2
+	IMUL CX
+	MOV res, AX
 ENDM
 
 division MACRO op1, op2, res
-	mov dx, 0
-	mov ax, op1
-	mov cx, op2
-	idiv cx
-	cmp dx, 0
-	mov res,ax
+	MOV DX, 0
+	MOV AX, op1
+	MOV CX, op2
+	idiv CX
+	cmp DX, 0
+	MOV res,AX
 ENDM
 
 asignar MACRO op1, res
@@ -23,16 +23,16 @@ asignar MACRO op1, res
 ENDM
 
 suma MACRO op1, op2, res
-	mov ax, op1
-	add ax, op2
-	mov res, ax
-	xor ax,ax
+	MOV AX, op1
+	add AX, op2
+	MOV res, AX
+	xor AX,AX
 ENDM
 
 resta MACRO op1, op2, res
-	mov ax, op1
-	sub ax, op2
-	mov res, ax
+	MOV AX, op1
+	sub AX, op2
+	MOV res, AX
 ENDM
 
 nuevaLinea MACRO
@@ -41,21 +41,27 @@ nuevaLinea MACRO
 ENDM
 
 incremenarUno MACRO var
-	mov ax, var
-	inc ax
-	mov var,ax
+	MOV AX, var
+	inc AX
+	MOV var,AX
 ENDM
 
 printNum MACRO var
-    mov ax, var
+    MOV AX, var
     call PRINT_NUM
 ENDM
 
 printString MACRO var
-	mov dx, offset var
-	mov ah, 9
+	MOV DX, offset var
+	MOV ah, 9
 	int 21h
 ENDM
 
+leerNum MACRO var
+	CALL SCAN_NUM
+	MOV var,CX
+ENDM
+
+DEFINE_SCAN_NUM
 DEFINE_PRINT_NUM_UNS
 DEFINE_PRINT_NUM

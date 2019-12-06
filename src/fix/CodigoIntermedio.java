@@ -102,7 +102,7 @@ public class CodigoIntermedio {
                     Variable t = new Variable(new Lexema("msj" + nMensajes, 0, 0, "41"), listaLexemas.get(i + 2));
                     variables.add(t);
                     cuadruplas.add(new Cuadrupla(
-                            head,
+                            new Lexema("writes", 0, 0, "503"),
                             t.getId(),
                             null,
                             new Lexema("write", 0, 0)
@@ -151,6 +151,9 @@ public class CodigoIntermedio {
                         }
                     } else if (temporal.getTipoSent() == Etiqueta.ELSE) {
                         cuadruplas.add(new Cuadrupla("e" + temporal.geteSig()));
+                    } else if (temporal.getTipoSent() == Etiqueta.WHILE) {
+                        cuadruplas.add(new Cuadrupla("gt e" + temporal.geteInit()));
+                        cuadruplas.add(new Cuadrupla("e" + temporal.geteFalse()));
                     }
 
                 }

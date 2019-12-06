@@ -219,6 +219,8 @@ public class Lexema implements Cloneable, LexConst {
             return true;
         } else if (that == SENT_WRITE && token.equals("502")) {
             return true;
+        }else if(that == SENT_WRITES && lexema.equals("writes")){
+            return true;
         }
 
         return false;
