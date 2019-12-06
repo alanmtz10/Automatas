@@ -4,5 +4,7 @@ if(x >= 10){
     write("Hola");
 }
 
+int mivar = 55;
+
 -
 
