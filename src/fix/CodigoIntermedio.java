@@ -31,6 +31,9 @@ public class CodigoIntermedio {
     public static Lexema id;
     public static Lexema head;
 
+    public static Etiqueta temporal;
+    public static Cuadrupla cuadruplaAux;
+
     public static void generaCodigoIntermedio(ArrayList<Lexema> listaLexemas) {
 
         for (int i = 0; i < listaLexemas.size(); i++) {
@@ -62,6 +65,66 @@ public class CodigoIntermedio {
             } else if (head.is(Lexema.VARIABLE) && !condicion) {
                 id = listaLexemas.get(i);
                 i = identificaValorVariables(listaLexemas, i, false);
+            } else if (head.is(Lexema.SENT_IF)) {
+                temporal = new Etiqueta(Etiqueta.IF, null);
+                etiquetas.add(temporal);
+                i += 1;
+                valorAuxiliar = new ArrayList<>();
+                while (!listaLexemas.get(i).getLexema().equals(")")) {
+                    valorAuxiliar.add(listaLexemas.get(i));
+                    i++;
+                }
+                i--;
+                valorAuxiliar = postfijo.Postfijo.convertirPostfijo(valorAuxiliar);
+                cuadruplasAuxiliar = Cuadrupla.generaCuadrupla(valorAuxiliar);
+                /**
+                 * Remover la ultima cuadrupla para generar una cuadrupla de
+                 * condicion
+                 */
+                cuadruplaAux = cuadruplasAuxiliar.remove(cuadruplasAuxiliar.size() - 1);
+                cuadruplasAuxiliar.add(new Cuadrupla(
+                        cuadruplaAux.getOperacion(),
+                        cuadruplaAux.getOperando1(),
+                        cuadruplaAux.getOperando2(),
+                        "gt e" + temporal.geteTrue()
+                ));
+                cuadruplasAuxiliar.add(new Cuadrupla("gt e" + temporal.geteFalse()));
+                cuadruplasAuxiliar.add(new Cuadrupla("e" + temporal.geteTrue()));
+                cuadruplas.addAll(cuadruplasAuxiliar);
+                i += 1;
+            } else if (head.is(Lexema.LLAVE_CIERRE)) {
+
+                temporal = etiquetas.pop();
+
+                if (i == listaLexemas.size() - 1) {
+
+                    if (temporal.getTipoSent() == Etiqueta.IF) {
+
+                        cuadruplas.add(new Cuadrupla("e" + temporal.geteFalse()));
+
+                    } else if (temporal.getTipoSent() == Etiqueta.ELSE) {
+                        cuadruplas.add(new Cuadrupla("e" + temporal.geteSig()));
+                    }
+                } else {
+
+                    if (temporal.getTipoSent() == Etiqueta.IF) {
+
+                        if (listaLexemas.get(i + 1).is(Lexema.SENT_ELSE)) {
+
+                            temporal = new Etiqueta(Etiqueta.ELSE, temporal);
+                            etiquetas.add(temporal);
+                            cuadruplas.add(new Cuadrupla("gt e" + temporal.geteSig()));
+                            cuadruplas.add(new Cuadrupla("e" + temporal.geteFalse()));
+
+                        } else {
+                            cuadruplas.add(new Cuadrupla("e" + temporal.geteFalse()));
+                        }
+                    } else if (temporal.getTipoSent() == Etiqueta.ELSE) {
+                        cuadruplas.add(new Cuadrupla("e" + temporal.geteSig()));
+                    }
+
+                }
+
             }
 
         }
@@ -72,10 +135,9 @@ public class CodigoIntermedio {
             System.out.println(cuadrupla);
         }
 
-        for (Variable variable : variables) {
-            System.out.println(variable);
-        }
-
+//        for (Variable variable : variables) {
+//            System.out.println(variable);
+//        }
     }
 
     /**

@@ -15,6 +15,8 @@ import lexema.Lexema;
  */
 public class Cuadrupla {
 
+    public static final int SENT_IF = 1;
+
     private static int contadorTemporales = 1;
 
     public static int getContadorTemporales() {
@@ -29,6 +31,34 @@ public class Cuadrupla {
     private Lexema operando1;
     private Lexema operando2;
     private Lexema resultado;
+
+    /**
+     * *
+     * Variables de cuadruplas de sentencias
+     */
+//    private int sentencia;
+    private String etiqueta;
+
+    /**
+     * Constructor para condiciones
+     *
+     * @param operacion
+     * @param operando1
+     * @param operando2
+     * @param sentencia
+     * @param etiqueta
+     */
+    public Cuadrupla(Lexema operacion, Lexema operando1, Lexema operando2, /*int sentencia,*/ String etiqueta) {
+        this.operacion = operacion;
+        this.operando1 = operando1;
+        this.operando2 = operando2;
+//        this.sentencia = sentencia;
+        this.etiqueta = etiqueta;
+    }
+
+    public Cuadrupla(String etiqueta) {
+        this.etiqueta = etiqueta;
+    }
 
     public Cuadrupla(Lexema operacion, Lexema operando1, Lexema operando2, Lexema resultado) {
         this.operacion = operacion;
@@ -87,6 +117,10 @@ public class Cuadrupla {
         }
         if (resultado != null) {
             res = resultado.getLexema();
+        }
+
+        if (etiqueta != null) {
+            return " Operando1 " + op1 + " Operacion " + op + "  Operando2 " + op2 + " Etiqueta " + etiqueta;
         }
 
         return "Resultado " + res + " Operando1 " + op1 + " Operacion " + op + "  Operando2 " + op2;
@@ -176,4 +210,5 @@ public class Cuadrupla {
                 .equals(c2.operando1.getLexema()) && c1.operando2.getLexema()
                 .equals(c2.operando2.getLexema());
     }
+
 }

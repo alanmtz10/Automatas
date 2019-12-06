@@ -74,6 +74,21 @@ public class Lexema implements Cloneable {
      */
     public static final int TIPO_DATO = 12;
 
+    /**
+     * Constante de sentencia if
+     */
+    public static final int SENT_IF = 13;
+
+    /**
+     * Constante de sentencia ELSE
+     */
+    public static final int SENT_ELSE = 15;
+
+    /**
+     * Constante de llave de cierre }
+     */
+    public static final int LLAVE_CIERRE = 14;
+
     private String lexema;
     private int renglon;
     private int columna;
@@ -266,6 +281,12 @@ public class Lexema implements Cloneable {
         } else if (that == OPERADOR_ASIGNACION && token.equals("40")) {
             return true;
         } else if (that == TIPO_DATO && token.equals("1")) {
+            return true;
+        } else if (that == SENT_IF && token.equals("5")) {
+            return true;
+        } else if (that == SENT_ELSE && token.equals("6")) {
+            return true;
+        } else if (that == LLAVE_CIERRE && lexema.equals("}")) {
             return true;
         }
 
