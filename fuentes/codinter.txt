@@ -5,6 +5,10 @@ int r3=0;
 
 int acum = 0;
 
+for(int i = 9; i<10;i++){
+
+}
+
 while(acum < 5){
 
     write("Ingresa el regalo: ");

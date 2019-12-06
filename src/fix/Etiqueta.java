@@ -56,6 +56,11 @@ public class Etiqueta {
             eFalse = nEtiqueta + 10;
             nEtiqueta += 15;
 
+        } else if (tipoSent == FOR) {
+            eInit = nEtiqueta;
+            eTrue = nEtiqueta + 5;
+            eFalse = nEtiqueta + 10;
+            nEtiqueta += 15;
         }
 
     }

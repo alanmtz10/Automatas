@@ -20,12 +20,6 @@ public class CodigoIntermedio {
      * Controlar el numero de variables de mensajes
      */
     public static int nMensajes = 1;
-
-    /**
-     * Bandera para saber si se esta dentro de una condicion de if, for, while
-     */
-    private static boolean condicion = false;
-
     public static Stack<Etiqueta> etiquetas = new Stack();
     public static ArrayList<Variable> variables = new ArrayList();
     public static ArrayList<Cuadrupla> cuadruplas = new ArrayList();
@@ -73,7 +67,7 @@ public class CodigoIntermedio {
                 /**
                  * Si head es una variable y no se esta dentro de una condicion
                  */
-            } else if (head.is(Lexema.VARIABLE) && !condicion) {
+            } else if (head.is(Lexema.VARIABLE)) {
                 id = listaLexemas.get(i);
                 i = identificaValorVariables(listaLexemas, i, false);
             } else if (head.is(Lexema.SENT_IF)) {
@@ -83,6 +77,11 @@ public class CodigoIntermedio {
             } else if (head.is(Lexema.SENT_WHILE)) {
 
                 i = getCondicionDeIfWhile(i, listaLexemas, Lexema.SENT_WHILE);
+
+            } else if (head.is(Lexema.SENT_FOR)) {
+
+                id = listaLexemas.get(i + 1);
+                i = getCondicionAumentoFor(i, listaLexemas);
 
             } else if (head.is(Lexema.SENT_READ)) {
 
@@ -276,6 +275,39 @@ public class CodigoIntermedio {
         cuadruplasAuxiliar.add(new Cuadrupla("e" + temporal.geteTrue()));
         cuadruplas.addAll(cuadruplasAuxiliar);
         i += 1;
+
+        return i;
+    }
+
+    public static int getCondicionAumentoFor(int i, ArrayList<Lexema> listaLexemas) {
+
+        temporal = new Etiqueta(Etiqueta.FOR, null);
+        etiquetas.push(temporal);
+
+        i += 2;
+        i = identificaValorVariables(listaLexemas, i, true);
+        cuadruplas.add(new Cuadrupla("e" + temporal.geteInit()));
+        valorAuxiliar = new ArrayList<Lexema>();
+
+        while (!listaLexemas.get(i).getLexema().equals(";")) {
+            valorAuxiliar.add(listaLexemas.get(i));
+            i++;
+        }
+        valorAuxiliar = postfijo.Postfijo.convertirPostfijo(valorAuxiliar);
+        cuadruplasAuxiliar = Cuadrupla.generaCuadrupla(valorAuxiliar);
+
+        cuadruplaAux = cuadruplasAuxiliar.remove(cuadruplasAuxiliar.size() - 1);
+
+        i++;
+
+        ArrayList<Lexema> aumentoAuxiliar = new ArrayList<>();
+
+        while (!listaLexemas.get(i).getLexema().equals(")")) {
+            aumentoAuxiliar.add(listaLexemas.get(i));
+            i++;
+        }
+
+        i++;
 
         return i;
     }

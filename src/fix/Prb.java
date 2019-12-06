@@ -20,10 +20,20 @@ public class Prb {
     private static ArrayList<Variable> listaVariables;
 
     public static void main(String[] args) {
+        /**
+         * Obtener tabla de lexemas
+         */
         listaLexemas = Lexema.getTablaLexema("fuentes/codinter.txt");
         Object[] objs = CodigoIntermedio.generaCodigoIntermedio(listaLexemas);
+        /**
+         * Obtener listas de cuadruples y lista de variables
+         */
         listaCuadruplas = (ArrayList<Cuadrupla>) objs[0];
         listaVariables = (ArrayList<Variable>) objs[1];
+
+        /**
+         * Generar codigo ensamblador
+         */
         Ensamblador.toAssembly(listaVariables, listaCuadruplas);
     }
 }

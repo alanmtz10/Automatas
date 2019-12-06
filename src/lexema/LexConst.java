@@ -102,6 +102,11 @@ public interface LexConst {
     public static final int SENT_WRITES = 19;
 
     /**
+     * Constante de sentencia FOR
+     */
+    public static final int SENT_FOR = 20;
+
+    /**
      * Constante de llave de cierre }
      */
     public static final int LLAVE_CIERRE = 14;
