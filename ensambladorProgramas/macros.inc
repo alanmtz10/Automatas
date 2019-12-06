@@ -49,17 +49,20 @@ ENDM
 printNum MACRO var
     MOV AX, var
     call PRINT_NUM
+    nuevaLinea
 ENDM
 
 printString MACRO var
 	MOV DX, offset var
 	MOV ah, 9
 	int 21h
+	nuevaLinea
 ENDM
 
 leerNum MACRO var
 	CALL SCAN_NUM
 	MOV var,CX
+	nuevaLinea
 ENDM
 
 DEFINE_SCAN_NUM

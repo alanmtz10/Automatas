@@ -15,14 +15,14 @@ import lexema.Lexema;
  */
 public class Ensamblador {
 
-    private static String encabezado = "org 100h"
+    private static String encabezado = "org 100h\n"
             + "\ninclude \"emu8086.inc\""
-            + "\ninclude \"macros.inc\""
+            + "\ninclude \"macros.inc\"\n"
             + "\nTITLE ProgramaASM"
             + "\n.MODEL lange"
             + "\n.STACK 64"
-            + "\n.DATA";
-    private static String code = "\n.CODE";
+            + "\n.DATA\n";
+    private static String code = "\n.CODE\n";
     private static String exit = "\n.EXIT";
 
     public static void toAssembly(ArrayList<Variable> variables, ArrayList<Cuadrupla> cuadruplas) {
@@ -77,13 +77,11 @@ public class Ensamblador {
 
                 } else if (cuadrupla.getOperacion().is(Lexema.SENT_WRITE)) {
                     System.out.println("printNum " + cuadrupla.getOperando1().getLexema());
-                    System.out.println("nuevaLinea");
+
                 } else if (cuadrupla.getOperacion().is(Lexema.SENT_WRITES)) {
                     System.out.println("printString " + cuadrupla.getOperando1().getLexema());
-                    System.out.println("nuevaLinea");
                 } else if (cuadrupla.getOperacion().is(Lexema.SENT_READ)) {
                     System.out.println("leerNum " + cuadrupla.getOperando1().getLexema());
-                    System.out.println("nuevaLinea");
                 }
             } else if (cuadrupla.getEtiqueta() != null) {
                 if (cuadrupla.getOperacion() != null && cuadrupla.getOperacion().is(Lexema.OPERADOR_RELACIONAL)) {
