@@ -20,10 +20,6 @@ public class Main {
     public static void main(String[] args) {
 
         listaLexemas = Stream.getListLexemas("fuentes/codinter.txt");
-
-//        for (Lexema lis : listaLexemas) {
-//            System.out.println(lis);
-//        }
         CodigoIntermedio.getCodigoIntermedio(listaLexemas);
 
     }
